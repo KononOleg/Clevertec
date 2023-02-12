@@ -1,0 +1,134 @@
+@import '../../../../index.variables.scss';
+
+.navigation-list {
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+
+  .left {
+    display: flex;
+    gap: 18px;
+
+    .search-open {
+      display: none;
+    }
+
+    button {
+      padding: 10px 17px;
+    }
+  }
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 10px 17px;
+    border-radius: 38px / 38px;
+    box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+      0px 1px 5px rgba(191, 196, 201, 0.24);
+
+    .button_search,
+    .button_close {
+      border: 0;
+      padding: 0;
+      background: transparent;
+
+      display: flex;
+      align-items: center;
+    }
+
+    .button_close {
+      display: none;
+    }
+
+    svg {
+      fill: $grey40;
+    }
+
+    .input {
+      color: $orange10;
+      border: 0;
+      outline: none;
+      width: 290px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .navigation-list {
+    .search {
+      .input {
+        width: 214px;
+      }
+    }
+  }
+}
+
+@media (max-width: 680px) {
+  .navigation-list {
+    gap: 0px;
+    button {
+      padding: 6px;
+      min-width: 32px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .left {
+      display: flex;
+      gap: 18px;
+      width: 100%;
+
+      .search {
+        display: none;
+        padding: 7px 16px;
+
+        .input {
+          width: 100%;
+          font-size: 12px;
+          line-height: 18px;
+        }
+
+        .button_search {
+          display: none;
+        }
+
+        .button_close {
+          min-width: 16px;
+          display: flex;
+        }
+      }
+
+      .search_active {
+        max-width: 400px;
+        display: flex;
+        width: 100%;
+      }
+
+      .search-open {
+        display: flex;
+      }
+
+      button {
+        padding: 8px 7px;
+
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+
+        p {
+          display: none;
+        }
+      }
+    }
+  }
+}

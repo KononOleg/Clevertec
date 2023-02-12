@@ -1,0 +1,1 @@
+export { BookSwiper } from './swiper';
