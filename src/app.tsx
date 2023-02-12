@@ -2,6 +2,7 @@ import { FC, useMemo, useState } from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
+import { Loading } from './components/loading';
 import { MainLayout } from './components/main-layout';
 import { PATH } from './constants/path';
 import { BurgerContext } from './context/burger';
@@ -19,6 +20,7 @@ export const App: FC = () => {
       <BurgerContext.Provider
         value={useMemo(() => ({ isBurgerActive, setIsBurgerActive }), [isBurgerActive, setIsBurgerActive])}
       >
+        <Loading />
         <HashRouter>
           <Routes>
             <Route element={<MainLayout />}>
