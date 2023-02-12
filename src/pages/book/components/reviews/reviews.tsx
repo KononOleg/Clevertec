@@ -3,12 +3,11 @@ import { FC, useState } from 'react';
 import ArrowSVG from '../../../../assets/icon-arrow.svg';
 import ReviewAvatarPNG from '../../../../assets/review-avatar.png';
 import { Rating } from '../../../../components/rating';
-import { IReview } from '../../../../types';
 
 import './reviews.scss';
 
 interface IProps {
-  reviews: IReview[];
+  reviews: any[];
 }
 
 export const Reviews: FC<IProps> = ({ reviews }) => {

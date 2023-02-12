@@ -4,7 +4,6 @@ import { NavLink, useMatch } from 'react-router-dom';
 import { ReactComponent as ArrowSVG } from '../../assets/icon-arrow.svg';
 import { library } from '../../constants/library';
 import { PATH } from '../../constants/path';
-import { IBooks } from '../../types';
 
 import './navigation.scss';
 
@@ -37,7 +36,7 @@ export const Navigation: FC = () => {
                   </NavLink>
                 </li>
                 <ul>
-                  {library.map(({ id, genre, category, length }: IBooks) => (
+                  {library.map(({ id, genre, category, length }: any) => (
                     <li key={id}>
                       <NavLink to={`${PATH.books}/${category}`} className={navLinkClassName}>
                         <p className='body_large'>

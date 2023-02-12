@@ -6,7 +6,6 @@ import { Button } from '../../components/button';
 import { Rating } from '../../components/rating';
 import { books } from '../../constants/books';
 import { library } from '../../constants/library';
-import { IBook } from '../../types';
 
 import { AboutBook } from './components/about-book';
 import { Detailed } from './components/detailed';
@@ -17,7 +16,7 @@ import './book-page.scss';
 
 export const BookPage: FC = () => {
   const { category, bookId } = useParams();
-  const book = books.find((b) => b.id === bookId) as IBook;
+  const book = books.find((b) => b.id === bookId) as any;
   const genry = library.find((c) => c.category === category)?.genre;
 
   return (

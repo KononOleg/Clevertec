@@ -1,10 +1,9 @@
 import { FC } from 'react';
 
 import ImageEmptyPNG from '../../assets/book/image-empty.png';
-import { IImage } from '../../types';
 
 interface IProps {
-  images: IImage[];
+  images: any[];
 }
 
 export const BookImage: FC<IProps> = ({ images }) => {

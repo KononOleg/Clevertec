@@ -5,12 +5,11 @@ import { BookImage } from '../../../../components/book-image';
 import { Button } from '../../../../components/button';
 import { Rating } from '../../../../components/rating';
 import { PATH } from '../../../../constants/path';
-import { IBook } from '../../../../types';
 
 import './book-card.scss';
 
 interface IProps {
-  book: IBook;
+  book: any;
   isTileView: boolean;
 }
 

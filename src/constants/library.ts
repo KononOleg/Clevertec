@@ -1,6 +1,4 @@
-import { IBooks } from '../types';
-
-export const library: IBooks[] = [
+export const library: any[] = [
   {
     id: '1',
     genre: 'Бизнес-книги',

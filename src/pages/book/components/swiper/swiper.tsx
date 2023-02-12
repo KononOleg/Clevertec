@@ -3,8 +3,6 @@ import { FreeMode, Navigation, Pagination, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperClass from 'swiper/types/swiper-class';
 
-import { IImage } from '../../../../types';
-
 import './swiper.scss';
 
 import 'swiper/css';
@@ -13,7 +11,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
 interface IProps {
-  images: IImage[];
+  images: any[];
 }
 
 export const BookSwiper: FC<IProps> = ({ images }) => {

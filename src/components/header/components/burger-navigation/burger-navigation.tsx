@@ -5,7 +5,6 @@ import { ReactComponent as ArrowSVG } from '../../../../assets/icon-arrow.svg';
 import { library } from '../../../../constants/library';
 import { PATH } from '../../../../constants/path';
 import { BurgerContext } from '../../../../context/burger';
-import { IBooks } from '../../../../types';
 
 import './burger-navigation.scss';
 
@@ -60,7 +59,7 @@ export const BurgerNavigation: FC<IProps> = ({ burgerEl }) => {
                   </NavLink>
                 </li>
                 <ul>
-                  {library.map(({ id, genre, category, length }: IBooks) => (
+                  {library.map(({ id, genre, category, length }: any) => (
                     <li key={id}>
                       <NavLink to={`${PATH.books}/${category}`} className={navLinkClassName}>
                         <p className='body_large'>

@@ -1,6 +1,4 @@
-import { IReview } from '../types';
-
-export const reviews: IReview[] = [
+export const reviews: any[] = [
   {
     id: '1',
     name: 'Иван Иванов',

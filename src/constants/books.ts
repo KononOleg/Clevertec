@@ -3,11 +3,10 @@ import ImageSecondPNG from '../assets/book/image-2.png';
 import ImageThirdPNG from '../assets/book/image-3.png';
 import ImageFourthPNG from '../assets/book/image-4.png';
 import ImageFiftthPNG from '../assets/book/image-5.png';
-import { IBook } from '../types';
 
 import { reviews } from './reviews';
 
-export const books: IBook[] = [
+export const books: any[] = [
   {
     id: '1',
     images: [],
