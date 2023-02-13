@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Moment from 'moment';
 
 import { IBooking, IDelivery } from '../../types';
 
@@ -16,7 +17,7 @@ export const Button: FC<IProps> = ({ booking, delivery }) => {
   return (
     <button className={`button ${order || handed ? 'button_secondary' : ''}`} type='button' disabled={order || handed}>
       {handed && 'Забронировано'}
-      {order && `занята до ${dateOrder}`}
+      {order && `занята до ${Moment(dateOrder).format('DD.MM')}`}
       {!order && !handed && 'Забронировать'}
     </button>
   );
