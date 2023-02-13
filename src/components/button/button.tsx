@@ -1,20 +1,23 @@
 import { FC } from 'react';
 
+import { IBooking, IDelivery } from '../../types';
+
 import './button.scss';
 
 interface IProps {
-  dateTaken: string;
-  book: boolean;
+  booking: IBooking;
+  delivery: IDelivery;
 }
 
-export const Button: FC<IProps> = ({ dateTaken, book }) => (
-  <button
-    className={`button ${dateTaken || book ? 'button_secondary' : ''}`}
-    type='button'
-    disabled={(dateTaken as unknown as boolean) || book}
-  >
-    {book && 'Забронировано'}
-    {dateTaken && `занята до ${dateTaken}`}
-    {!dateTaken && !book && 'Забронировать'}
-  </button>
-);
+export const Button: FC<IProps> = ({ booking, delivery }) => {
+  const { order, dateOrder } = booking || ({} as IBooking);
+  const { handed } = delivery || ({} as IDelivery);
+
+  return (
+    <button className={`button ${order || handed ? 'button_secondary' : ''}`} type='button' disabled={order || handed}>
+      {handed && 'Забронировано'}
+      {order && `занята до ${dateOrder}`}
+      {!order && !handed && 'Забронировать'}
+    </button>
+  );
+};

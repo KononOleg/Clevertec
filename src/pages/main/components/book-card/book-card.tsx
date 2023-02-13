@@ -5,29 +5,34 @@ import { BookImage } from '../../../../components/book-image';
 import { Button } from '../../../../components/button';
 import { Rating } from '../../../../components/rating';
 import { PATH } from '../../../../constants/path';
+import { IBook } from '../../../../types';
 
 import './book-card.scss';
 
 interface IProps {
-  book: any;
+  book: IBook;
   isTileView: boolean;
 }
 
-export const BookCard: FC<IProps> = ({ book, isTileView }) => (
-  <Link
-    data-test-id='card'
-    className={`book-card ${isTileView ? 'book-card_vertical' : 'book-card_horizontal'}`}
-    to={`${PATH.books}/${book.category}/${book.id}`}
-  >
-    <BookImage images={book.images} />
-    <div className='content'>
-      <div className='rating'>
-        {book.rating ? <Rating rating={book.rating} /> : <p className='body_small'>ещё нет оценок</p>}
-      </div>
+export const BookCard: FC<IProps> = ({ book, isTileView }) => {
+  const { id, issueYear, authors, title, categories, image, rating, booking, delivery } = book;
 
-      <p className='subtitle_small title'>{book.title}</p>
-      <p className='body_small author'>{`${book.author}, ${book.year}`}</p>
-      <Button book={book.book} dateTaken={book.dateTaken} />
-    </div>
-  </Link>
-);
+  return (
+    <Link
+      data-test-id='card'
+      className={`book-card ${isTileView ? 'book-card_vertical' : 'book-card_horizontal'}`}
+      to={`${PATH.books}/${categories.join(',')}/${id}`}
+    >
+      <BookImage image={image} />
+      <div className='content'>
+        <div className='rating'>
+          {rating ? <Rating rating={rating} /> : <p className='body_small'>ещё нет оценок</p>}
+        </div>
+
+        <p className='subtitle_small title'>{title}</p>
+        <p className='body_small author'>{`${authors?.join(',')}, ${issueYear}`}</p>
+        <Button booking={booking} delivery={delivery} />
+      </div>
+    </Link>
+  );
+};

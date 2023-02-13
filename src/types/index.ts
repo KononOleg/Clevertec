@@ -20,6 +20,7 @@ export interface IBook {
   title: string;
   authors?: string[];
   image?: IImage;
+  images: IImage[];
   categories: string[];
   booking: IBooking;
   delivery: IDelivery;
