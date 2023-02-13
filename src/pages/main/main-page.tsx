@@ -17,9 +17,16 @@ export const MainPage: FC = () => {
   const { library } = useAppSelector((state) => state.librarySlice);
 
   useEffect(() => {
-    const findedCatregory = library.find((currentCategory) => currentCategory.path === category);
+    if (category === 'all') {
+      const concatBooks: IBook[] = [];
 
-    if (findedCatregory) setBooks(findedCatregory.books);
+      library.forEach((currentLibrary) => concatBooks.push(...currentLibrary.books));
+      setBooks(concatBooks);
+    } else {
+      const foundCategory = library.find((currentCategory) => currentCategory.path === category);
+
+      if (foundCategory) setBooks(foundCategory.books);
+    }
   }, [category, library]);
 
   const setTileViewHandler = (tileView: boolean) => setTileView(tileView);
