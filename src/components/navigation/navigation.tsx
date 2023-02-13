@@ -4,14 +4,14 @@ import { NavLink, useMatch } from 'react-router-dom';
 import { ReactComponent as ArrowSVG } from '../../assets/icon-arrow.svg';
 import { PATH } from '../../constants/path';
 import { useAppSelector } from '../../hooks/redux';
-import { ICategory } from '../../types';
+import { ILibrary } from '../../types';
 
 import './navigation.scss';
 
 export const Navigation: FC = () => {
   const isAllBooksPath = useMatch(PATH.allBooks);
   const isBookCategoryPath = useMatch(PATH.booksCategory);
-  const { categories } = useAppSelector((state) => state.librarySlice);
+  const { library } = useAppSelector((state) => state.librarySlice);
 
   const navLinkClassName = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : 'link');
 
@@ -38,12 +38,12 @@ export const Navigation: FC = () => {
                   </NavLink>
                 </li>
                 <ul>
-                  {categories.map(({ id, name, path }: ICategory) => (
+                  {library.map(({ id, name, path, books }: ILibrary) => (
                     <li key={id}>
                       <NavLink to={`${PATH.books}/${path}`} className={navLinkClassName}>
                         <p className='body_large'>
                           <span className='category'>{`${name}`}</span>
-                          <span className='count'>10</span>
+                          <span className='count'>{books.length}</span>
                         </p>
                       </NavLink>
                     </li>

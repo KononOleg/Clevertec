@@ -9,7 +9,7 @@ import { useAppDispatch } from './hooks/redux';
 import { BookPage } from './pages/book';
 import { MainPage } from './pages/main';
 import { TermsPage } from './pages/terms';
-import { getCategories } from './store/thunks/library-thunks';
+import { getLibrary } from './store/thunks/library-thunks';
 import { TermsContentView } from './types';
 
 export const App: FC = () => {
@@ -17,8 +17,8 @@ export const App: FC = () => {
   const [isBurgerActive, setIsBurgerActive] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getCategories());
-  });
+    dispatch(getLibrary());
+  }, [dispatch]);
 
   return (
     <BurgerContext.Provider

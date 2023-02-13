@@ -3,6 +3,10 @@ export enum TermsContentView {
   Contract,
 }
 
+export interface ILibrary extends ICategory {
+  books: IBook[];
+}
+
 export interface ICategory {
   id: string;
   name: string;

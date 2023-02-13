@@ -1,21 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IBook, ICategory, IError } from '../../types';
-import { getBook, getBooks, getCategories } from '../thunks/library-thunks';
+import { IBook, IError, ILibrary } from '../../types';
+import { getBook, getLibrary } from '../thunks/library-thunks';
 
 interface LibrarySliceState {
   isPending: boolean;
   error: IError | null;
-  books: IBook[];
-  categories: ICategory[];
+  library: ILibrary[];
   book: IBook | null;
 }
 
 const initialState: LibrarySliceState = {
   isPending: false,
   error: null,
-  books: [],
-  categories: [],
+  library: [],
   book: null,
 };
 
@@ -24,7 +22,7 @@ export const librarySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getBooks.pending.type, (state) => {
+    builder.addCase(getLibrary.pending.type, (state) => {
       // eslint-disable-next-line no-param-reassign
       state.isPending = true;
     });
@@ -34,18 +32,13 @@ export const librarySlice = createSlice({
       state.isPending = true;
     });
 
-    builder.addCase(getCategories.pending.type, (state) => {
-      // eslint-disable-next-line no-param-reassign
-      state.isPending = true;
-    });
-
-    builder.addCase(getBooks.fulfilled.type, (state, action: PayloadAction<IBook[]>) => {
+    builder.addCase(getLibrary.fulfilled.type, (state, action: PayloadAction<ILibrary[]>) => {
       // eslint-disable-next-line no-param-reassign
       state.isPending = false;
       // eslint-disable-next-line no-param-reassign
       state.error = null;
       // eslint-disable-next-line no-param-reassign
-      state.books = action.payload;
+      state.library = action.payload;
     });
 
     builder.addCase(getBook.fulfilled.type, (state, action: PayloadAction<IBook>) => {
@@ -55,15 +48,6 @@ export const librarySlice = createSlice({
       state.error = null;
       // eslint-disable-next-line no-param-reassign
       state.book = action.payload;
-    });
-
-    builder.addCase(getCategories.fulfilled.type, (state, action: PayloadAction<ICategory[]>) => {
-      // eslint-disable-next-line no-param-reassign
-      state.isPending = false;
-      // eslint-disable-next-line no-param-reassign
-      state.error = null;
-      // eslint-disable-next-line no-param-reassign
-      state.categories = action.payload;
     });
   },
 });
