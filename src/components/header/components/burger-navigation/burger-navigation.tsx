@@ -2,9 +2,10 @@ import { FC, RefObject, useContext, useEffect, useRef } from 'react';
 import { NavLink, useMatch } from 'react-router-dom';
 
 import { ReactComponent as ArrowSVG } from '../../../../assets/icon-arrow.svg';
-import { library } from '../../../../constants/library';
-import { PATH } from '../../../../constants/path';
+import { PATH } from '../../../../constants';
 import { BurgerContext } from '../../../../context/burger';
+import { useAppSelector } from '../../../../hooks/redux';
+import { ILibrary } from '../../../../types';
 
 import './burger-navigation.scss';
 
@@ -16,6 +17,7 @@ export const BurgerNavigation: FC<IProps> = ({ burgerEl }) => {
   const isAllBooksPath = useMatch(PATH.allBooks);
   const isBookCategoryPath = useMatch(PATH.booksCategory);
 
+  const { library } = useAppSelector((state) => state.librarySlice);
   const { isBurgerActive, setIsBurgerActive } = useContext(BurgerContext);
   const navLinkClassName = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : 'link');
 
@@ -59,12 +61,12 @@ export const BurgerNavigation: FC<IProps> = ({ burgerEl }) => {
                   </NavLink>
                 </li>
                 <ul>
-                  {library.map(({ id, genre, category, length }: any) => (
+                  {library.map(({ id, name, path, books }: ILibrary) => (
                     <li key={id}>
-                      <NavLink to={`${PATH.books}/${category}`} className={navLinkClassName}>
+                      <NavLink to={`${PATH.books}/${path}`} className={navLinkClassName}>
                         <p className='body_large'>
-                          <span className='category'>{`${genre}`}</span>
-                          <span className='count'>{`${length}`}</span>
+                          <span className='category'>{`${name}`}</span>
+                          <span className='count'>{`${books.length}`}</span>
                         </p>
                       </NavLink>
                     </li>

@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import StarPNG from '../../assets/icon-star.png';
 import StarEmptyPNG from '../../assets/icon-star-empty.png';
-import { stars } from '../../constants/stars';
+import { stars } from '../../constants';
 
 import './rating.scss';
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { BookImage } from '../../../../components/book-image';
 import { Button } from '../../../../components/button';
 import { Rating } from '../../../../components/rating';
-import { PATH } from '../../../../constants/path';
+import { PATH } from '../../../../constants';
 import { IBook } from '../../../../types';
 
 import './book-card.scss';

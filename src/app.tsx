@@ -3,13 +3,13 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Loading } from './components/loading';
 import { MainLayout } from './components/main-layout';
-import { PATH } from './constants/path';
 import { BurgerContext } from './context/burger';
 import { useAppDispatch } from './hooks/redux';
 import { BookPage } from './pages/book';
 import { MainPage } from './pages/main';
 import { TermsPage } from './pages/terms';
 import { getLibrary } from './store/thunks/library-thunks';
+import { PATH } from './constants';
 import { TermsContentView } from './types';
 
 export const App: FC = () => {

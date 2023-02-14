@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { NavLink, useMatch } from 'react-router-dom';
 
 import { ReactComponent as ArrowSVG } from '../../assets/icon-arrow.svg';
-import { PATH } from '../../constants/path';
+import { PATH } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
 import { ILibrary } from '../../types';
 

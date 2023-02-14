@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import AvatarPNG from '../../assets/avatar.png';
 import LogoPNG from '../../assets/logo.png';
-import { PATH } from '../../constants/path';
+import { PATH } from '../../constants';
 import { BurgerContext } from '../../context/burger';
 
 import { BurgerNavigation } from './components/burger-navigation';
