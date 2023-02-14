@@ -1,10 +1,14 @@
 .main-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   max-width: 1440px;
   margin: 0 auto;
   padding: 32px 165px 0;
+}
+
+.main-layout__wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 100vh;
 }
 
 .main {

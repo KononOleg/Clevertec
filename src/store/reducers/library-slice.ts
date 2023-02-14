@@ -20,7 +20,12 @@ const initialState: LibrarySliceState = {
 export const librarySlice = createSlice({
   name: 'library',
   initialState,
-  reducers: {},
+  reducers: {
+    resetError(state) {
+      // eslint-disable-next-line no-param-reassign
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getLibrary.pending.type, (state) => {
       // eslint-disable-next-line no-param-reassign
@@ -36,8 +41,6 @@ export const librarySlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.isPending = false;
       // eslint-disable-next-line no-param-reassign
-      state.error = null;
-      // eslint-disable-next-line no-param-reassign
       state.library = action.payload;
     });
 
@@ -45,9 +48,23 @@ export const librarySlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.isPending = false;
       // eslint-disable-next-line no-param-reassign
-      state.error = null;
-      // eslint-disable-next-line no-param-reassign
       state.book = action.payload;
+    });
+
+    builder.addCase(getLibrary.rejected.type, (state, action: PayloadAction<IError>) => {
+      // eslint-disable-next-line no-param-reassign
+      state.isPending = false;
+      // eslint-disable-next-line no-param-reassign
+      state.error = action.payload;
+    });
+
+    builder.addCase(getBook.rejected.type, (state, action: PayloadAction<IError>) => {
+      // eslint-disable-next-line no-param-reassign
+      state.isPending = false;
+      // eslint-disable-next-line no-param-reassign
+      state.error = action.payload;
     });
   },
 });
+
+export const { resetError } = librarySlice.actions;
