@@ -1,13 +1,16 @@
 import { FC, useState } from 'react';
+import Moment from 'moment';
 
 import ArrowSVG from '../../../../assets/icon-arrow.svg';
 import ReviewAvatarPNG from '../../../../assets/review-avatar.png';
 import { Rating } from '../../../../components/rating';
+import { API_HOST } from '../../../../constants';
+import { IComment } from '../../../../types';
 
 import './reviews.scss';
 
 interface IProps {
-  reviews: any[];
+  reviews: IComment[];
 }
 
 export const Reviews: FC<IProps> = ({ reviews }) => {
@@ -17,7 +20,7 @@ export const Reviews: FC<IProps> = ({ reviews }) => {
     <div className='reviews'>
       <div className='title'>
         <h5>
-          Отзывы <span>{reviews.length}</span>
+          Отзывы <span>{reviews?.length || 0}</span>
         </h5>
         <button
           className={` ${isTurn ? '' : 'button-hide_turn'}`}
@@ -28,22 +31,25 @@ export const Reviews: FC<IProps> = ({ reviews }) => {
           <img src={ArrowSVG} alt='arrow' />
         </button>
       </div>
+      {reviews && (
+        <div className={`reviews-list ${isTurn ? 'reviews-list_unturn' : 'reviews-list_turn'}`}>
+          {reviews.map(({ id, rating, createdAt, text, user }) => (
+            <div key={id} className='review'>
+              <div className='user'>
+                <img src={user.avatarUrl ? `${API_HOST}${user.avatarUrl}` : ReviewAvatarPNG} alt='avatar' />
 
-      <div className={`reviews-list ${isTurn ? 'reviews-list_unturn' : 'reviews-list_turn'}`}>
-        {reviews.map((review) => (
-          <div key={review.id} className='review'>
-            <div className='user'>
-              <img src={ReviewAvatarPNG} alt='avatar' />
-              <div className='name'>
-                <p className='body_large'>{review.name}</p>
-                <p className='body_large'>{review.date}</p>
+                <div className='name'>
+                  <p className='body_large'>{`${user.firstName} ${user.lastName}`}</p>
+                  <p className='body_large'>{Moment(createdAt).format('DD MMMM YYYY')}</p>
+                </div>
               </div>
+              <Rating rating={rating} />
+              {text && <p className='body_large'>{text}</p>}
             </div>
-            <Rating rating={review.rating} />
-            {review.review && <p className='body_large'>{review.review}</p>}
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
       <button className='button button_rating' type='button' data-test-id='button-rating'>
         оценить книгу
       </button>

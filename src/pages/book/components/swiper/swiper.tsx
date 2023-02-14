@@ -3,6 +3,9 @@ import { FreeMode, Navigation, Pagination, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperClass from 'swiper/types/swiper-class';
 
+import { API_HOST } from '../../../../constants';
+import { IImage } from '../../../../types';
+
 import './swiper.scss';
 
 import 'swiper/css';
@@ -11,7 +14,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
 interface IProps {
-  images: any[];
+  images: IImage[];
 }
 
 export const BookSwiper: FC<IProps> = ({ images }) => {
@@ -34,9 +37,9 @@ export const BookSwiper: FC<IProps> = ({ images }) => {
         className='swiper_up'
         data-test-id='slide-big'
       >
-        {images.map(({ id, image }) => (
-          <SwiperSlide key={id} data-test-id='slide-mini'>
-            <img src={image} className='image' alt='book' />
+        {images.map(({ url }) => (
+          <SwiperSlide key={url} data-test-id='slide-mini'>
+            <img src={`${API_HOST}${url}`} className='image' alt='book' />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -49,9 +52,9 @@ export const BookSwiper: FC<IProps> = ({ images }) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className='swiper_down'
       >
-        {images.map(({ id, image }) => (
-          <SwiperSlide key={id}>
-            <img src={image} alt='book' />
+        {images.map(({ url }) => (
+          <SwiperSlide key={url}>
+            <img src={`${API_HOST}${url}`} alt='book' />
           </SwiperSlide>
         ))}
       </Swiper>
