@@ -11,7 +11,7 @@ interface LibrarySliceState {
 }
 
 const initialState: LibrarySliceState = {
-  isPending: false,
+  isPending: true,
   error: null,
   library: [],
   book: null,

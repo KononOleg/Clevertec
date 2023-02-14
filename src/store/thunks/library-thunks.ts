@@ -6,8 +6,7 @@ import { AxiosErrorDataType, ILibrary } from '../../types';
 
 export const getLibrary = createAsyncThunk('library/getBooks', async (_, thunkAPI) => {
   try {
-    const books = await LibraryService.getBooks();
-    const categories = await LibraryService.getCategories();
+    const [books, categories] = await Promise.all([LibraryService.getBooks(), LibraryService.getCategories()]);
 
     const library: ILibrary[] = categories.data.map((category) => ({ ...category, books: [] }));
 
