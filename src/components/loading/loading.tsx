@@ -10,7 +10,7 @@ export const Loading: FC = () => {
 
   if (isPending)
     return (
-      <div className='loading'>
+      <div className='loading' data-test-id='loader'>
         <img className='image' src={LoadingPNG} alt='loading' />
       </div>
     );
