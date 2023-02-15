@@ -15,7 +15,7 @@ import { BookSwiper } from './components/swiper';
 import './book-page.scss';
 
 export const BookPage: FC = () => {
-  const { category, bookId } = useParams();
+  const { bookId } = useParams();
 
   const dispatch = useAppDispatch();
   const { book } = useAppSelector((state) => state.librarySlice);
@@ -30,7 +30,7 @@ export const BookPage: FC = () => {
         <Fragment>
           <div className='navigation-map'>
             <p>
-              {`${category}`}
+              {`${book.categories[0]}`}
               <span>/</span> {`${book.title}`}
             </p>
             <div className='background' />
@@ -59,7 +59,7 @@ export const BookPage: FC = () => {
               {book.rating ? <h5>{book.rating}</h5> : <p className='body_small'>ещё нет оценок</p>}
             </div>
           </div>
-          <Detailed book={book} category={category as string} />
+          <Detailed book={book} category={book.categories[0]} />
           <Reviews reviews={book.comments} />
         </Fragment>
       )}

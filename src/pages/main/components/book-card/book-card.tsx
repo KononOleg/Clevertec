@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { BookImage } from '../../../../components/book-image';
 import { Button } from '../../../../components/button';
@@ -15,13 +15,14 @@ interface IProps {
 }
 
 export const BookCard: FC<IProps> = ({ book, isTileView }) => {
-  const { id, issueYear, authors, title, categories, image, rating, booking, delivery } = book;
+  const { category } = useParams();
+  const { id, issueYear, authors, title, image, rating, booking, delivery } = book;
 
   return (
     <Link
       data-test-id='card'
       className={`book-card ${isTileView ? 'book-card_vertical' : 'book-card_horizontal'}`}
-      to={`${PATH.books}/${categories.join(',')}/${id}`}
+      to={`${PATH.books}/${category}/${id}`}
     >
       <BookImage image={image} />
       <div className='content'>
