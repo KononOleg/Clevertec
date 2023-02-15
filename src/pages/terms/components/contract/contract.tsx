@@ -3,7 +3,7 @@ import { FC, Fragment } from 'react';
 export const Contract: FC = () => (
   <Fragment>
     <h3>Договор оферты</h3>
-    <ul>
+    <ul className='list'>
       <li>
         <p className='subtitle_large'>
           1. Идейные соображения высшего порядка, а также высокое качество позиционных исследований представляет собой

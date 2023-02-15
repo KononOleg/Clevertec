@@ -36,7 +36,11 @@ export const Reviews: FC<IProps> = ({ reviews }) => {
           {reviews.map(({ id, rating, createdAt, text, user }) => (
             <div key={id} className='review'>
               <div className='user'>
-                <img src={user.avatarUrl ? `${API_HOST}${user.avatarUrl}` : ReviewAvatarPNG} alt='avatar' />
+                <img
+                  className='image'
+                  src={user.avatarUrl ? `${API_HOST}${user.avatarUrl}` : ReviewAvatarPNG}
+                  alt='avatar'
+                />
 
                 <div className='name'>
                   <p className='body_large'>{`${user.firstName} ${user.lastName}`}</p>
