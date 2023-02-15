@@ -37,7 +37,7 @@ export const BookPage: FC = () => {
           </div>
           <div className='info'>
             <div className='content'>
-              {book.images.length > 1 ? <BookSwiper images={book.images} /> : <BookImage image={book.images[0]} />}
+              {book.images?.length > 1 ? <BookSwiper images={book.images} /> : <BookImage image={book.images?.[0]} />}
 
               <div>
                 <h3>{book.title}</h3>
