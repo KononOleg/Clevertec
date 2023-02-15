@@ -25,23 +25,27 @@ export const getLibrary = createAsyncThunk('library/getBooks', async (_, thunkAP
 
       return thunkAPI.rejectWithValue(data.error);
     }
-  }
 
-  return null;
+    return Promise.resolve();
+  }
 });
 
-export const getBook = createAsyncThunk('library/getBook', async (payload: { bookId: string }, thunkAPI) => {
-  try {
-    const response = await LibraryService.getBook(payload.bookId);
+export const getBook = createAsyncThunk(
+  'library/getBook',
 
-    return response.data;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      const data = err.response.data as AxiosErrorDataType;
+  async (payload: { bookId: string }, thunkAPI) => {
+    try {
+      const response = await LibraryService.getBook(payload.bookId);
 
-      return thunkAPI.rejectWithValue(data.error);
+      return response.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        const data = err.response.data as AxiosErrorDataType;
+
+        thunkAPI.rejectWithValue(data.error);
+      }
     }
-  }
 
-  return null;
-});
+    return Promise.resolve();
+  }
+);

@@ -22,48 +22,41 @@ export const librarySlice = createSlice({
   initialState,
   reducers: {
     resetError(state) {
-      // eslint-disable-next-line no-param-reassign
-      state.error = null;
+      return { ...state, error: null };
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getLibrary.pending.type, (state) => {
-      // eslint-disable-next-line no-param-reassign
-      state.isPending = true;
-    });
+    builder.addCase(getLibrary.pending, (state) => ({ ...state, isPending: true }));
 
-    builder.addCase(getBook.pending.type, (state) => {
-      // eslint-disable-next-line no-param-reassign
-      state.isPending = true;
-    });
+    builder.addCase(getBook.pending, (state) => ({ ...state, isPending: true }));
 
-    builder.addCase(getLibrary.fulfilled.type, (state, action: PayloadAction<ILibrary[]>) => {
-      // eslint-disable-next-line no-param-reassign
-      state.isPending = false;
-      // eslint-disable-next-line no-param-reassign
-      state.library = action.payload;
-    });
+    builder.addCase(getLibrary.fulfilled, (state, action: PayloadAction<any>) => ({
+      ...state,
+      isPending: false,
+      library: action.payload,
+    }));
 
-    builder.addCase(getBook.fulfilled.type, (state, action: PayloadAction<IBook>) => {
-      // eslint-disable-next-line no-param-reassign
-      state.isPending = false;
-      // eslint-disable-next-line no-param-reassign
-      state.book = action.payload;
-    });
+    builder.addCase(getBook.fulfilled.type, (state, action: PayloadAction<any>) => ({
+      ...state,
+      isPending: false,
+      book: action.payload,
+    }));
 
-    builder.addCase(getLibrary.rejected.type, (state, action: PayloadAction<IError>) => {
-      // eslint-disable-next-line no-param-reassign
-      state.isPending = false;
-      // eslint-disable-next-line no-param-reassign
-      state.error = action.payload;
-    });
+    builder.addCase(getLibrary.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      book: null,
+      library: [],
+      error: action.payload,
+    }));
 
-    builder.addCase(getBook.rejected.type, (state, action: PayloadAction<IError>) => {
-      // eslint-disable-next-line no-param-reassign
-      state.isPending = false;
-      // eslint-disable-next-line no-param-reassign
-      state.error = action.payload;
-    });
+    builder.addCase(getBook.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      book: null,
+      library: [],
+      error: action.payload,
+    }));
   },
 });
 

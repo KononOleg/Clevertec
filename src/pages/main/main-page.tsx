@@ -21,7 +21,7 @@ export const MainPage: FC = () => {
       const concatBooks: IBook[] = [];
 
       library.forEach((currentLibrary) => concatBooks.push(...currentLibrary.books));
-      setBooks(concatBooks);
+      setBooks(Array.from(new Set(concatBooks)));
     } else {
       const foundCategory = library.find((currentCategory) => currentCategory.path === category);
 
