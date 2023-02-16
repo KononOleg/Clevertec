@@ -30,13 +30,13 @@ export const librarySlice = createSlice({
 
     builder.addCase(getBook.pending, (state) => ({ ...state, isPending: true }));
 
-    builder.addCase(getLibrary.fulfilled, (state, action: PayloadAction<any>) => ({
+    builder.addCase(getLibrary.fulfilled.type, (state, action: PayloadAction<ILibrary[]>) => ({
       ...state,
       isPending: false,
       library: action.payload,
     }));
 
-    builder.addCase(getBook.fulfilled.type, (state, action: PayloadAction<any>) => ({
+    builder.addCase(getBook.fulfilled.type, (state, action: PayloadAction<IBook>) => ({
       ...state,
       isPending: false,
       book: action.payload,

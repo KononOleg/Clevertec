@@ -2,6 +2,7 @@ import { FC, Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Navigation } from '../../components/navigation';
+import { PATH } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
 import { IBook } from '../../types';
 
@@ -17,7 +18,7 @@ export const MainPage: FC = () => {
   const { library } = useAppSelector((state) => state.librarySlice);
 
   useEffect(() => {
-    if (category === 'all') {
+    if (category === PATH.all) {
       const concatBooks: IBook[] = [];
 
       library.forEach((currentLibrary) => concatBooks.push(...currentLibrary.books));
