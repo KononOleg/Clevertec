@@ -1,0 +1,40 @@
+.terms {
+  padding: 0 0 62px;
+
+  h3 {
+    padding-top: 30px;
+  }
+
+  .list {
+    padding-top: 32px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  li {
+    li {
+      padding-top: 16px;
+      margin-left: 30px;
+    }
+  }
+}
+
+@media (max-width: 680px) {
+  .terms {
+    h3 {
+      padding-top: 34px;
+    }
+
+    .list {
+      padding-top: 24px;
+    }
+
+    li {
+      li {
+        padding-top: 16px;
+      }
+    }
+  }
+}

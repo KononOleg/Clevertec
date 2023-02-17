@@ -1,0 +1,63 @@
+@import '../../../../index.variables.scss';
+
+.detailed {
+  padding-top: 21px;
+
+  .content {
+    display: flex;
+    align-items: flex-start;
+    gap: 148px;
+
+    .table {
+      display: inline-grid;
+      grid-template-columns: auto auto;
+      gap: 16px 70px;
+
+      &:first-child {
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .detailed {
+    .content {
+      gap: 78px;
+
+      .table {
+        gap: 16px 33px;
+
+        .subtitle_large,
+        .body_large {
+          font-size: 14px;
+          line-height: 18px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 680px) {
+  .detailed {
+    .content {
+      gap: 16px;
+      flex-direction: column;
+
+      .table {
+        gap: 16px 42px;
+
+        .subtitle_large,
+        .body_large {
+          font-size: 12px;
+          line-height: 16px;
+        }
+
+        .subtitle_large {
+          font-weight: 500;
+          color: $grey40;
+        }
+      }
+    }
+  }
+}

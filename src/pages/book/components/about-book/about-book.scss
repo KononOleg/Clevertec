@@ -1,0 +1,21 @@
+@import '../../../../index.variables.scss';
+
+.about-book {
+  padding-top: 32px;
+
+  h5 {
+    color: $dark;
+  }
+  p {
+    padding-top: 3px;
+  }
+}
+
+@media (max-width: 680px) {
+  .about-book {
+    p {
+      font-size: 12px;
+      line-height: 18px;
+    }
+  }
+}
