@@ -17,7 +17,7 @@ export const ErrorMessage: FC = () => {
 
   if (error)
     return (
-      <div className='error-message'>
+      <div className='error-message' data-test-id='error'>
         <div className='left'>
           <img src={WarningPNG} className='image' alt='warning' />
           <p className='subtitle_large'>{error.message}</p>

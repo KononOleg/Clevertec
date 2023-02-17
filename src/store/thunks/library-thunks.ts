@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
 import { LibraryService } from '../../service/library-service';
-import { AxiosErrorDataType, ILibrary } from '../../types';
+import { IError, ILibrary } from '../../types';
 
-export const getLibrary = createAsyncThunk('library/getBooks', async (_, thunkAPI) => {
+const ERROR_MESSAGE = 'Что-то пошло не так. Обновите страницу через некоторое время.';
+
+export const getLibrary = createAsyncThunk('library/getLibrary', async (_, thunkAPI) => {
   try {
     const [books, categories] = await Promise.all([LibraryService.getBooks(), LibraryService.getCategories()]);
 
@@ -19,14 +20,8 @@ export const getLibrary = createAsyncThunk('library/getBooks', async (_, thunkAP
     });
 
     return library;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      const data = err.response.data as AxiosErrorDataType;
-
-      return thunkAPI.rejectWithValue(data.error);
-    }
-
-    return Promise.resolve();
+  } catch {
+    return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
   }
 });
 
@@ -38,14 +33,8 @@ export const getBook = createAsyncThunk(
       const response = await LibraryService.getBook(payload.bookId);
 
       return response.data;
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const data = err.response.data as AxiosErrorDataType;
-
-        thunkAPI.rejectWithValue(data.error);
-      }
+    } catch {
+      return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
     }
-
-    return Promise.resolve();
   }
 );

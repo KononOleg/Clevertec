@@ -8,7 +8,7 @@ import { Header } from '../header';
 import './main-layout.scss';
 
 export const MainLayout: FC = () => (
-  <div className='main-layout' data-test-id='error'>
+  <div className='main-layout'>
     <div className='main-layout__wrapper'>
       <ErrorMessage />
       <Header />
