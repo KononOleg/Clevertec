@@ -1,8 +1,9 @@
-import { FC, Fragment, useEffect, useState } from 'react';
+import { FC, Fragment, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Navigation } from '../../components/navigation';
 import { PATH } from '../../constants';
+import { sortBooks } from '../../helpers';
 import { useAppSelector } from '../../hooks/redux';
 import { IBook } from '../../types';
 
@@ -16,6 +17,7 @@ export const MainPage: FC = () => {
   const [books, setBooks] = useState<IBook[]>([]);
   const [isTileView, setTileView] = useState<boolean>(true);
   const { library } = useAppSelector((state) => state.librarySlice);
+  const sortedBooks = useMemo(() => sortBooks(books), [books]);
 
   useEffect(() => {
     if (category === PATH.all) {
@@ -38,7 +40,7 @@ export const MainPage: FC = () => {
       <section className='main-page'>
         <NavigationList isTileView={isTileView} setTileViewHandler={setTileViewHandler} />
         <div className={isTileView ? 'books_vertical' : 'books_horizontal'}>
-          {books.map((book: IBook) => (
+          {sortedBooks.map((book: IBook) => (
             <BookCard book={book} key={book.id} isTileView={isTileView} />
           ))}
         </div>
