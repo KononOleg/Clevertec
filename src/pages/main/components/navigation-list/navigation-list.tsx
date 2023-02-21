@@ -5,6 +5,8 @@ import { ReactComponent as CloseSVG } from '../../../../assets/icon-close.svg';
 import { ReactComponent as FilterSVG } from '../../../../assets/icon-filter.svg';
 import { ReactComponent as SearchSVG } from '../../../../assets/icon-search.svg';
 import { ReactComponent as SquareSVG } from '../../../../assets/icon-square.svg';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { switchOrder } from '../../../../store/reducers/library-slice';
 
 import './navigation-list.scss';
 
@@ -14,7 +16,9 @@ interface IProps {
 }
 
 export const NavigationList: FC<IProps> = ({ isTileView, setTileViewHandler }) => {
+  const dispatch = useAppDispatch();
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const { isDescendingOrder } = useAppSelector((state) => state.librarySlice);
 
   return (
     <div className='navigation-list'>
@@ -46,7 +50,11 @@ export const NavigationList: FC<IProps> = ({ isTileView, setTileViewHandler }) =
         </div>
 
         {!isSearchOpen && (
-          <button className='button_icon' type='button'>
+          <button
+            className={`button_icon ${isDescendingOrder ? '' : 'button-order_active'}`}
+            type='button'
+            onClick={() => dispatch(switchOrder())}
+          >
             <FilterSVG />
             <p>По рейтингу</p>
           </button>

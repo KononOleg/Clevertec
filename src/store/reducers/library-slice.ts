@@ -8,6 +8,7 @@ interface LibrarySliceState {
   error: IError | null;
   library: ILibrary[];
   book: IBook | null;
+  isDescendingOrder: boolean;
 }
 
 const initialState: LibrarySliceState = {
@@ -15,6 +16,7 @@ const initialState: LibrarySliceState = {
   error: null,
   library: [],
   book: null,
+  isDescendingOrder: true,
 };
 
 export const librarySlice = createSlice({
@@ -23,6 +25,10 @@ export const librarySlice = createSlice({
   reducers: {
     resetError(state) {
       return { ...state, error: null };
+    },
+
+    switchOrder(state) {
+      return { ...state, isDescendingOrder: !state.isDescendingOrder };
     },
   },
   extraReducers: (builder) => {
@@ -60,4 +66,4 @@ export const librarySlice = createSlice({
   },
 });
 
-export const { resetError } = librarySlice.actions;
+export const { resetError, switchOrder } = librarySlice.actions;

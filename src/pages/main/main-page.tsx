@@ -16,8 +16,8 @@ export const MainPage: FC = () => {
   const { category } = useParams();
   const [books, setBooks] = useState<IBook[]>([]);
   const [isTileView, setTileView] = useState<boolean>(true);
-  const { library } = useAppSelector((state) => state.librarySlice);
-  const sortedBooks = useMemo(() => sortBooks(books), [books]);
+  const { library, isDescendingOrder } = useAppSelector((state) => state.librarySlice);
+  const sortedBooks = useMemo(() => sortBooks(books, isDescendingOrder), [books, isDescendingOrder]);
 
   useEffect(() => {
     if (category === PATH.all) {
