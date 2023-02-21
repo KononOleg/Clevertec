@@ -16,3 +16,6 @@ export const sortBooks = (books: IBook[], isDescendingOrder: boolean) => {
     ? booksWithRating.concat(booksWithoutRating)
     : booksWithoutRating.concat(booksWithRating.reverse());
 };
+
+export const filterBooks = (books: IBook[], filterText: string) =>
+  books.filter((book) => book.title.toLowerCase().includes(filterText.toLowerCase()));

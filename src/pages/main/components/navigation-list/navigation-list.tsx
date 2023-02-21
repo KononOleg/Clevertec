@@ -6,7 +6,7 @@ import { ReactComponent as FilterSVG } from '../../../../assets/icon-filter.svg'
 import { ReactComponent as SearchSVG } from '../../../../assets/icon-search.svg';
 import { ReactComponent as SquareSVG } from '../../../../assets/icon-square.svg';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { switchOrder } from '../../../../store/reducers/library-slice';
+import { setFilterText, switchOrder } from '../../../../store/reducers/library-slice';
 
 import './navigation-list.scss';
 
@@ -18,7 +18,7 @@ interface IProps {
 export const NavigationList: FC<IProps> = ({ isTileView, setTileViewHandler }) => {
   const dispatch = useAppDispatch();
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-  const { isDescendingOrder } = useAppSelector((state) => state.librarySlice);
+  const { isDescendingOrder, filterText } = useAppSelector((state) => state.librarySlice);
 
   return (
     <div className='navigation-list'>
@@ -38,7 +38,14 @@ export const NavigationList: FC<IProps> = ({ isTileView, setTileViewHandler }) =
           <button className='button_search' type='button'>
             <SearchSVG />
           </button>
-          <input className='input' type='text' placeholder='Поиск книги или автора…' data-test-id='input-search' />
+          <input
+            className='input'
+            type='text'
+            value={filterText}
+            placeholder='Поиск книги или автора…'
+            data-test-id='input-search'
+            onChange={(e) => dispatch(setFilterText(e.target.value))}
+          />
           <button
             className='button_close'
             type='button'

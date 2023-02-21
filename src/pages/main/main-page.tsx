@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { Navigation } from '../../components/navigation';
 import { PATH } from '../../constants';
-import { sortBooks } from '../../helpers';
+import { filterBooks, sortBooks } from '../../helpers';
 import { useAppSelector } from '../../hooks/redux';
 import { IBook } from '../../types';
 
@@ -16,8 +16,10 @@ export const MainPage: FC = () => {
   const { category } = useParams();
   const [books, setBooks] = useState<IBook[]>([]);
   const [isTileView, setTileView] = useState<boolean>(true);
-  const { library, isDescendingOrder } = useAppSelector((state) => state.librarySlice);
-  const sortedBooks = useMemo(() => sortBooks(books, isDescendingOrder), [books, isDescendingOrder]);
+  const { library, isDescendingOrder, filterText } = useAppSelector((state) => state.librarySlice);
+
+  const filteredBooks = useMemo(() => filterBooks(books, filterText), [books, filterText]);
+  const sortedBooks = useMemo(() => sortBooks(filteredBooks, isDescendingOrder), [filteredBooks, isDescendingOrder]);
 
   useEffect(() => {
     if (category === PATH.all) {

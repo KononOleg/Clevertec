@@ -9,6 +9,7 @@ interface LibrarySliceState {
   library: ILibrary[];
   book: IBook | null;
   isDescendingOrder: boolean;
+  filterText: string;
 }
 
 const initialState: LibrarySliceState = {
@@ -17,6 +18,7 @@ const initialState: LibrarySliceState = {
   library: [],
   book: null,
   isDescendingOrder: true,
+  filterText: '',
 };
 
 export const librarySlice = createSlice({
@@ -29,6 +31,10 @@ export const librarySlice = createSlice({
 
     switchOrder(state) {
       return { ...state, isDescendingOrder: !state.isDescendingOrder };
+    },
+
+    setFilterText(state, action) {
+      return { ...state, filterText: action.payload };
     },
   },
   extraReducers: (builder) => {
@@ -66,4 +72,4 @@ export const librarySlice = createSlice({
   },
 });
 
-export const { resetError, switchOrder } = librarySlice.actions;
+export const { resetError, switchOrder, setFilterText } = librarySlice.actions;
