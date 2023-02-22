@@ -1,9 +1,8 @@
-import { FC, Fragment, useEffect, useMemo, useState } from 'react';
+import { FC, Fragment, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Navigation } from '../../components/navigation';
-import { PATH } from '../../constants';
-import { filterBooks, sortBooks } from '../../helpers';
+import { filterBooks, filterCategory, sortBooks } from '../../helpers';
 import { useAppSelector } from '../../hooks/redux';
 import { IBook } from '../../types';
 
@@ -14,25 +13,12 @@ import './main-page.scss';
 
 export const MainPage: FC = () => {
   const { category } = useParams();
-  const [books, setBooks] = useState<IBook[]>([]);
   const [isTileView, setTileView] = useState<boolean>(true);
   const { library, isPending, isDescendingOrder, filterText } = useAppSelector((state) => state.librarySlice);
 
-  const filteredBooks = useMemo(() => filterBooks(books, filterText), [books, filterText]);
+  const filteredCategory = useMemo(() => filterCategory(library, category as string), [library, category]);
+  const filteredBooks = useMemo(() => filterBooks(filteredCategory, filterText), [filteredCategory, filterText]);
   const sortedBooks = useMemo(() => sortBooks(filteredBooks, isDescendingOrder), [filteredBooks, isDescendingOrder]);
-
-  useEffect(() => {
-    if (category === PATH.all) {
-      const concatBooks: IBook[] = [];
-
-      library.forEach((currentLibrary) => concatBooks.push(...currentLibrary.books));
-      setBooks(Array.from(new Set(concatBooks)));
-    } else {
-      const foundCategory = library.find((currentCategory) => currentCategory.path === category);
-
-      if (foundCategory) setBooks(foundCategory.books);
-    }
-  }, [category, library]);
 
   const setTileViewHandler = (tileView: boolean) => setTileView(tileView);
 

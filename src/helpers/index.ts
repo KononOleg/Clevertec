@@ -1,4 +1,5 @@
-import { IBook } from '../types';
+import { PATH } from '../constants';
+import { IBook, ILibrary } from '../types';
 
 export const sortBooks = (books: IBook[], isDescendingOrder: boolean) => {
   const booksWithoutRating = books.filter((book) => book.rating === null);
@@ -19,3 +20,18 @@ export const sortBooks = (books: IBook[], isDescendingOrder: boolean) => {
 
 export const filterBooks = (books: IBook[], filterText: string) =>
   books.filter((book) => book.title.toLowerCase().includes(filterText.toLowerCase()));
+
+export const filterCategory = (library: ILibrary[], category: string) => {
+  if (category === PATH.all) {
+    const concatBooks: IBook[] = [];
+
+    library.forEach((currentLibrary) => concatBooks.push(...currentLibrary.books));
+
+    return Array.from(new Set(concatBooks));
+  }
+  const foundCategory = library.find((currentCategory) => currentCategory.path === category);
+
+  if (foundCategory) return foundCategory.books;
+
+  return [];
+};
