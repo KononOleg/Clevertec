@@ -1,9 +1,10 @@
 import { FC, Fragment, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { BookImage } from '../../components/book-image';
 import { Button } from '../../components/button';
 import { Rating } from '../../components/rating';
+import { PATH } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { getBook } from '../../store/thunks/library-thunks';
 
@@ -15,10 +16,11 @@ import { BookSwiper } from './components/swiper';
 import './book-page.scss';
 
 export const BookPage: FC = () => {
-  const { bookId } = useParams();
+  const { category: categoryName, bookId } = useParams();
 
   const dispatch = useAppDispatch();
-  const { book } = useAppSelector((state) => state.librarySlice);
+  const { book, library } = useAppSelector((state) => state.librarySlice);
+  const category = library.find((currentCategory) => currentCategory.path === categoryName);
 
   useEffect(() => {
     dispatch(getBook({ bookId: bookId as string }));
@@ -26,15 +28,15 @@ export const BookPage: FC = () => {
 
   return (
     <section className='book-page'>
+      <div className='navigation-map'>
+        <p>
+          <Link to={`${PATH.books}/${categoryName}`}> {`${category?.name}`}</Link>
+          <span>/</span> {`${book?.title || ''}`}
+        </p>
+        <div className='background' />
+      </div>
       {book && (
         <Fragment>
-          <div className='navigation-map'>
-            <p>
-              {`${book.categories[0]}`}
-              <span>/</span> {`${book.title}`}
-            </p>
-            <div className='background' />
-          </div>
           <div className='info'>
             <div className='content'>
               {book.images?.length > 1 ? <BookSwiper images={book.images} /> : <BookImage image={book.images?.[0]} />}
