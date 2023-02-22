@@ -3,8 +3,10 @@ import { Link, useParams } from 'react-router-dom';
 
 import { BookImage } from '../../../../components/book-image';
 import { Button } from '../../../../components/button';
+import { Highlighter } from '../../../../components/highlighter';
 import { Rating } from '../../../../components/rating';
 import { PATH } from '../../../../constants';
+import { useAppSelector } from '../../../../hooks/redux';
 import { IBook } from '../../../../types';
 
 import './book-card.scss';
@@ -17,6 +19,7 @@ interface IProps {
 export const BookCard: FC<IProps> = ({ book, isTileView }) => {
   const { category } = useParams();
   const { id, issueYear, authors, title, image, rating, booking, delivery } = book;
+  const { filterText } = useAppSelector((state) => state.librarySlice);
 
   return (
     <Link
@@ -30,7 +33,9 @@ export const BookCard: FC<IProps> = ({ book, isTileView }) => {
           {rating ? <Rating rating={rating} /> : <p className='body_small'>ещё нет оценок</p>}
         </div>
 
-        <p className='subtitle_small title'>{title}</p>
+        <p className='subtitle_small title'>
+          <Highlighter text={title} highlight={filterText} highlightedItemClass='title_highlight' />
+        </p>
         <p className='body_small author'>{`${authors?.join(',')}, ${issueYear}`}</p>
         <Button booking={booking} delivery={delivery} />
       </div>

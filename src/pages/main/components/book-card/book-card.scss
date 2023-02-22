@@ -18,6 +18,10 @@
     font-size: 12px;
     line-height: 18px;
   }
+
+  .title_highlight {
+    color: $select;
+  }
 }
 
 .book-card_vertical {
@@ -46,7 +50,6 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-
     button {
       margin: 15px 4px 0;
     }
