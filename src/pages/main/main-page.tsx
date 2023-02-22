@@ -16,7 +16,7 @@ export const MainPage: FC = () => {
   const { category } = useParams();
   const [books, setBooks] = useState<IBook[]>([]);
   const [isTileView, setTileView] = useState<boolean>(true);
-  const { library, isDescendingOrder, filterText } = useAppSelector((state) => state.librarySlice);
+  const { library, isPending, isDescendingOrder, filterText } = useAppSelector((state) => state.librarySlice);
 
   const filteredBooks = useMemo(() => filterBooks(books, filterText), [books, filterText]);
   const sortedBooks = useMemo(() => sortBooks(filteredBooks, isDescendingOrder), [filteredBooks, isDescendingOrder]);
@@ -41,11 +41,17 @@ export const MainPage: FC = () => {
       <Navigation />
       <section className='main-page'>
         <NavigationList isTileView={isTileView} setTileViewHandler={setTileViewHandler} />
-        <div className={isTileView ? 'books_vertical' : 'books_horizontal'}>
-          {sortedBooks.map((book: IBook) => (
-            <BookCard book={book} key={book.id} isTileView={isTileView} />
-          ))}
-        </div>
+        {!isPending && (
+          <div className={isTileView ? 'books_vertical' : 'books_horizontal'}>
+            {sortedBooks.length ? (
+              sortedBooks.map((book: IBook) => <BookCard book={book} key={book.id} isTileView={isTileView} />)
+            ) : filterText ? (
+              <h3 className='message'>По запросу ничего не найдено</h3>
+            ) : (
+              <h3 className='message'>В этой категории книг ещё нет</h3>
+            )}
+          </div>
+        )}
       </section>
     </Fragment>
   );
