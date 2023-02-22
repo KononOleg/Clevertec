@@ -16,11 +16,12 @@ import { BookSwiper } from './components/swiper';
 import './book-page.scss';
 
 export const BookPage: FC = () => {
-  const { category: categoryName, bookId } = useParams();
+  const { category, bookId } = useParams();
 
   const dispatch = useAppDispatch();
   const { book, library } = useAppSelector((state) => state.librarySlice);
-  const category = library.find((currentCategory) => currentCategory.path === categoryName);
+  const categoryName =
+    category === PATH.all ? 'Все книги' : library.find((currentCategory) => currentCategory.path === category)?.name;
 
   useEffect(() => {
     dispatch(getBook({ bookId: bookId as string }));
@@ -30,7 +31,7 @@ export const BookPage: FC = () => {
     <section className='book-page'>
       <div className='navigation-map'>
         <p>
-          <Link to={`${PATH.books}/${categoryName}`}> {`${category?.name}`}</Link>
+          <Link to={`${PATH.books}/${category}`}> {`${categoryName || category}`}</Link>
           <span>/</span> {`${book?.title || ''}`}
         </p>
         <div className='background' />
