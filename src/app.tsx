@@ -1,6 +1,7 @@
 import { FC, Fragment, useEffect } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
+import { Layout } from './components/layout';
 import { Loading } from './components/loading';
 import { MainLayout } from './components/main-layout';
 import { useAppDispatch } from './hooks/redux';
@@ -23,12 +24,14 @@ export const App: FC = () => {
       <Loading />
       <HashRouter>
         <Routes>
-          <Route element={<MainLayout />}>
+          <Route element={<Layout />}>
             <Route path={PATH.home}>
-              <Route path={PATH.home} element={<Navigate to={PATH.allBooks} />} />
-              <Route path={PATH.booksCategory} element={<MainPage />} />
-              <Route path={PATH.terms} element={<TermsPage contentView={TermsContentView.Terms} />} />
-              <Route path={PATH.contract} element={<TermsPage contentView={TermsContentView.Contract} />} />
+              <Route element={<MainLayout />}>
+                <Route path={PATH.home} element={<Navigate to={PATH.allBooks} />} />
+                <Route path={PATH.booksCategory} element={<MainPage />} />
+                <Route path={PATH.terms} element={<TermsPage contentView={TermsContentView.Terms} />} />
+                <Route path={PATH.contract} element={<TermsPage contentView={TermsContentView.Contract} />} />
+              </Route>
             </Route>
             <Route path={PATH.booksId} element={<BookPage />} />
           </Route>
