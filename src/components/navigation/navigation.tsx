@@ -3,7 +3,8 @@ import { NavLink, useMatch } from 'react-router-dom';
 
 import { ReactComponent as ArrowSVG } from '../../assets/icon-arrow.svg';
 import { PATH } from '../../constants';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setIsBurgerActive } from '../../store/reducers/app-slice';
 import { ILibrary } from '../../types';
 
 import './navigation.scss';
@@ -13,11 +14,14 @@ interface IProps {
 }
 
 export const Navigation: FC<IProps> = ({ navigation }) => {
+  const dispatch = useAppDispatch();
   const isAllBooksPath = useMatch(PATH.allBooks);
   const isBookCategoryPath = useMatch(PATH.booksCategory);
   const { library } = useAppSelector((state) => state.librarySlice);
 
   const navLinkClassName = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : 'link');
+
+  const closeBurgerHandler = () => dispatch(setIsBurgerActive(false));
 
   return (
     <nav className='navigation'>
@@ -35,7 +39,7 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
               </summary>
               <ul>
                 <li>
-                  <NavLink to={PATH.allBooks} className={navLinkClassName}>
+                  <NavLink to={PATH.allBooks} className={navLinkClassName} onClick={closeBurgerHandler}>
                     <p className='category body_large all-book' data-test-id={`${navigation}-books`}>
                       Все книги
                     </p>
@@ -49,6 +53,7 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
                           to={`${PATH.books}/${path}`}
                           className={navLinkClassName}
                           data-test-id={`${navigation}-${path}`}
+                          onClick={closeBurgerHandler}
                         >
                           <span className='category'>{name}</span>
                         </NavLink>
@@ -63,12 +68,22 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
             </details>
           </li>
           <li>
-            <NavLink to={PATH.terms} className={navLinkClassName} data-test-id={`${navigation}-terms`}>
+            <NavLink
+              to={PATH.terms}
+              className={navLinkClassName}
+              data-test-id={`${navigation}-terms`}
+              onClick={closeBurgerHandler}
+            >
               <h5 className='page'>Правила пользования</h5>
             </NavLink>
           </li>
           <li>
-            <NavLink to={PATH.contract} className={navLinkClassName} data-test-id={`${navigation}-contract`}>
+            <NavLink
+              to={PATH.contract}
+              className={navLinkClassName}
+              data-test-id={`${navigation}-contract`}
+              onClick={closeBurgerHandler}
+            >
               <h5 className='page'>Договор оферты</h5>
             </NavLink>
           </li>

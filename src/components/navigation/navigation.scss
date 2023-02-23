@@ -35,8 +35,6 @@
   }
 
   .active {
-    pointer-events: none;
-
     .page,
     .category {
       @extend %gradient-text;
