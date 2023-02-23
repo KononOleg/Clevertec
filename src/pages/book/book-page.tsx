@@ -31,11 +31,12 @@ export const BookPage: FC = () => {
     <section className='book-page'>
       <div className='navigation-map'>
         <p>
-          <Link to={`${PATH.books}/${category}`} data-test-id='breadcrumbs-link'>
-            {' '}
-            {`${categoryName || category}`}
-          </Link>
-          <span>/</span> <span data-test-id='book-name'>{`${book?.title || ''}`}</span>
+          <span>
+            <Link to={`${PATH.books}/${category}`} data-test-id='breadcrumbs-link'>
+              {`${categoryName || category}`}
+            </Link>
+          </span>
+          <span className='separator'>/</span> <span data-test-id='book-name'>{`${book?.title || ''}`}</span>
         </p>
         <div className='background' />
       </div>
