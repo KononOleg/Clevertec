@@ -61,6 +61,7 @@ export const NavigationList: FC<IProps> = ({ isTileView, setTileViewHandler }) =
             className={`button_icon ${isDescendingOrder ? '' : 'button-order_active'}`}
             type='button'
             onClick={() => dispatch(switchOrder())}
+            data-test-id='sort-rating-button'
           >
             <FilterSVG />
             <p>По рейтингу</p>

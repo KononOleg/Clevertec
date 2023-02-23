@@ -29,9 +29,13 @@ export const MainPage: FC = () => {
           {sortedBooks.length ? (
             sortedBooks.map((book: IBook) => <BookCard book={book} key={book.id} isTileView={isTileView} />)
           ) : filterText ? (
-            <h3 className='message'>По запросу ничего не найдено</h3>
+            <h3 className='message' data-test-id='search-result-not-found'>
+              По запросу ничего не найдено
+            </h3>
           ) : (
-            <h3 className='message'>В этой категории книг ещё нет</h3>
+            <h3 className='message' data-test-id='empty-category'>
+              В этой категории книг ещё нет
+            </h3>
           )}
         </div>
       )}

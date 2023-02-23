@@ -15,7 +15,13 @@ export const Highlighter: FC<IProps> = ({ text, highlight, highlightedItemClass 
     <Fragment>
       {parts.map((part, index) => (
         <span key={`${index.toString()}:${part}`}>
-          {part.toLowerCase() === highlight.toLowerCase() ? <span className={highlightedItemClass}>{part}</span> : part}
+          {part.toLowerCase() === highlight.toLowerCase() ? (
+            <span className={highlightedItemClass} data-test-id='highlight-matches'>
+              {part}
+            </span>
+          ) : (
+            part
+          )}
         </span>
       ))}
     </Fragment>

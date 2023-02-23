@@ -31,8 +31,11 @@ export const BookPage: FC = () => {
     <section className='book-page'>
       <div className='navigation-map'>
         <p>
-          <Link to={`${PATH.books}/${category}`}> {`${categoryName || category}`}</Link>
-          <span>/</span> {`${book?.title || ''}`}
+          <Link to={`${PATH.books}/${category}`} data-test-id='breadcrumbs-link'>
+            {' '}
+            {`${categoryName || category}`}
+          </Link>
+          <span>/</span> <span data-test-id='book-name'>{`${book?.title || ''}`}</span>
         </p>
         <div className='background' />
       </div>
@@ -43,7 +46,7 @@ export const BookPage: FC = () => {
               {book.images?.length > 1 ? <BookSwiper images={book.images} /> : <BookImage image={book.images?.[0]} />}
 
               <div>
-                <h3>{book.title}</h3>
+                <h3 data-test-id='book-title'>{book.title}</h3>
                 <h5 className='author'>{`${book.authors?.join(',')}, ${book.issueYear}`}</h5>
                 <Button booking={book.booking} delivery={book.delivery} />
                 <div className='about-book_up'>

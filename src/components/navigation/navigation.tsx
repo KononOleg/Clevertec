@@ -44,10 +44,16 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
                 <ul>
                   {library.map(({ id, name, path, books }: ILibrary) => (
                     <li key={id}>
-                      <NavLink to={`${PATH.books}/${path}`} className={navLinkClassName}>
+                      <NavLink
+                        to={`${PATH.books}/${path}`}
+                        className={navLinkClassName}
+                        data-test-id={`${navigation}-${path}`}
+                      >
                         <p className='body_large'>
                           <span className='category'>{`${name}`}</span>
-                          <span className='count'>{books.length}</span>
+                          <span className='count' data-test-id={`${navigation}-book-count-for-${path}`}>
+                            {books.length}
+                          </span>
                         </p>
                       </NavLink>
                     </li>
