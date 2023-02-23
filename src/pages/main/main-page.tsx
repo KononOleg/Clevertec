@@ -1,8 +1,9 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { filterBooks, filterCategory, sortBooks } from '../../helpers';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { getLibrary } from '../../store/thunks/library-thunks';
 import { IBook } from '../../types';
 
 import { BookCard } from './components/book-card';
@@ -12,6 +13,7 @@ import './main-page.scss';
 
 export const MainPage: FC = () => {
   const { category } = useParams();
+  const dispatch = useAppDispatch();
   const [isTileView, setTileView] = useState<boolean>(true);
   const { library, isPending, isDescendingOrder, filterText } = useAppSelector((state) => state.librarySlice);
 
@@ -20,6 +22,10 @@ export const MainPage: FC = () => {
   const sortedBooks = useMemo(() => sortBooks(filteredBooks, isDescendingOrder), [filteredBooks, isDescendingOrder]);
 
   const setTileViewHandler = (tileView: boolean) => setTileView(tileView);
+
+  useEffect(() => {
+    dispatch(getLibrary());
+  }, [dispatch]);
 
   return (
     <section className='main-page'>
