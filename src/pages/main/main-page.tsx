@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { filterBooks, filterCategory, sortBooks } from '../../helpers';
@@ -23,7 +23,11 @@ export const MainPage: FC = () => {
 
   const setTileViewHandler = (tileView: boolean) => setTileView(tileView);
 
+  const dataFetchedRef = useRef(false);
+
   useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
     dispatch(getLibrary());
   }, [dispatch]);
 
