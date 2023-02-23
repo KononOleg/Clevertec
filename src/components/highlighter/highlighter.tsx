@@ -7,19 +7,17 @@ interface IProps {
 }
 
 export const Highlighter: FC<IProps> = ({ text, highlight, highlightedItemClass }) => {
+  if (!highlight) return <span>{text}</span>;
+
   const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
 
   return (
     <Fragment>
-      {parts.map((part, index) => {
-        const highlightStyle = part.toLowerCase() === highlight.toLowerCase() ? highlightedItemClass : '';
-
-        return (
-          <span key={`${index.toString()}:${part}`} className={highlightStyle}>
-            {part}
-          </span>
-        );
-      })}
+      {parts.map((part, index) => (
+        <span key={`${index.toString()}:${part}`}>
+          {part.toLowerCase() === highlight.toLowerCase() ? <span className={highlightedItemClass}>{part}</span> : part}
+        </span>
+      ))}
     </Fragment>
   );
 };
