@@ -1,6 +1,5 @@
-import { FC, Fragment } from 'react';
+import { FC } from 'react';
 
-import { Navigation } from '../../components/navigation';
 import { TermsContentView } from '../../types';
 
 import { Contract } from './components/contract';
@@ -13,11 +12,8 @@ interface IProps {
 }
 
 export const TermsPage: FC<IProps> = ({ contentView }) => (
-  <Fragment>
-    <Navigation />
-    <section className='terms'>
-      {contentView === TermsContentView.Terms && <Terms />}
-      {contentView === TermsContentView.Contract && <Contract />}
-    </section>
-  </Fragment>
+  <section className='terms'>
+    {contentView === TermsContentView.Terms && <Terms />}
+    {contentView === TermsContentView.Contract && <Contract />}
+  </section>
 );

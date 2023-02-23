@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import { ErrorMessage } from '../error-message';
 import { Footer } from '../footer';
 import { Header } from '../header';
+import { Navigation } from '../navigation';
 
 import './main-layout.scss';
 
@@ -13,6 +14,9 @@ export const MainLayout: FC = () => (
       <ErrorMessage />
       <Header />
       <main className='main'>
+        <div className='navigation-showcase'>
+          <Navigation navigation='navigation' />
+        </div>
         <Outlet />
       </main>
       <Footer />

@@ -1,7 +1,6 @@
-import { FC, Fragment, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Navigation } from '../../components/navigation';
 import { filterBooks, filterCategory, sortBooks } from '../../helpers';
 import { useAppSelector } from '../../hooks/redux';
 import { IBook } from '../../types';
@@ -23,22 +22,19 @@ export const MainPage: FC = () => {
   const setTileViewHandler = (tileView: boolean) => setTileView(tileView);
 
   return (
-    <Fragment>
-      <Navigation />
-      <section className='main-page'>
-        <NavigationList isTileView={isTileView} setTileViewHandler={setTileViewHandler} />
-        {!isPending && (
-          <div className={isTileView ? 'books_vertical' : 'books_horizontal'}>
-            {sortedBooks.length ? (
-              sortedBooks.map((book: IBook) => <BookCard book={book} key={book.id} isTileView={isTileView} />)
-            ) : filterText ? (
-              <h3 className='message'>По запросу ничего не найдено</h3>
-            ) : (
-              <h3 className='message'>В этой категории книг ещё нет</h3>
-            )}
-          </div>
-        )}
-      </section>
-    </Fragment>
+    <section className='main-page'>
+      <NavigationList isTileView={isTileView} setTileViewHandler={setTileViewHandler} />
+      {!isPending && (
+        <div className={isTileView ? 'books_vertical' : 'books_horizontal'}>
+          {sortedBooks.length ? (
+            sortedBooks.map((book: IBook) => <BookCard book={book} key={book.id} isTileView={isTileView} />)
+          ) : filterText ? (
+            <h3 className='message'>По запросу ничего не найдено</h3>
+          ) : (
+            <h3 className='message'>В этой категории книг ещё нет</h3>
+          )}
+        </div>
+      )}
+    </section>
   );
 };

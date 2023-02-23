@@ -8,7 +8,11 @@ import { ILibrary } from '../../types';
 
 import './navigation.scss';
 
-export const Navigation: FC = () => {
+interface IProps {
+  navigation: string;
+}
+
+export const Navigation: FC<IProps> = ({ navigation }) => {
   const isAllBooksPath = useMatch(PATH.allBooks);
   const isBookCategoryPath = useMatch(PATH.booksCategory);
   const { library } = useAppSelector((state) => state.librarySlice);
@@ -16,12 +20,12 @@ export const Navigation: FC = () => {
   const navLinkClassName = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : 'link');
 
   return (
-    <nav className='navigation navigation-showcase'>
+    <nav className='navigation'>
       <div className='navigation__wrapper'>
         <ul className='links'>
           <li>
             <details open={isAllBooksPath || isBookCategoryPath ? true : false}>
-              <summary data-test-id='navigation-showcase'>
+              <summary data-test-id={`${navigation}-showcase`}>
                 <NavLink to={PATH.books} className={navLinkClassName}>
                   <div className='page'>
                     <h5>Витрина книг</h5>
@@ -32,7 +36,7 @@ export const Navigation: FC = () => {
               <ul>
                 <li>
                   <NavLink to={PATH.allBooks} className={navLinkClassName}>
-                    <p className='category body_large all-book' data-test-id='navigation-books'>
+                    <p className='category body_large all-book' data-test-id={`${navigation}-books`}>
                       Все книги
                     </p>
                   </NavLink>
@@ -53,12 +57,12 @@ export const Navigation: FC = () => {
             </details>
           </li>
           <li>
-            <NavLink to={PATH.terms} className={navLinkClassName} data-test-id='navigation-terms'>
+            <NavLink to={PATH.terms} className={navLinkClassName} data-test-id={`${navigation}-terms`}>
               <h5 className='page'>Правила пользования</h5>
             </NavLink>
           </li>
           <li>
-            <NavLink to={PATH.contract} className={navLinkClassName} data-test-id='navigation-contract'>
+            <NavLink to={PATH.contract} className={navLinkClassName} data-test-id={`${navigation}-contract`}>
               <h5 className='page'>Договор оферты</h5>
             </NavLink>
           </li>

@@ -1,9 +1,8 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, Fragment, useEffect } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Loading } from './components/loading';
 import { MainLayout } from './components/main-layout';
-import { BurgerContext } from './context/burger';
 import { useAppDispatch } from './hooks/redux';
 import { BookPage } from './pages/book';
 import { MainPage } from './pages/main';
@@ -14,16 +13,13 @@ import { TermsContentView } from './types';
 
 export const App: FC = () => {
   const dispatch = useAppDispatch();
-  const [isBurgerActive, setIsBurgerActive] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getLibrary());
   }, [dispatch]);
 
   return (
-    <BurgerContext.Provider
-      value={useMemo(() => ({ isBurgerActive, setIsBurgerActive }), [isBurgerActive, setIsBurgerActive])}
-    >
+    <Fragment>
       <Loading />
       <HashRouter>
         <Routes>
@@ -38,6 +34,6 @@ export const App: FC = () => {
           </Route>
         </Routes>
       </HashRouter>
-    </BurgerContext.Provider>
+    </Fragment>
   );
 };
