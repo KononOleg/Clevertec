@@ -1,9 +1,10 @@
 import { FC, Fragment, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { BookImage } from '../../components/book-image';
 import { Button } from '../../components/button';
 import { Rating } from '../../components/rating';
+import { PATH } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { getBook } from '../../store/thunks/library-thunks';
 
@@ -15,10 +16,12 @@ import { BookSwiper } from './components/swiper';
 import './book-page.scss';
 
 export const BookPage: FC = () => {
-  const { bookId } = useParams();
+  const { category, bookId } = useParams();
 
   const dispatch = useAppDispatch();
-  const { book } = useAppSelector((state) => state.librarySlice);
+  const { book, library } = useAppSelector((state) => state.librarySlice);
+  const categoryName =
+    category === PATH.all ? 'Все книги' : library.find((currentCategory) => currentCategory.path === category)?.name;
 
   useEffect(() => {
     dispatch(getBook({ bookId: bookId as string }));
@@ -26,21 +29,25 @@ export const BookPage: FC = () => {
 
   return (
     <section className='book-page'>
+      <div className='navigation-map'>
+        <p>
+          <span>
+            <Link to={`${PATH.books}/${category}`} data-test-id='breadcrumbs-link'>
+              {`${categoryName || category}`}
+            </Link>
+          </span>
+          <span className='separator'>/</span> <span data-test-id='book-name'>{`${book?.title || ''}`}</span>
+        </p>
+        <div className='background' />
+      </div>
       {book && (
         <Fragment>
-          <div className='navigation-map'>
-            <p>
-              {`${book.categories[0]}`}
-              <span>/</span> {`${book.title}`}
-            </p>
-            <div className='background' />
-          </div>
           <div className='info'>
             <div className='content'>
               {book.images?.length > 1 ? <BookSwiper images={book.images} /> : <BookImage image={book.images?.[0]} />}
 
               <div>
-                <h3>{book.title}</h3>
+                <h3 data-test-id='book-title'>{book.title}</h3>
                 <h5 className='author'>{`${book.authors?.join(',')}, ${book.issueYear}`}</h5>
                 <Button booking={book.booking} delivery={book.delivery} />
                 <div className='about-book_up'>

@@ -12,11 +12,11 @@
     p {
       padding: 23px 0;
       line-height: 20px;
-    }
 
-    span {
-      font-size: 20px;
-      margin: 0 13px;
+      .separator {
+        font-size: 20px;
+        margin: 0 13px;
+      }
     }
 
     .background {

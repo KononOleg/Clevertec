@@ -1,6 +1,15 @@
+@import '../../index.variables.scss';
+
 .main-page {
   padding: 30px 0 62px;
   width: 100%;
+
+  .message {
+    color: $grey40;
+    margin: auto;
+
+    padding-top: 168px;
+  }
 
   .books_vertical {
     display: flex;
@@ -19,6 +28,10 @@
 
 @media (max-width: 1100px) {
   .main-page {
+    .message {
+      padding-top: 203px;
+    }
+
     .books_vertical {
       gap: 32px 35px;
       padding: 23px 0 0 0;
@@ -32,6 +45,11 @@
 
 @media (max-width: 680px) {
   .main-page {
+    .message {
+      padding-top: 107px;
+      text-align: center;
+    }
+
     padding: 21px 0 62px;
 
     .books_vertical {

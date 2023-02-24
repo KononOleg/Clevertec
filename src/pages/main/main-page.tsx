@@ -1,9 +1,9 @@
-import { FC, Fragment, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Navigation } from '../../components/navigation';
-import { PATH } from '../../constants';
-import { useAppSelector } from '../../hooks/redux';
+import { filterBooks, filterCategory, sortBooks } from '../../helpers';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { getLibrary } from '../../store/thunks/library-thunks';
 import { IBook } from '../../types';
 
 import { BookCard } from './components/book-card';
@@ -13,36 +13,42 @@ import './main-page.scss';
 
 export const MainPage: FC = () => {
   const { category } = useParams();
-  const [books, setBooks] = useState<IBook[]>([]);
+  const dispatch = useAppDispatch();
   const [isTileView, setTileView] = useState<boolean>(true);
-  const { library } = useAppSelector((state) => state.librarySlice);
+  const { library, isPending, isDescendingOrder, filterText } = useAppSelector((state) => state.librarySlice);
 
-  useEffect(() => {
-    if (category === PATH.all) {
-      const concatBooks: IBook[] = [];
-
-      library.forEach((currentLibrary) => concatBooks.push(...currentLibrary.books));
-      setBooks(Array.from(new Set(concatBooks)));
-    } else {
-      const foundCategory = library.find((currentCategory) => currentCategory.path === category);
-
-      if (foundCategory) setBooks(foundCategory.books);
-    }
-  }, [category, library]);
+  const filteredCategory = useMemo(() => filterCategory(library, category as string), [library, category]);
+  const filteredBooks = useMemo(() => filterBooks(filteredCategory, filterText), [filteredCategory, filterText]);
+  const sortedBooks = useMemo(() => sortBooks(filteredBooks, isDescendingOrder), [filteredBooks, isDescendingOrder]);
 
   const setTileViewHandler = (tileView: boolean) => setTileView(tileView);
 
+  const dataFetchedRef = useRef(false);
+
+  useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
+    dispatch(getLibrary());
+  }, [dispatch]);
+
   return (
-    <Fragment>
-      <Navigation />
-      <section className='main-page'>
-        <NavigationList isTileView={isTileView} setTileViewHandler={setTileViewHandler} />
+    <section className='main-page'>
+      <NavigationList isTileView={isTileView} setTileViewHandler={setTileViewHandler} />
+      {!isPending && (
         <div className={isTileView ? 'books_vertical' : 'books_horizontal'}>
-          {books.map((book: IBook) => (
-            <BookCard book={book} key={book.id} isTileView={isTileView} />
-          ))}
+          {sortedBooks.length ? (
+            sortedBooks.map((book: IBook) => <BookCard book={book} key={book.id} isTileView={isTileView} />)
+          ) : filterText ? (
+            <h3 className='message' data-test-id='search-result-not-found'>
+              По запросу ничего не найдено
+            </h3>
+          ) : (
+            <h3 className='message' data-test-id='empty-category'>
+              В этой категории книг ещё нет
+            </h3>
+          )}
         </div>
-      </section>
-    </Fragment>
+      )}
+    </section>
   );
 };

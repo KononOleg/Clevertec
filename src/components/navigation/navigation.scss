@@ -35,8 +35,6 @@
   }
 
   .active {
-    pointer-events: none;
-
     .page,
     .category {
       @extend %gradient-text;
@@ -125,11 +123,5 @@
         }
       }
     }
-  }
-}
-
-@media (max-width: 1100px) {
-  .navigation-showcase {
-    display: none;
   }
 }

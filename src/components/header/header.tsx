@@ -1,17 +1,19 @@
-import { FC, useContext, useRef } from 'react';
+import { FC, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import AvatarPNG from '../../assets/avatar.png';
 import LogoPNG from '../../assets/logo.png';
 import { PATH } from '../../constants';
-import { BurgerContext } from '../../context/burger';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setIsBurgerActive } from '../../store/reducers/app-slice';
 
 import { BurgerNavigation } from './components/burger-navigation';
 
 import './header.scss';
 
 export const Header: FC = () => {
-  const { isBurgerActive, setIsBurgerActive } = useContext(BurgerContext);
+  const dispatch = useAppDispatch();
+  const { isBurgerActive } = useAppSelector((state) => state.appSlice);
 
   const burgerEl = useRef<HTMLButtonElement>(null);
 
@@ -28,7 +30,7 @@ export const Header: FC = () => {
           className={`burger ${isBurgerActive ? 'burger_active' : ''}`}
           data-test-id='button-burger'
           onClick={() => {
-            setIsBurgerActive((current) => !current);
+            dispatch(setIsBurgerActive(!isBurgerActive));
           }}
         >
           <div />
