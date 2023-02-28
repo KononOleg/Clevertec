@@ -6,27 +6,18 @@
   padding: 48px 56px;
 
   display: flex;
-  gap: 10px;
   flex-direction: column;
 
-  .input {
-    background: $black5;
-    border-radius: 4px;
-    padding: 19px 12px;
-    border: 0;
-    border-bottom: 1px solid $grey20;
-    outline: none;
-
-    height: 56px;
-    width: 416px;
+  .fields {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    padding: 32px 0 20px;
   }
 
-  .input_error {
-    border-bottom: 1px solid $negative;
-  }
-
-  .error {
-    color: $negative;
+  .button {
+    padding: 17px 0;
+    margin: 32px 0 16px;
   }
 
   .registration {
