@@ -66,7 +66,7 @@ export const BookPage: FC = () => {
               {book.rating ? <h5>{book.rating}</h5> : <p className='body_small'>ещё нет оценок</p>}
             </div>
           </div>
-          <Detailed book={book} category={book.categories[0]} />
+          <Detailed book={book} category={categoryName as string} />
           <Reviews reviews={book.comments} />
         </Fragment>
       )}
