@@ -3,6 +3,12 @@ export enum TermsContentView {
   Contract,
 }
 
+export enum AuthorizationContentView {
+  Auth,
+  Registration,
+  ForgotPass,
+}
+
 export interface ILibrary extends ICategory {
   books: IBook[];
 }

@@ -9,6 +9,9 @@ export const PATH = {
   booksId: '/books/:category/:bookId',
   terms: '/terms',
   contract: '/contract',
+  auth: '/auth',
+  registration: '/registration',
+  forgotPass: '/forgot-pass',
 };
 
 export const stars: number[] = [1, 2, 3, 4, 5];
