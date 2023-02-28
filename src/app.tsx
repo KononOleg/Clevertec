@@ -1,6 +1,7 @@
 import { FC, Fragment } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
+import { AuthorizationLayout } from './components/authorization-layout';
 import { Layout } from './components/layout';
 import { Loading } from './components/loading';
 import { MainLayout } from './components/main-layout';
@@ -26,6 +27,7 @@ export const App: FC = () => (
           </Route>
           <Route path={PATH.booksId} element={<BookPage />} />
         </Route>
+        <Route element={<AuthorizationLayout />} />
       </Routes>
     </HashRouter>
   </Fragment>
