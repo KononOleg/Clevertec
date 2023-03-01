@@ -4,13 +4,17 @@
   background: $hover;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+
+  position: relative;
 
   height: 100vh;
   width: 100vw;
 
   .title {
+    top: 180px;
+    position: absolute;
     color: $white;
-    padding: 180px 0 59px;
   }
 }
