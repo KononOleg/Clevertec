@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IError, IUser } from '../../types';
 import { signIn } from '../thunks/auth-thunks';
-import { getLibrary } from '../thunks/library-thunks';
 
 interface AuthSliceState {
   isPending: boolean;
@@ -32,7 +31,7 @@ export const authSlice = createSlice({
       user: action.payload,
     }));
 
-    builder.addCase(getLibrary.rejected.type, (state, action: PayloadAction<IError>) => ({
+    builder.addCase(signIn.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
       error: action.payload,

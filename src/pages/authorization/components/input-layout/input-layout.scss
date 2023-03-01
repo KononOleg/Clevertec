@@ -28,10 +28,6 @@
     border-bottom: 1px solid $negative;
   }
 
-  .error {
-    color: $negative;
-  }
-
   .input:focus-within ~ .input-label,
   .input:not(:placeholder-shown) ~ .input-label {
     transform: translate(12px, 6px);
@@ -39,5 +35,12 @@
     @extend .info_large;
 
     color: $grey40;
+  }
+
+  .error {
+    position: absolute;
+    bottom: -18px;
+    left: 12px;
+    color: $negative;
   }
 }

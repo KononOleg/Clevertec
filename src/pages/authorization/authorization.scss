@@ -19,10 +19,17 @@
     padding: 17px 0;
     margin: 32px 0 16px;
   }
+  .forgot-password {
+    padding-left: 13px;
+  }
 
   .registration {
     display: flex;
     gap: 16px;
     color: $black70;
+  }
+
+  .error {
+    color: $negative;
   }
 }
