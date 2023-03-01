@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import { TextButton } from '../../../../components/text-button';
 import { PATH } from '../../../../constants';
+import { useAppDispatch } from '../../../../hooks/redux';
+import { signIn } from '../../../../store/thunks/auth-thunks';
 import { InputLayout } from '../input-layout';
 
 interface IFormInputs {
@@ -18,7 +20,10 @@ export const Authorization: FC = () => {
     handleSubmit,
   } = useForm<IFormInputs>();
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data);
+  const dispatch = useAppDispatch();
+
+  const onSubmit: SubmitHandler<IFormInputs> = (data) =>
+    dispatch(signIn({ login: data.login, password: data.password }));
 
   return (
     <form className='form' onSubmit={handleSubmit(onSubmit)}>
