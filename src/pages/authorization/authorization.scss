@@ -18,9 +18,12 @@
   .button {
     padding: 17px 0;
     margin: 32px 0 16px;
+    cursor: pointer;
   }
   .forgot-password {
     padding-left: 13px;
+    display: flex;
+    flex-direction: column;
   }
 
   .registration {
