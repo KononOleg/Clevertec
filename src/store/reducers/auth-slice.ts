@@ -6,12 +6,14 @@ import { getLibrary } from '../thunks/library-thunks';
 
 interface AuthSliceState {
   isPending: boolean;
+  isAuth: boolean;
   error: IError | null;
   user: IUser | null;
 }
 
 const initialState: AuthSliceState = {
-  isPending: true,
+  isPending: false,
+  isAuth: false,
   error: null,
   user: null,
 };
@@ -26,6 +28,7 @@ export const authSlice = createSlice({
     builder.addCase(signIn.fulfilled.type, (state, action: PayloadAction<IUser>) => ({
       ...state,
       isPending: false,
+      isAuth: true,
       user: action.payload,
     }));
 
