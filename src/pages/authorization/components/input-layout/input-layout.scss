@@ -28,6 +28,12 @@
     border-bottom: 1px solid $negative;
   }
 
+  .button_password {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+
   .input:focus-within ~ .input-label,
   .input:not(:placeholder-shown) ~ .input-label {
     transform: translate(12px, 6px);
