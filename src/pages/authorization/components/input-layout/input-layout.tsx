@@ -1,13 +1,13 @@
 import { FC, ReactNode } from 'react';
 
-import './text-input.scss';
+import './input-layout.scss';
 
 interface IProps {
   children: ReactNode;
   label: string;
 }
 
-export const TextInput: FC<IProps> = ({ children, label }) => (
+export const InputLayout: FC<IProps> = ({ children, label }) => (
   <div className='input-container'>
     {children}
     <label className='input-label'>{label}</label>

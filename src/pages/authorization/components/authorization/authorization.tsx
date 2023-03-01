@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { TextButton } from '../../../../components/text-button';
 import { PATH } from '../../../../constants';
-import { TextInput } from '../text-input';
+import { InputLayout } from '../input-layout';
 
 interface IFormInputs {
   login: string;
@@ -24,15 +24,15 @@ export const Authorization: FC = () => {
     <form className='form' onSubmit={handleSubmit(onSubmit)}>
       <h4>Вход в личный кабинет</h4>
       <div className='fields'>
-        <TextInput label='Логин'>
+        <InputLayout label='Логин'>
           <input
             className={`input ${errors.login ? 'input_error' : ''}`}
             placeholder=' '
             {...register('login', { required: true })}
           />
           {errors.login && <span className='error'>Поле не может быть пустым</span>}
-        </TextInput>
-        <TextInput label='Пароль'>
+        </InputLayout>
+        <InputLayout label='Пароль'>
           <input
             className={`input ${errors.password ? 'input_error' : ''}`}
             type='password'
@@ -40,7 +40,7 @@ export const Authorization: FC = () => {
             {...register('password', { required: true })}
           />
           {errors.password && <span className='error'>Поле не может быть пустым</span>}
-        </TextInput>
+        </InputLayout>
       </div>
 
       <Link to={PATH.forgotPass} className='info_large'>
