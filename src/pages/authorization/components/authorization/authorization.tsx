@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import { ReactComponent as ArmSVG } from '../../../../assets/icon-arm.svg';
+import { TextButton } from '../../../../components/text-button';
 import { PATH } from '../../../../constants';
 import { TextInput } from '../text-input';
 
@@ -49,6 +49,10 @@ export const Authorization: FC = () => {
       <input className='button' type='submit' value='Вход' />
       <div className='registration'>
         <p className='body_large'>Нет учётной записи?</p>
+
+        <Link to={PATH.registration}>
+          <TextButton text='Регистрация' />
+        </Link>
       </div>
     </form>
   );
