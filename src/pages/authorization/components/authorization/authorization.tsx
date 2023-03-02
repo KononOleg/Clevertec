@@ -2,14 +2,13 @@ import { FC, Fragment, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import EyeClosePNG from '../../../../assets/icon-eye-close.png';
-import EyeOpenPNG from '../../../../assets/icon-eye-open.png';
 import { TextButton } from '../../../../components/text-button';
 import { HttpStatusCode, PATH } from '../../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { signIn } from '../../../../store/thunks/auth-thunks';
 import { ErrorModal } from '../error-modal';
-import { InputLayout } from '../input-layout';
+import { PasswordInput } from '../password-input';
+import { TextInput } from '../text-input';
 
 interface IFormInputs {
   login: string;
@@ -21,17 +20,12 @@ export const Authorization: FC = () => {
     register,
     formState: { errors },
     handleSubmit,
-    watch,
   } = useForm<IFormInputs>();
 
   const dispatch = useAppDispatch();
   const { error } = useAppSelector((state) => state.authSlice);
   const [isAuthError, setIsAuthError] = useState<boolean>(false);
   const [isFatalError, setIsFatalError] = useState<boolean>(false);
-
-  const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
-
-  const watchPassword = watch('password');
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) =>
     dispatch(signIn({ login: data.login, password: data.password }));
@@ -56,28 +50,18 @@ export const Authorization: FC = () => {
         <form className='form' onSubmit={handleSubmit(onSubmit)}>
           <h4>Вход в личный кабинет</h4>
           <div className='fields'>
-            <InputLayout label='Логин'>
-              <input
-                className={`input ${errors.login || isAuthError ? 'input_error' : ''}`}
-                placeholder=' '
-                {...register('login', { required: true })}
-              />
-              {errors.login && <span className='error info_large'>Поле не может быть пустым</span>}
-            </InputLayout>
-            <InputLayout label='Пароль'>
-              <input
-                className={`input ${errors.password || isAuthError ? 'input_error' : ''}`}
-                type={isPasswordShow ? 'text' : 'password'}
-                placeholder=' '
-                {...register('password', { required: true })}
-              />
-              {errors.password && <span className='error info_large'>Поле не может быть пустым</span>}
-              {watchPassword && (
-                <button className='button_password' type='button' onClick={() => setIsPasswordShow(!isPasswordShow)}>
-                  <img src={isPasswordShow ? EyeOpenPNG : EyeClosePNG} alt='eye' />
-                </button>
-              )}
-            </InputLayout>
+            <TextInput
+              label='Логин'
+              isError={errors.login || isAuthError}
+              register={{ ...register('login', { required: 'Поле не может быть пустым' }) }}
+              error={errors.login}
+            />
+            <PasswordInput
+              label='Пароль'
+              isError={errors.password || isAuthError}
+              register={{ ...register('password', { required: 'Поле не может быть пустым' }) }}
+              error={errors.password}
+            />
           </div>
           <div className='forgot-password'>
             {isAuthError ? (
