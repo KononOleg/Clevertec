@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom';
 import { TextButton } from '../../../../components/text-button';
 import { PATH } from '../../../../constants';
 import { FirstRegistration } from '../first-registration';
+import { SecondRegistration } from '../second-registration';
 
 export interface IRegistrationInputs {
   login: string;
   password: string;
+  firstName: string;
+  lastName: string;
 }
 
 export const Registration: FC = () => {
@@ -31,7 +34,9 @@ export const Registration: FC = () => {
       {step === 1 && (
         <FirstRegistration register={register} errors={errors} nextStepHandler={nextStepHandler} isValid={isValid} />
       )}
-      {step === 2 && <div />}
+      {step === 2 && (
+        <SecondRegistration register={register} errors={errors} nextStepHandler={nextStepHandler} isValid={isValid} />
+      )}
       {step === 3 && <div />}
 
       <div className='registration'>
