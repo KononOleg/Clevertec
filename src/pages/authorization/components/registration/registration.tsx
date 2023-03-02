@@ -6,12 +6,15 @@ import { TextButton } from '../../../../components/text-button';
 import { PATH } from '../../../../constants';
 import { FirstRegistration } from '../first-registration';
 import { SecondRegistration } from '../second-registration';
+import { ThirdRegistration } from '../third-registration';
 
 export interface IRegistrationInputs {
   login: string;
   password: string;
   firstName: string;
   lastName: string;
+  email: string;
+  phone: string;
 }
 
 export const Registration: FC = () => {
@@ -37,7 +40,7 @@ export const Registration: FC = () => {
       {step === 2 && (
         <SecondRegistration register={register} errors={errors} nextStepHandler={nextStepHandler} isValid={isValid} />
       )}
-      {step === 3 && <div />}
+      {step === 3 && <ThirdRegistration register={register} errors={errors} />}
 
       <div className='registration'>
         <p className='body_large'>Есть учётная запись?</p>
