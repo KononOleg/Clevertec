@@ -9,7 +9,7 @@ interface IProps {
   label: string;
   register: UseFormRegisterReturn;
   error: FieldError | undefined;
-  isError: FieldError | boolean;
+  isError: FieldError | boolean | undefined;
 }
 
 export const TextInput: FC<IProps> = ({ label, register, error, isError }) => (

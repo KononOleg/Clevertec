@@ -11,7 +11,7 @@ interface IProps {
   label: string;
   register: UseFormRegisterReturn;
   error: FieldError | undefined;
-  isError: FieldError | boolean;
+  isError: FieldError | boolean | undefined;
 }
 
 export const PasswordInput: FC<IProps> = ({ label, register, error, isError }) => {

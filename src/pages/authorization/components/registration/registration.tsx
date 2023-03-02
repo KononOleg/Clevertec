@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 
 import { TextButton } from '../../../../components/text-button';
 import { PATH } from '../../../../constants';
+import { FirstRegistration } from '../first-registration';
 
-interface IFormInputs {
+export interface IRegistrationInputs {
   login: string;
   password: string;
 }
@@ -13,20 +14,23 @@ interface IFormInputs {
 export const Registration: FC = () => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
-  } = useForm<IFormInputs>();
+  } = useForm<IRegistrationInputs>();
 
   const [step, setStep] = useState<number>(1);
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IRegistrationInputs> = () => {};
+
   const nextStepHandler = () => setStep((prev) => prev + 1);
 
   return (
     <form className='form' onSubmit={handleSubmit(onSubmit)}>
       <h4>Регистрация</h4>
       <p className='subtitle_small'>{`${step} шаг из 3`}</p>
-      {step === 1 && <div />}
+      {step === 1 && (
+        <FirstRegistration register={register} errors={errors} nextStepHandler={nextStepHandler} isValid={isValid} />
+      )}
       {step === 2 && <div />}
       {step === 3 && <div />}
 
