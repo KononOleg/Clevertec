@@ -26,7 +26,10 @@ export const PasswordInput: FC<IProps> = ({ label, register, error, isError }) =
         type={isPasswordShow ? 'text' : 'password'}
         placeholder=' '
         {...register}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          register.onChange(e);
+          setPassword(e.target.value);
+        }}
       />
       {password && (
         <button className='button_password' type='button' onClick={() => setIsPasswordShow(!isPasswordShow)}>
