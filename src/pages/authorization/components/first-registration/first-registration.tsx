@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandler, isValid }) => {
-  const [focusedLogin, setFocusedLogin] = useState<boolean>(false);
+  const [focusedUserName, setFocusedUserName] = useState<boolean>(false);
   const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
 
   const onSubmitHandler = () => {
@@ -26,31 +26,35 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
         <div className='input-container'>
           <TextInput
             label='Придумайте логин для входа'
-            isError={!focusedLogin && errors.login}
+            isError={!focusedUserName && errors.username}
             register={{
-              ...register('login', {
+              ...register('username', {
                 required: true,
                 validate: {
-                  loginLetter: (value: string) => /(?=.*[a-zA-Z]).{1,}/.test(value),
-                  loginNumber: (value: string) => /(?=.*\d).{1,}/.test(value),
+                  userNameLetter: (value: string) => /(?=.*[a-zA-Z]).{1,}/.test(value),
+                  userNameNumber: (value: string) => /(?=.*\d).{1,}/.test(value),
                 },
               }),
             }}
-            onBlur={() => setFocusedLogin(false)}
-            onFocus={() => setFocusedLogin(true)}
-            error={errors.login}
+            onBlur={() => setFocusedUserName(false)}
+            onFocus={() => setFocusedUserName(true)}
+            error={errors.username}
           />
 
-          <p className={`error info_large ${!focusedLogin && errors.login ? 'color_error' : ''}`}>
+          <p className={`error info_large ${!focusedUserName && errors.username ? 'color_error' : ''}`}>
             Используйте для логина{' '}
             <span
-              className={errors.login?.type === 'loginLetter' || errors.login?.type === 'required' ? 'color_error' : ''}
+              className={
+                errors.username?.type === 'userNameLetter' || errors.username?.type === 'required' ? 'color_error' : ''
+              }
             >
               латинский алфавит
             </span>{' '}
             и{' '}
             <span
-              className={errors.login?.type === 'loginNumber' || errors.login?.type === 'required' ? 'color_error' : ''}
+              className={
+                errors.username?.type === 'userNameNumber' || errors.username?.type === 'required' ? 'color_error' : ''
+              }
             >
               цифры
             </span>

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { AuthService } from '../../service/auth-service';
-import { AxiosErrorDataType, IError } from '../../types';
+import { AxiosErrorDataType, IError, SignUpRequest } from '../../types';
 
 const ERROR_MESSAGE = 'Что-то пошло не так. Обновите страницу через некоторое время.';
 
@@ -28,3 +28,19 @@ export const signIn = createAsyncThunk(
     }
   }
 );
+
+export const signUp = createAsyncThunk('auth/signUp', async (payload: SignUpRequest, thunkAPI) => {
+  try {
+    const response = await AuthService.signUp(payload);
+
+    return response.data.user;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      const data = err.response.data as AxiosErrorDataType;
+
+      return thunkAPI.rejectWithValue(data.error);
+    }
+
+    return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
+  }
+});
