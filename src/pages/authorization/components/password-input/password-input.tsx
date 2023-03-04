@@ -12,9 +12,11 @@ interface IProps {
   register: UseFormRegisterReturn;
   error: FieldError | undefined;
   isError: FieldError | boolean | undefined;
+  onBlur?: () => void;
+  onFocus?: () => void;
 }
 
-export const PasswordInput: FC<IProps> = ({ label, register, error, isError }) => {
+export const PasswordInput: FC<IProps> = ({ label, register, error, isError, onBlur, onFocus }) => {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
 
   const [password, setPassword] = useState<string>('');
@@ -25,10 +27,15 @@ export const PasswordInput: FC<IProps> = ({ label, register, error, isError }) =
         className={`input ${isError ? 'input_error' : ''}`}
         type={isPasswordShow ? 'text' : 'password'}
         placeholder=' '
+        onFocus={onFocus}
         {...register}
         onChange={(e) => {
           register.onChange(e);
           setPassword(e.target.value);
+        }}
+        onBlur={(e) => {
+          register.onBlur(e);
+          if (onBlur) onBlur();
         }}
       />
       {password && (

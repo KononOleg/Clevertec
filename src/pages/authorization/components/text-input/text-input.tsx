@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+import InputMask, { Mask } from 'react-text-mask';
 
 import { InputLayout } from '../input-layout';
 
@@ -10,10 +11,38 @@ interface IProps {
   register: UseFormRegisterReturn;
   error: FieldError | undefined;
   isError: FieldError | boolean | undefined;
+  onBlur?: () => void;
+  onFocus?: () => void;
+  mask?: Mask;
 }
 
-export const TextInput: FC<IProps> = ({ label, register, error, isError }) => (
+export const TextInput: FC<IProps> = ({ label, register, error, isError, onFocus, onBlur, mask }) => (
   <InputLayout label={label} error={error}>
-    <input className={`input ${isError ? 'input_error' : ''}`} type='text' placeholder=' ' {...register} />
+    {mask ? (
+      <InputMask
+        className={`input ${isError ? 'input_error' : ''}`}
+        type='text'
+        mask={mask}
+        placeholder=' '
+        onFocus={onFocus}
+        {...register}
+        onBlur={(e) => {
+          register.onBlur(e);
+          if (onBlur) onBlur();
+        }}
+      />
+    ) : (
+      <input
+        className={`input ${isError ? 'input_error' : ''}`}
+        type='text'
+        placeholder=' '
+        onFocus={onFocus}
+        {...register}
+        onBlur={(e) => {
+          register.onBlur(e);
+          if (onBlur) onBlur();
+        }}
+      />
+    )}
   </InputLayout>
 );

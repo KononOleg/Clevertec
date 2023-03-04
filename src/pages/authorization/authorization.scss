@@ -31,8 +31,14 @@
     gap: 16px;
     color: $black70;
   }
-
   .error {
+    position: absolute;
+    bottom: -18px;
+    left: 12px;
+    color: $grey40;
+  }
+
+  .color_error {
     color: $negative;
   }
 }

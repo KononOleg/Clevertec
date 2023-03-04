@@ -12,12 +12,21 @@ interface IProps {
 export const ThirdRegistration: FC<IProps> = ({ register, errors }) => (
   <Fragment>
     <div className='fields'>
-      <TextInput
-        label='Номер телефона'
-        isError={errors.phone}
-        register={{ ...register('phone', { required: 'Поле не может быть пустым' }) }}
-        error={errors.phone}
-      />
+      <div className='input-container'>
+        <TextInput
+          label='Номер телефона'
+          isError={errors.phone}
+          register={{
+            ...register('phone', {
+              required: true,
+              pattern:
+                /^\+?375((\s\(33\)\s\d{3}-\d{2}-\d{2})|(\s\(29\)\s\d{3}-\d{2}-\d{2})|(\s\(44\)\s\d{3}-\d{2}-\d{2})|(\s\(25\)\s\d{3}-\d{2}-\d{2}))\s*$/,
+            }),
+          }}
+          error={errors.phone}
+        />
+        <p className={`error info_large ${errors.phone ? 'color_error' : ''}`}>В формате +375 (xx) xxx-xx-xx</p>
+      </div>
       <TextInput
         label='E-mail'
         isError={errors.email}
