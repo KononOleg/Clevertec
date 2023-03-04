@@ -1,13 +1,13 @@
 import { FC, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-import AvatarPNG from '../../assets/avatar.png';
 import LogoPNG from '../../assets/logo.png';
 import { PATH } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setIsBurgerActive } from '../../store/reducers/app-slice';
 
 import { BurgerNavigation } from './components/burger-navigation';
+import { Person } from './components/person';
 
 import './header.scss';
 
@@ -38,10 +38,7 @@ export const Header: FC = () => {
 
         <h3>Библиотека</h3>
       </div>
-      <div className='header__person'>
-        <p className='subtitle_small'>Привет, Иван!</p>
-        <img className='header__avatar' src={AvatarPNG} alt='avatar' />
-      </div>
+      <Person />
     </header>
   );
 };

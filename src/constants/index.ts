@@ -12,6 +12,7 @@ export const PATH = {
   auth: '/auth',
   registration: '/registration',
   forgotPass: '/forgot-pass',
+  profile: '/profile',
 };
 
 export const stars: number[] = [1, 2, 3, 4, 5];

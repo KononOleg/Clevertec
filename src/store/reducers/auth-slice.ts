@@ -24,6 +24,8 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     resetSlice(state) {
+      localStorage.removeItem('token');
+
       return { ...state, isPending: false, isAuth: false, error: null, user: null, isSuccessfulRegistration: false };
     },
   },
