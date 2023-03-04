@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
-import InputMask, { Mask } from 'react-text-mask';
+import InputMask from 'react-input-mask';
 
 import { InputLayout } from '../input-layout';
 
@@ -13,7 +13,7 @@ interface IProps {
   isError: FieldError | boolean | undefined;
   onBlur?: () => void;
   onFocus?: () => void;
-  mask?: Mask;
+  mask?: string;
 }
 
 export const TextInput: FC<IProps> = ({ label, register, error, isError, onFocus, onBlur, mask }) => (

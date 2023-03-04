@@ -15,6 +15,7 @@ export const ThirdRegistration: FC<IProps> = ({ register, errors }) => (
       <div className='input-container'>
         <TextInput
           label='Номер телефона'
+          mask='+375 (99) 999-99-99'
           isError={errors.phone}
           register={{
             ...register('phone', {
