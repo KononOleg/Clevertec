@@ -3,19 +3,19 @@
 
 .navigation {
   .navigation__wrapper {
-    width: 280px;
-    box-sizing: border-box;
-
     .links {
+      width: 255px;
+
+      box-sizing: content-box;
+
       padding-top: 30px;
       display: flex;
       gap: 40px;
       flex-direction: column;
     }
   }
-
-  .page {
-    margin: 0 25px 0 0;
+  .border {
+    border: 1px solid $grey20;
   }
 
   .count {
@@ -27,6 +27,10 @@
     color: $grey40;
   }
 
+  .disabled {
+    pointer-events: none;
+  }
+
   .link:hover {
     .page,
     .category {
@@ -35,6 +39,8 @@
   }
 
   .active {
+    pointer-events: none;
+
     .page,
     .category {
       @extend %gradient-text;
@@ -43,7 +49,7 @@
     .page {
       padding-bottom: 8px;
       border-bottom: 1px solid transparent;
-      margin-right: 25px;
+
       @extend %gradient-border;
 
       path {
@@ -101,16 +107,13 @@
         justify-content: space-between;
 
         svg {
+          margin-right: 12px;
           transform: rotate(180deg);
         }
 
         h5 {
           margin: 0;
         }
-      }
-
-      .link {
-        pointer-events: none;
       }
     }
 

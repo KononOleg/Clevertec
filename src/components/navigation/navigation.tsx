@@ -1,10 +1,11 @@
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 import { NavLink, useMatch } from 'react-router-dom';
 
 import { ReactComponent as ArrowSVG } from '../../assets/icon-arrow.svg';
 import { PATH } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setIsBurgerActive } from '../../store/reducers/app-slice';
+import { resetSlice } from '../../store/reducers/auth-slice';
 import { ILibrary } from '../../types';
 
 import './navigation.scss';
@@ -21,6 +22,7 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
 
   const navLinkClassName = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : 'link');
 
+  const resetSliceHandler = () => dispatch(resetSlice());
   const closeBurgerHandler = () => dispatch(setIsBurgerActive(false));
 
   return (
@@ -30,7 +32,7 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
           <li>
             <details open={isAllBooksPath || isBookCategoryPath ? true : false}>
               <summary data-test-id={`${navigation}-showcase`}>
-                <NavLink to={PATH.books} className={navLinkClassName}>
+                <NavLink to={PATH.books} className={({ isActive }) => `${isActive ? 'active' : 'link'} disabled`}>
                   <div className='page'>
                     <h5>Витрина книг</h5>
                     <ArrowSVG />
@@ -40,7 +42,7 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
               <ul>
                 <li>
                   <NavLink to={PATH.allBooks} className={navLinkClassName} onClick={closeBurgerHandler}>
-                    <p className='category body_large all-book' data-test-id={`${navigation}-books`}>
+                    <p className='category body_large' data-test-id={`${navigation}-books`}>
                       Все книги
                     </p>
                   </NavLink>
@@ -88,6 +90,23 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
             </NavLink>
           </li>
         </ul>
+        {navigation === 'burger' && (
+          <Fragment>
+            <div className='border' />
+            <ul className='links'>
+              <li>
+                <NavLink to={PATH.profile} className={navLinkClassName} onClick={closeBurgerHandler}>
+                  <h5 className='page'>Профиль</h5>
+                </NavLink>
+              </li>
+              <li>
+                <button type='button' onClick={resetSliceHandler}>
+                  <h5 className='page'>Выход</h5>
+                </button>
+              </li>
+            </ul>
+          </Fragment>
+        )}
       </div>
     </nav>
   );
