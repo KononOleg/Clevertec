@@ -10,7 +10,7 @@ interface IProps {
 }
 
 export const ErrorModal: FC<IProps> = ({ title, text, buttonText, onClickHandler }) => (
-  <div className='error-modal'>
+  <div className='error-modal' data-test-id='status-block'>
     <h4>{title}</h4>
     <p>{text}</p>
     {buttonText && (

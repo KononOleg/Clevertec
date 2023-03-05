@@ -72,7 +72,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
         />
       )}
       {!isSuccessfulRecoveryPassword && !error && (
-        <form className='form' onSubmit={handleSubmit(onSubmit)}>
+        <form className='form' onSubmit={handleSubmit(onSubmit)} data-test-id='reset-password-form'>
           <h4>Восстановление пароля</h4>
           <div className='fields'>
             <div className='input-container'>
@@ -94,7 +94,10 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
                 error={errors.password}
                 shouldShowCheckmark={true}
               />
-              <p className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}>
+              <p
+                className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
+                data-test-id='hint'
+              >
                 Пароль{' '}
                 <span
                   className={

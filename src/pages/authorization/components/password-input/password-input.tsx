@@ -48,11 +48,17 @@ export const PasswordInput: FC<IProps> = ({
           if (onBlur) onBlur();
         }}
       />
-      {password && !error && shouldShowCheckmark && <img className='checkmark' src={CheckmarkPNG} alt='checkmark' />}
+      {password && !error && shouldShowCheckmark && (
+        <img className='checkmark' src={CheckmarkPNG} alt='checkmark' data-test-id='checkmark' />
+      )}
 
       {password && (
         <button className='show-password' type='button' onClick={() => setIsPasswordShow(!isPasswordShow)}>
-          <img src={isPasswordShow ? EyeOpenPNG : EyeClosePNG} alt='eye' />
+          <img
+            src={isPasswordShow ? EyeOpenPNG : EyeClosePNG}
+            alt='eye'
+            data-test-id={`${isPasswordShow ? 'eye-opened' : 'eye-closed'}`}
+          />
         </button>
       )}
     </InputLayout>

@@ -100,7 +100,7 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
                 </NavLink>
               </li>
               <li>
-                <button type='button' onClick={resetSliceHandler}>
+                <button type='button' onClick={resetSliceHandler} data-test-id='exit-button'>
                   <h5 className='page'>Выход</h5>
                 </button>
               </li>

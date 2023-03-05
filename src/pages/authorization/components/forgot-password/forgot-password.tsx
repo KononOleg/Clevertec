@@ -40,7 +40,7 @@ export const ForgotPassword: FC = () => {
           text='Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля'
         />
       ) : (
-        <form className='form ' onSubmit={handleSubmit(onSubmit)}>
+        <form className='form ' onSubmit={handleSubmit(onSubmit)} data-test-id='send-email-form'>
           <Link to={PATH.auth} className='forgot-password_top'>
             <TextButton text='Вход в личный кабинет' />
           </Link>

@@ -26,7 +26,9 @@ export const ThirdRegistration: FC<IProps> = ({ register, errors }) => (
           }}
           error={errors.phone}
         />
-        <p className={`error info_large ${errors.phone ? 'color_error' : ''}`}>В формате +375 (xx) xxx-xx-xx</p>
+        <p className={`error info_large ${errors.phone ? 'color_error' : ''}`} data-test-id='hint'>
+          В формате +375 (xx) xxx-xx-xx
+        </p>
       </div>
       <TextInput
         label='E-mail'

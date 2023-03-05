@@ -47,7 +47,7 @@ export const Authorization: FC = () => {
           onClickHandler={() => setIsFatalError(false)}
         />
       ) : (
-        <form className='form' onSubmit={handleSubmit(onSubmit)}>
+        <form className='form' onSubmit={handleSubmit(onSubmit)} data-test-id='auth-form'>
           <h4>Вход в личный кабинет</h4>
           <div className='fields'>
             <TextInput

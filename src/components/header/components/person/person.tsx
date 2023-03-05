@@ -28,7 +28,7 @@ export const Person: FC = () => {
             <h5>Профиль</h5>
           </Link>
 
-          <button type='button' onClick={resetSliceHandler}>
+          <button type='button' onClick={resetSliceHandler} data-test-id='exit-button'>
             <h5>Выход</h5>
           </button>
         </div>

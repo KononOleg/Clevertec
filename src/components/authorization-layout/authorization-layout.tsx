@@ -20,7 +20,7 @@ export const AuthorizationLayout: FC = () => {
   return (
     <Fragment>
       {isPending && <Loading />}
-      <div className='authorization-layout'>
+      <div className='authorization-layout' data-test-id='auth'>
         <h3 className='title'>Cleverland</h3>
         <Outlet />
       </div>

@@ -41,7 +41,10 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             error={errors.username}
           />
 
-          <p className={`error info_large ${!focusedUserName && errors.username ? 'color_error' : ''}`}>
+          <p
+            className={`error info_large ${!focusedUserName && errors.username ? 'color_error' : ''}`}
+            data-test-id='hint'
+          >
             Используйте для логина{' '}
             <span
               className={
@@ -79,7 +82,10 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             error={errors.password}
             shouldShowCheckmark={true}
           />
-          <p className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}>
+          <p
+            className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
+            data-test-id='hint'
+          >
             Пароль{' '}
             <span
               className={

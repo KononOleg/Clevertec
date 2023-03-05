@@ -13,6 +13,10 @@ export const InputLayout: FC<IProps> = ({ children, label, error }) => (
   <div className='input-container'>
     {children}
     <label className='input-label'>{label}</label>
-    {error && <span className='error color_error info_large'>{error.message}</span>}
+    {error && (
+      <span className='error color_error info_large' data-test-id='hint'>
+        {error.message}
+      </span>
+    )}
   </div>
 );
