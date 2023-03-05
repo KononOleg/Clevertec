@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IError, IUser } from '../../types';
-import { resetPassword, signIn, signUp } from '../thunks/auth-thunks';
+import { recoveryPassword, resetPassword, signIn, signUp } from '../thunks/auth-thunks';
 
 interface AuthSliceState {
   isPending: boolean;
@@ -10,6 +10,7 @@ interface AuthSliceState {
   user: IUser | null;
   isSuccessfulRegistration: boolean;
   isSuccessfulResetPassword: boolean;
+  isSuccessfulRecoveryPassword: boolean;
 }
 
 const initialState: AuthSliceState = {
@@ -19,6 +20,7 @@ const initialState: AuthSliceState = {
   user: null,
   isSuccessfulRegistration: false,
   isSuccessfulResetPassword: false,
+  isSuccessfulRecoveryPassword: false,
 };
 
 export const authSlice = createSlice({
@@ -43,6 +45,7 @@ export const authSlice = createSlice({
     builder.addCase(signIn.pending, (state) => ({ ...state, isPending: true }));
     builder.addCase(signUp.pending, (state) => ({ ...state, isPending: true }));
     builder.addCase(resetPassword.pending, (state) => ({ ...state, isPending: true }));
+    builder.addCase(recoveryPassword.pending, (state) => ({ ...state, isPending: true }));
 
     builder.addCase(signIn.fulfilled.type, (state, action: PayloadAction<IUser>) => ({
       ...state,
@@ -64,6 +67,12 @@ export const authSlice = createSlice({
       isSuccessfulResetPassword: true,
     }));
 
+    builder.addCase(recoveryPassword.fulfilled.type, (state) => ({
+      ...state,
+      isPending: false,
+      isSuccessfulRecoveryPassword: true,
+    }));
+
     builder.addCase(signIn.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
@@ -77,6 +86,12 @@ export const authSlice = createSlice({
     }));
 
     builder.addCase(resetPassword.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      error: action.payload,
+    }));
+
+    builder.addCase(recoveryPassword.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
       error: action.payload,

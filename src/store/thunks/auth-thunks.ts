@@ -60,3 +60,23 @@ export const resetPassword = createAsyncThunk('auth/resetPassword', async (email
     return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
   }
 });
+
+export const recoveryPassword = createAsyncThunk(
+  'auth/recoveryPassword',
+  async (payload: { password: string; passwordConfirmation: string; code: string }, thunkAPI) => {
+    try {
+      const { password, passwordConfirmation, code } = payload;
+      const response = await AuthService.recoveryPassword(password, passwordConfirmation, code);
+
+      return response.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        const data = err.response.data as AxiosErrorDataType;
+
+        return thunkAPI.rejectWithValue(data.error);
+      }
+
+      return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
+    }
+  }
+);

@@ -23,4 +23,16 @@ export class AuthService {
       email,
     });
   }
+
+  static async recoveryPassword(
+    password: string,
+    passwordConfirmation: string,
+    code: string
+  ): Promise<AxiosResponse<AuthResponse>> {
+    return $api.post<AuthResponse>('/api/auth/reset-password', {
+      password,
+      passwordConfirmation,
+      code,
+    });
+  }
 }
