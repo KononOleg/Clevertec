@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import AvatarPNG from '../../../../assets/avatar.png';
 import { PATH } from '../../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { resetSlice } from '../../../../store/reducers/auth-slice';
+import { signOut } from '../../../../store/reducers/auth-slice';
 
 import './person.scss';
 
@@ -13,7 +13,7 @@ export const Person: FC = () => {
   const { user } = useAppSelector((state) => state.authSlice);
   const [isActiveModal, setIsActiveModal] = useState<boolean>(false);
 
-  const resetSliceHandler = () => dispatch(resetSlice());
+  const resetSliceHandler = () => dispatch(signOut());
 
   return (
     <div className='person'>

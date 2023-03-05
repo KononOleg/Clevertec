@@ -11,7 +11,7 @@ import { PasswordInput } from '../password-input';
 import { TextInput } from '../text-input';
 
 interface IFormInputs {
-  login: string;
+  identifier: string;
   password: string;
 }
 
@@ -20,7 +20,7 @@ export const Authorization: FC = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IFormInputs>();
+  } = useForm<IFormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
   const { error } = useAppSelector((state) => state.authSlice);
@@ -28,7 +28,7 @@ export const Authorization: FC = () => {
   const [isFatalError, setIsFatalError] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) =>
-    dispatch(signIn({ login: data.login, password: data.password }));
+    dispatch(signIn({ login: data.identifier, password: data.password }));
 
   useEffect(() => {
     if (error) {
@@ -47,38 +47,43 @@ export const Authorization: FC = () => {
           onClickHandler={() => setIsFatalError(false)}
         />
       ) : (
-        <form className='form' onSubmit={handleSubmit(onSubmit)} data-test-id='auth-form'>
+        <div className='authorization'>
           <h4>Вход в личный кабинет</h4>
-          <div className='fields'>
-            <TextInput
-              label='Логин'
-              isError={errors.login || isAuthError}
-              register={{ ...register('login', { required: 'Поле не может быть пустым' }) }}
-              error={errors.login}
-            />
-            <PasswordInput
-              label='Пароль'
-              isError={errors.password || isAuthError}
-              register={{ ...register('password', { required: 'Поле не может быть пустым' }) }}
-              error={errors.password}
-            />
-          </div>
-          <div className='forgot-password'>
-            {isAuthError ? (
-              <Fragment>
-                <span className=' info_large color_error'>Неверный логин или пароль!</span>
+          <form className='form' onSubmit={handleSubmit(onSubmit)} data-test-id='auth-form'>
+            <div className='fields'>
+              <TextInput
+                label='Логин'
+                isError={errors.identifier || isAuthError}
+                register={{ ...register('identifier', { required: 'Поле не может быть пустым' }) }}
+                error={errors.identifier}
+              />
+              <PasswordInput
+                label='Пароль'
+                isError={errors.password || isAuthError}
+                register={{ ...register('password', { required: 'Поле не может быть пустым' }) }}
+                error={errors.password}
+              />
+            </div>
+            <div className='forgot-password'>
+              {isAuthError ? (
+                <Fragment>
+                  <span className=' info_large color_error'>Неверный логин или пароль!</span>
+                  <Link to={PATH.forgotPass} className='info_large'>
+                    Восстановить?
+                  </Link>
+                </Fragment>
+              ) : (
                 <Link to={PATH.forgotPass} className='info_large'>
-                  Восстановить?
+                  Забыли логин или пароль?
                 </Link>
-              </Fragment>
-            ) : (
-              <Link to={PATH.forgotPass} className='info_large'>
-                Забыли логин или пароль?
-              </Link>
-            )}
-          </div>
+              )}
+            </div>
 
-          <input className='button' type='submit' value='Вход' />
+            <button className='button' type='submit'>
+              Вход
+            </button>
+          </form>
+
           <div className='registration'>
             <p className='body_large'>Нет учётной записи?</p>
 
@@ -86,7 +91,7 @@ export const Authorization: FC = () => {
               <TextButton text='Регистрация' />
             </Link>
           </div>
-        </form>
+        </div>
       )}
     </div>
   );

@@ -1,14 +1,16 @@
 @import '../../index.variables.scss';
 
-.form {
+.authorization {
   background: $white;
   border-radius: 16px;
   padding: 48px 56px;
 
   max-width: 528px;
 
-  display: flex;
-  flex-direction: column;
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
 
   .fields {
     display: flex;
@@ -42,5 +44,16 @@
 
   .color_error {
     color: $negative;
+  }
+}
+
+@media (max-width: 680px) {
+  .authorization {
+    padding: 24px 16px;
+
+    .registration {
+      flex-direction: column;
+      gap: 7px;
+    }
   }
 }

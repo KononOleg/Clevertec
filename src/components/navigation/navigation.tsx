@@ -5,7 +5,7 @@ import { ReactComponent as ArrowSVG } from '../../assets/icon-arrow.svg';
 import { PATH } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setIsBurgerActive } from '../../store/reducers/app-slice';
-import { resetSlice } from '../../store/reducers/auth-slice';
+import { signOut } from '../../store/reducers/auth-slice';
 import { ILibrary } from '../../types';
 
 import './navigation.scss';
@@ -22,7 +22,7 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
 
   const navLinkClassName = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : 'link');
 
-  const resetSliceHandler = () => dispatch(resetSlice());
+  const resetSliceHandler = () => dispatch(signOut());
   const closeBurgerHandler = () => dispatch(setIsBurgerActive(false));
 
   return (

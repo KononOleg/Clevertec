@@ -27,13 +27,19 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    resetSlice(state) {
+    signOut(state) {
       localStorage.removeItem('token');
 
       return {
         ...state,
-        isPending: false,
         isAuth: false,
+      };
+    },
+
+    resetSlice(state) {
+      return {
+        ...state,
+        isPending: false,
         error: null,
         user: null,
         isSuccessfulRegistration: false,
@@ -99,4 +105,4 @@ export const authSlice = createSlice({
   },
 });
 
-export const { resetSlice } = authSlice.actions;
+export const { resetSlice, signOut } = authSlice.actions;
