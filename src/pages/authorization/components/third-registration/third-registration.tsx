@@ -7,9 +7,10 @@ import { TextInput } from '../text-input';
 interface IProps {
   register: UseFormRegister<IRegistrationInputs>;
   errors: FieldErrors<IRegistrationInputs>;
+  isValid: boolean;
 }
 
-export const ThirdRegistration: FC<IProps> = ({ register, errors }) => (
+export const ThirdRegistration: FC<IProps> = ({ register, errors, isValid }) => (
   <Fragment>
     <div className='fields'>
       <div className='input-container'>
@@ -19,13 +20,14 @@ export const ThirdRegistration: FC<IProps> = ({ register, errors }) => (
           isError={errors.phone}
           register={{
             ...register('phone', {
-              required: true,
+              required: 'Поле не может быть пустым',
               pattern:
                 /^\+?375((\s\(33\)\s\d{3}-\d{2}-\d{2})|(\s\(29\)\s\d{3}-\d{2}-\d{2})|(\s\(44\)\s\d{3}-\d{2}-\d{2})|(\s\(25\)\s\d{3}-\d{2}-\d{2}))\s*$/,
             }),
           }}
           error={errors.phone}
         />
+
         <p className={`error info_large ${errors.phone ? 'color_error' : ''}`} data-test-id='hint'>
           В формате +375 (xx) xxx-xx-xx
         </p>
@@ -45,6 +47,9 @@ export const ThirdRegistration: FC<IProps> = ({ register, errors }) => (
         error={errors.email}
       />
     </div>
-    <input className='button' type='submit' value='Зарегистрироваться' />
+
+    <button className='button' type='submit' disabled={!isValid}>
+      Зарегистрироваться
+    </button>
   </Fragment>
 );

@@ -27,7 +27,7 @@ export const Registration: FC = () => {
     formState: { errors, isValid },
     handleSubmit,
     reset,
-  } = useForm<IRegistrationInputs>();
+  } = useForm<IRegistrationInputs>({ mode: 'all' });
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -42,7 +42,9 @@ export const Registration: FC = () => {
     dispatch(resetSlice());
   }, [dispatch, reset]);
 
-  const nextStepHandler = () => setStep((prev) => prev + 1);
+  const nextStepHandler = () => {
+    if (isValid) setStep((prev) => prev + 1);
+  };
 
   useEffect(() => {
     resetSliceHandler();
@@ -78,26 +80,29 @@ export const Registration: FC = () => {
       )}
 
       {!isSuccessfulRegistration && !error && (
-        <form className='form' onSubmit={handleSubmit(onSubmit)} data-test-id='register-form'>
+        <div className='authorization'>
           <h4>Регистрация</h4>
           <p className='subtitle_small'>{`${step} шаг из 3`}</p>
-          {step === 1 && (
-            <FirstRegistration
-              register={register}
-              errors={errors}
-              nextStepHandler={nextStepHandler}
-              isValid={isValid}
-            />
-          )}
-          {step === 2 && (
-            <SecondRegistration
-              register={register}
-              errors={errors}
-              nextStepHandler={nextStepHandler}
-              isValid={isValid}
-            />
-          )}
-          {step === 3 && <ThirdRegistration register={register} errors={errors} />}
+
+          <form className='form' onSubmit={handleSubmit(onSubmit)} data-test-id='register-form'>
+            {step === 1 && (
+              <FirstRegistration
+                register={register}
+                errors={errors}
+                nextStepHandler={nextStepHandler}
+                isValid={isValid}
+              />
+            )}
+            {step === 2 && (
+              <SecondRegistration
+                register={register}
+                errors={errors}
+                nextStepHandler={nextStepHandler}
+                isValid={isValid}
+              />
+            )}
+            {step === 3 && <ThirdRegistration register={register} errors={errors} isValid={isValid} />}
+          </form>
 
           <div className='registration'>
             <p className='body_large'>Есть учётная запись?</p>
@@ -106,7 +111,7 @@ export const Registration: FC = () => {
               <TextButton text='Войти' />
             </Link>
           </div>
-        </form>
+        </div>
       )}
     </Fragment>
   );

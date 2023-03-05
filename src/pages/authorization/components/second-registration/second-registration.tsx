@@ -11,28 +11,24 @@ interface IProps {
   isValid: boolean;
 }
 
-export const SecondRegistration: FC<IProps> = ({ register, errors, nextStepHandler, isValid }) => {
-  const onSubmitHandler = () => {
-    if (isValid) nextStepHandler();
-  };
-
-  return (
-    <Fragment>
-      <div className='fields'>
-        <TextInput
-          label='Имя'
-          isError={errors.firstName}
-          register={{ ...register('firstName', { required: 'Поле не может быть пустым' }) }}
-          error={errors.firstName}
-        />
-        <TextInput
-          label='Фамилия'
-          isError={errors.lastName}
-          register={{ ...register('lastName', { required: 'Поле не может быть пустым' }) }}
-          error={errors.lastName}
-        />
-      </div>
-      <input className='button' type='submit' value='Последний шаг' onClick={onSubmitHandler} />
-    </Fragment>
-  );
-};
+export const SecondRegistration: FC<IProps> = ({ register, errors, nextStepHandler, isValid }) => (
+  <Fragment>
+    <div className='fields'>
+      <TextInput
+        label='Имя'
+        isError={errors.firstName}
+        register={{ ...register('firstName', { required: 'Поле не может быть пустым' }) }}
+        error={errors.firstName}
+      />
+      <TextInput
+        label='Фамилия'
+        isError={errors.lastName}
+        register={{ ...register('lastName', { required: 'Поле не может быть пустым' }) }}
+        error={errors.lastName}
+      />
+    </div>
+    <button className='button' type='button' disabled={!isValid} onClick={nextStepHandler}>
+      Последний шаг
+    </button>
+  </Fragment>
+);

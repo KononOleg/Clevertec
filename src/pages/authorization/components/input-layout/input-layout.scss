@@ -10,6 +10,7 @@
   .input-label {
     position: absolute;
     transform: translate(12px, 19px);
+    pointer-events: none;
   }
 
   .input {

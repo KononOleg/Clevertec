@@ -16,10 +16,6 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
   const [focusedUserName, setFocusedUserName] = useState<boolean>(false);
   const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
 
-  const onSubmitHandler = () => {
-    if (isValid) nextStepHandler();
-  };
-
   return (
     <Fragment>
       <div className='fields'>
@@ -117,7 +113,10 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
           </p>
         </div>
       </div>
-      <input className='button' type='submit' value='Следующий шаг' onClick={onSubmitHandler} />
+
+      <button className='button' type='button' disabled={!isValid} onClick={nextStepHandler}>
+        Следующий шаг
+      </button>
     </Fragment>
   );
 };
