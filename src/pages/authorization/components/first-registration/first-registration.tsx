@@ -77,6 +77,7 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             onBlur={() => setFocusedPassword(false)}
             onFocus={() => setFocusedPassword(true)}
             error={errors.password}
+            shouldShowCheckmark={true}
           />
           <p className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}>
             Пароль{' '}

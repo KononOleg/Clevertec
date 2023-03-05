@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
+import CheckmarkPNG from '../../../../assets/icon-checkmark.png';
 import EyeClosePNG from '../../../../assets/icon-eye-close.png';
 import EyeOpenPNG from '../../../../assets/icon-eye-open.png';
 import { InputLayout } from '../input-layout';
@@ -14,9 +15,18 @@ interface IProps {
   isError: FieldError | boolean | undefined;
   onBlur?: () => void;
   onFocus?: () => void;
+  shouldShowCheckmark?: boolean;
 }
 
-export const PasswordInput: FC<IProps> = ({ label, register, error, isError, onBlur, onFocus }) => {
+export const PasswordInput: FC<IProps> = ({
+  label,
+  register,
+  error,
+  isError,
+  onBlur,
+  onFocus,
+  shouldShowCheckmark,
+}) => {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
 
   const [password, setPassword] = useState<string>('');
@@ -38,8 +48,10 @@ export const PasswordInput: FC<IProps> = ({ label, register, error, isError, onB
           if (onBlur) onBlur();
         }}
       />
+      {password && !error && shouldShowCheckmark && <img className='checkmark' src={CheckmarkPNG} alt='checkmark' />}
+
       {password && (
-        <button className='button_password' type='button' onClick={() => setIsPasswordShow(!isPasswordShow)}>
+        <button className='show-password' type='button' onClick={() => setIsPasswordShow(!isPasswordShow)}>
           <img src={isPasswordShow ? EyeOpenPNG : EyeClosePNG} alt='eye' />
         </button>
       )}
