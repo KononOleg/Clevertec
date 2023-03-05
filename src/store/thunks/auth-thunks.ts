@@ -44,3 +44,19 @@ export const signUp = createAsyncThunk('auth/signUp', async (payload: SignUpRequ
     return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
   }
 });
+
+export const resetPassword = createAsyncThunk('auth/resetPassword', async (email: string, thunkAPI) => {
+  try {
+    const response = await AuthService.resetPassword(email);
+
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      const data = err.response.data as AxiosErrorDataType;
+
+      return thunkAPI.rejectWithValue(data.error);
+    }
+
+    return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
+  }
+});

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IError, IUser } from '../../types';
-import { signIn, signUp } from '../thunks/auth-thunks';
+import { resetPassword, signIn, signUp } from '../thunks/auth-thunks';
 
 interface AuthSliceState {
   isPending: boolean;
@@ -9,6 +9,7 @@ interface AuthSliceState {
   error: IError | null;
   user: IUser | null;
   isSuccessfulRegistration: boolean;
+  isSuccessfulResetPassword: boolean;
 }
 
 const initialState: AuthSliceState = {
@@ -17,6 +18,7 @@ const initialState: AuthSliceState = {
   error: null,
   user: null,
   isSuccessfulRegistration: false,
+  isSuccessfulResetPassword: false,
 };
 
 export const authSlice = createSlice({
@@ -26,12 +28,21 @@ export const authSlice = createSlice({
     resetSlice(state) {
       localStorage.removeItem('token');
 
-      return { ...state, isPending: false, isAuth: false, error: null, user: null, isSuccessfulRegistration: false };
+      return {
+        ...state,
+        isPending: false,
+        isAuth: false,
+        error: null,
+        user: null,
+        isSuccessfulRegistration: false,
+        isSuccessfulResetPassword: false,
+      };
     },
   },
   extraReducers: (builder) => {
     builder.addCase(signIn.pending, (state) => ({ ...state, isPending: true }));
     builder.addCase(signUp.pending, (state) => ({ ...state, isPending: true }));
+    builder.addCase(resetPassword.pending, (state) => ({ ...state, isPending: true }));
 
     builder.addCase(signIn.fulfilled.type, (state, action: PayloadAction<IUser>) => ({
       ...state,
@@ -47,6 +58,12 @@ export const authSlice = createSlice({
       user: action.payload,
     }));
 
+    builder.addCase(resetPassword.fulfilled.type, (state) => ({
+      ...state,
+      isPending: false,
+      isSuccessfulResetPassword: true,
+    }));
+
     builder.addCase(signIn.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
@@ -54,6 +71,12 @@ export const authSlice = createSlice({
     }));
 
     builder.addCase(signUp.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      error: action.payload,
+    }));
+
+    builder.addCase(resetPassword.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
       error: action.payload,
