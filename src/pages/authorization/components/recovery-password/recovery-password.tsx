@@ -23,11 +23,11 @@ interface IProps {
 export const RecoveryPassword: FC<IProps> = ({ code }) => {
   const {
     register,
-    formState: { errors, isValid },
+    formState: { errors },
     handleSubmit,
     watch,
     reset,
-  } = useForm<IFormInputs>();
+  } = useForm<IFormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -72,86 +72,94 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
         />
       )}
       {!isSuccessfulRecoveryPassword && !error && (
-        <form className='form' onSubmit={handleSubmit(onSubmit)} data-test-id='reset-password-form'>
+        <div className='authorization'>
           <h4>Восстановление пароля</h4>
-          <div className='fields'>
-            <div className='input-container'>
+          <form className='form' onSubmit={handleSubmit(onSubmit)} data-test-id='reset-password-form'>
+            <div className='fields'>
+              <div className='input-container'>
+                <PasswordInput
+                  label='Новый пароль'
+                  isError={!focusedPassword && errors.password}
+                  register={{
+                    ...register('password', {
+                      required: 'Поле не может быть пустым',
+                      minLength: 8,
+                      validate: {
+                        passwordUpperLetter: (value: string) => /(?=.*[A-Z])/.test(value),
+                        passwordMinOneNum: (value: string) => /(?=.*[0-9])/.test(value),
+                      },
+                    }),
+                  }}
+                  onBlur={() => setFocusedPassword(false)}
+                  onFocus={() => setFocusedPassword(true)}
+                  error={errors.password}
+                  shouldShowCheckmark={true}
+                />
+                {!errors.password?.message && (
+                  <p
+                    className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
+                    data-test-id='hint'
+                  >
+                    Пароль{' '}
+                    <span
+                      className={
+                        errors.password?.type === 'minLength' || errors.password?.type === 'required'
+                          ? 'color_error'
+                          : ''
+                      }
+                    >
+                      не менее 8 символов
+                    </span>
+                    {' с '}
+                    <span
+                      className={
+                        errors.password?.type === 'passwordUpperLetter' || errors.password?.type === 'required'
+                          ? 'color_error'
+                          : ''
+                      }
+                    >
+                      заглавной буквы
+                    </span>{' '}
+                    и{' '}
+                    <span
+                      className={
+                        errors.password?.type === 'passwordMinOneNum' || errors.password?.type === 'required'
+                          ? 'color_error'
+                          : ''
+                      }
+                    >
+                      цифрой
+                    </span>
+                  </p>
+                )}
+              </div>
+
               <PasswordInput
-                label='Новый пароль'
-                isError={!focusedPassword && errors.password}
+                label='Повторите пароль'
+                isError={errors.passwordConfirmation}
                 register={{
-                  ...register('password', {
+                  ...register('passwordConfirmation', {
                     required: true,
-                    minLength: 8,
-                    validate: {
-                      passwordUpperLetter: (value: string) => /(?=.*[A-Z])/.test(value),
-                      passwordMinOneNum: (value: string) => /(?=.*[0-9])/.test(value),
+                    validate: (val: string) => {
+                      if (watch('password') !== val) {
+                        return 'Пароли не совпадают';
+                      }
+
+                      return true;
                     },
                   }),
                 }}
-                onBlur={() => setFocusedPassword(false)}
-                onFocus={() => setFocusedPassword(true)}
-                error={errors.password}
-                shouldShowCheckmark={true}
+                error={errors.passwordConfirmation}
               />
-              <p
-                className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
-                data-test-id='hint'
-              >
-                Пароль{' '}
-                <span
-                  className={
-                    errors.password?.type === 'minLength' || errors.password?.type === 'required' ? 'color_error' : ''
-                  }
-                >
-                  не менее 8 символов
-                </span>
-                {' с '}
-                <span
-                  className={
-                    errors.password?.type === 'passwordUpperLetter' || errors.password?.type === 'required'
-                      ? 'color_error'
-                      : ''
-                  }
-                >
-                  заглавной буквы
-                </span>{' '}
-                и{' '}
-                <span
-                  className={
-                    errors.password?.type === 'passwordMinOneNum' || errors.password?.type === 'required'
-                      ? 'color_error'
-                      : ''
-                  }
-                >
-                  цифрой
-                </span>
-              </p>
             </div>
 
-            <PasswordInput
-              label='Повторите пароль'
-              isError={errors.passwordConfirmation}
-              register={{
-                ...register('passwordConfirmation', {
-                  required: true,
-                  validate: (val: string) => {
-                    if (watch('password') !== val) {
-                      return 'Пароли не совпадают';
-                    }
-
-                    return true;
-                  },
-                }),
-              }}
-              error={errors.passwordConfirmation}
-            />
-          </div>
-
-          <input className='button' disabled={!isValid} type='submit' value='Сохранить изменения' />
+            <button className='button' type='submit'>
+              Сохранить изменения
+            </button>
+          </form>
 
           <p className='body_large'>После сохранения войдите в библиотеку, используя новый пароль</p>
-        </form>
+        </div>
       )}
     </Fragment>
   );

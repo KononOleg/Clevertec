@@ -21,7 +21,7 @@ export const ForgotPassword: FC = () => {
     formState: { errors },
     handleSubmit,
     setError,
-  } = useForm<IFormInputs>();
+  } = useForm<IFormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
   const { isSuccessfulResetPassword, error } = useAppSelector((state) => state.authSlice);
@@ -33,41 +33,46 @@ export const ForgotPassword: FC = () => {
   }, [error, setError]);
 
   return (
-    <div className='forgot-password'>
+    <div className='forgot-password '>
       {isSuccessfulResetPassword ? (
         <ErrorModal
           title='Письмо выслано'
           text='Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля'
         />
       ) : (
-        <form className='form ' onSubmit={handleSubmit(onSubmit)} data-test-id='send-email-form'>
+        <div className='authorization '>
           <Link to={PATH.auth} className='forgot-password_top'>
             <TextButton text='Вход в личный кабинет' />
           </Link>
           <div className='forgot-password__wrapper'>
             <h4>Восстановление</h4>
-            <div className='fields'>
-              <TextInput
-                label='Email'
-                isError={errors.email}
-                register={{
-                  ...register('email', {
-                    required: 'Поле не может быть пустым',
-                    pattern: {
-                      value: /^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/,
-                      message: 'Введите корректный e-mail',
-                    },
-                  }),
-                }}
-                error={errors.email}
-              />
-            </div>
+            <form className='form ' onSubmit={handleSubmit(onSubmit)} data-test-id='send-email-form'>
+              <div className='fields'>
+                <TextInput
+                  label='Email'
+                  isError={errors.email}
+                  register={{
+                    ...register('email', {
+                      required: 'Поле не может быть пустым',
+                      pattern: {
+                        value: /^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/,
+                        message: 'Введите корректный e-mail',
+                      },
+                    }),
+                  }}
+                  error={errors.email}
+                />
+              </div>
 
-            <p className={`info_large ${errors.email ? 'form_error' : ''}`}>
-              На это email будет отправлено письмо с инструкциями по восстановлению пароля
-            </p>
+              <p className={`info_large ${errors.email ? 'form_error' : ''}`}>
+                На это email будет отправлено письмо с инструкциями по восстановлению пароля
+              </p>
 
-            <input className='button' type='submit' value='Восстановить' />
+              <button className='button' type='submit'>
+                Восстановить
+              </button>
+            </form>
+
             <div className='registration'>
               <p className='body_large'>Нет учётной записи?</p>
 
@@ -76,7 +81,7 @@ export const ForgotPassword: FC = () => {
               </Link>
             </div>
           </div>
-        </form>
+        </div>
       )}
     </div>
   );
