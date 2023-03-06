@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { AuthService } from '../../service/auth-service';
 import { AxiosErrorDataType, IError, SignUpRequest } from '../../types';
@@ -18,13 +18,9 @@ export const signIn = createAsyncThunk(
 
       return user;
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const data = err.response.data as AxiosErrorDataType;
+      const { response } = (await err) as AxiosError;
 
-        return thunkAPI.rejectWithValue(data.error);
-      }
-
-      return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
+      return thunkAPI.rejectWithValue({ status: response?.status } as IError);
     }
   }
 );
@@ -35,13 +31,9 @@ export const signUp = createAsyncThunk('auth/signUp', async (payload: SignUpRequ
 
     return response.data.user;
   } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      const data = err.response.data as AxiosErrorDataType;
+    const { response } = (await err) as AxiosError;
 
-      return thunkAPI.rejectWithValue(data.error);
-    }
-
-    return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
+    return thunkAPI.rejectWithValue({ status: response?.status } as IError);
   }
 });
 
