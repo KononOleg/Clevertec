@@ -17,6 +17,7 @@ export const ThirdRegistration: FC<IProps> = ({ register, errors, isValid }) => 
         <TextInput
           label='Номер телефона'
           mask='+375 (99) 999-99-99'
+          maskChar='x'
           isError={errors.phone}
           register={{
             ...register('phone', {

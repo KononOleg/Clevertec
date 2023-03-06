@@ -64,7 +64,7 @@ export const ForgotPassword: FC = () => {
                 />
               </div>
 
-              <p className={`info_large ${errors.email ? 'form_error' : ''}`}>
+              <p className={`info_large ${errors.email ? 'form_error' : ''}`} data-test-id='hint'>
                 На это email будет отправлено письмо с инструкциями по восстановлению пароля
               </p>
 

@@ -27,6 +27,7 @@ export const Registration: FC = () => {
     formState: { errors, isValid },
     handleSubmit,
     reset,
+    watch,
   } = useForm<IRegistrationInputs>({ mode: 'all' });
 
   const navigate = useNavigate();
@@ -91,6 +92,7 @@ export const Registration: FC = () => {
                 errors={errors}
                 nextStepHandler={nextStepHandler}
                 isValid={isValid}
+                watch={watch}
               />
             )}
             {step === 2 && (

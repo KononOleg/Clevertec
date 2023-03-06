@@ -1,6 +1,7 @@
 import { FC, Fragment, useState } from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
 
+import { ErrorTextPassword, ErrorTextUserName } from '../error-text';
 import { PasswordInput } from '../password-input';
 import { IRegistrationInputs } from '../registration/registration';
 import { TextInput } from '../text-input';
@@ -10,11 +11,15 @@ interface IProps {
   errors: FieldErrors<IRegistrationInputs>;
   nextStepHandler: () => void;
   isValid: boolean;
+  watch: UseFormWatch<IRegistrationInputs>;
 }
 
-export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandler, isValid }) => {
+export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandler, isValid, watch }) => {
   const [focusedUserName, setFocusedUserName] = useState<boolean>(false);
   const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
+
+  const watchUserName = watch('username');
+  const watchPassword = watch('password');
 
   return (
     <Fragment>
@@ -25,39 +30,21 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             isError={!focusedUserName && errors.username}
             register={{
               ...register('username', {
-                required: true,
-                validate: {
-                  userNameLetter: (value: string) => /(?=.*[a-zA-Z]).{1,}/.test(value),
-                  userNameNumber: (value: string) => /(?=.*\d).{1,}/.test(value),
-                },
+                required: 'Поле не может быть пустым',
               }),
             }}
             onBlur={() => setFocusedUserName(false)}
             onFocus={() => setFocusedUserName(true)}
             error={errors.username}
           />
-
-          <p
-            className={`error info_large ${!focusedUserName && errors.username ? 'color_error' : ''}`}
-            data-test-id='hint'
-          >
-            Используйте для логина{' '}
-            <span
-              className={
-                errors.username?.type === 'userNameLetter' || errors.username?.type === 'required' ? 'color_error' : ''
-              }
+          {!errors.username?.message && (
+            <p
+              className={`error info_large ${!focusedUserName && errors.username ? 'color_error' : ''}`}
+              data-test-id='hint'
             >
-              латинский алфавит
-            </span>{' '}
-            и{' '}
-            <span
-              className={
-                errors.username?.type === 'userNameNumber' || errors.username?.type === 'required' ? 'color_error' : ''
-              }
-            >
-              цифры
-            </span>
-          </p>
+              <ErrorTextUserName text={watchUserName} />
+            </p>
+          )}
         </div>
         <div className='input-container'>
           <PasswordInput
@@ -65,12 +52,7 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             isError={!focusedPassword && errors.password}
             register={{
               ...register('password', {
-                required: true,
-                minLength: 8,
-                validate: {
-                  passwordUpperLetter: (value: string) => /(?=.*[A-Z])/.test(value),
-                  passwordMinOneNum: (value: string) => /(?=.*[0-9])/.test(value),
-                },
+                required: 'Поле не может быть пустым',
               }),
             }}
             onBlur={() => setFocusedPassword(false)}
@@ -78,39 +60,14 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             error={errors.password}
             shouldShowCheckmark={true}
           />
-          <p
-            className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
-            data-test-id='hint'
-          >
-            Пароль{' '}
-            <span
-              className={
-                errors.password?.type === 'minLength' || errors.password?.type === 'required' ? 'color_error' : ''
-              }
+          {!errors.password?.message && (
+            <p
+              className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
+              data-test-id='hint'
             >
-              не менее 8 символов
-            </span>
-            {' с '}
-            <span
-              className={
-                errors.password?.type === 'passwordUpperLetter' || errors.password?.type === 'required'
-                  ? 'color_error'
-                  : ''
-              }
-            >
-              заглавной буквы
-            </span>{' '}
-            и{' '}
-            <span
-              className={
-                errors.password?.type === 'passwordMinOneNum' || errors.password?.type === 'required'
-                  ? 'color_error'
-                  : ''
-              }
-            >
-              цифрой
-            </span>
-          </p>
+              <ErrorTextPassword text={watchPassword} />
+            </p>
+          )}
         </div>
       </div>
 

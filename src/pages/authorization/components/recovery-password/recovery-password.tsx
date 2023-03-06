@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { resetSlice } from '../../../../store/reducers/auth-slice';
 import { recoveryPassword } from '../../../../store/thunks/auth-thunks';
 import { ErrorModal } from '../error-modal';
+import { ErrorTextPassword } from '../error-text';
 import { PasswordInput } from '../password-input';
 
 import './recovery-password.scss';
@@ -33,6 +34,8 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
   const navigate = useNavigate();
   const { error, isSuccessfulRecoveryPassword } = useAppSelector((state) => state.authSlice);
   const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
+
+  const watchPassword = watch('password');
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => {
     dispatch(
@@ -100,36 +103,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
                     className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
                     data-test-id='hint'
                   >
-                    Пароль{' '}
-                    <span
-                      className={
-                        errors.password?.type === 'minLength' || errors.password?.type === 'required'
-                          ? 'color_error'
-                          : ''
-                      }
-                    >
-                      не менее 8 символов
-                    </span>
-                    {' с '}
-                    <span
-                      className={
-                        errors.password?.type === 'passwordUpperLetter' || errors.password?.type === 'required'
-                          ? 'color_error'
-                          : ''
-                      }
-                    >
-                      заглавной буквы
-                    </span>{' '}
-                    и{' '}
-                    <span
-                      className={
-                        errors.password?.type === 'passwordMinOneNum' || errors.password?.type === 'required'
-                          ? 'color_error'
-                          : ''
-                      }
-                    >
-                      цифрой
-                    </span>
+                    <ErrorTextPassword text={watchPassword} />
                   </p>
                 )}
               </div>

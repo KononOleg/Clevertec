@@ -14,15 +14,17 @@ interface IProps {
   onBlur?: () => void;
   onFocus?: () => void;
   mask?: string;
+  maskChar?: string;
 }
 
-export const TextInput: FC<IProps> = ({ label, register, error, isError, onFocus, onBlur, mask }) => (
+export const TextInput: FC<IProps> = ({ label, register, error, isError, onFocus, onBlur, mask, maskChar }) => (
   <InputLayout label={label} error={error}>
     {mask ? (
       <InputMask
         className={`input ${isError ? 'input_error' : ''}`}
         type='text'
         mask={mask}
+        maskChar={maskChar}
         placeholder=' '
         onFocus={onFocus}
         {...register}

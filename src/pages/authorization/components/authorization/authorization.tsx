@@ -67,7 +67,9 @@ export const Authorization: FC = () => {
             <div className='forgot-password'>
               {isAuthError ? (
                 <Fragment>
-                  <span className=' info_large color_error'>Неверный логин или пароль!</span>
+                  <span className=' info_large color_error' data-test-id='hint'>
+                    Неверный логин или пароль!
+                  </span>
                   <Link to={PATH.forgotPass} className='info_large'>
                     Восстановить?
                   </Link>
