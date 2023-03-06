@@ -31,13 +31,14 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             register={{
               ...register('username', {
                 required: 'Поле не может быть пустым',
+                pattern: /^[a-zA-Z][a-zA-Z\d]/,
               }),
             }}
             onBlur={() => setFocusedUserName(false)}
             onFocus={() => setFocusedUserName(true)}
             error={errors.username}
           />
-          {!errors.username?.message && (
+          {errors.username?.type !== 'required' && (
             <p
               className={`error info_large ${!focusedUserName && errors.username ? 'color_error' : ''}`}
               data-test-id='hint'
@@ -53,6 +54,7 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             register={{
               ...register('password', {
                 required: 'Поле не может быть пустым',
+                pattern: /(?=.*[0-9])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/,
               }),
             }}
             onBlur={() => setFocusedPassword(false)}
@@ -60,7 +62,7 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             error={errors.password}
             shouldShowCheckmark={true}
           />
-          {!errors.password?.message && (
+          {errors.password?.type !== 'required' && (
             <p
               className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
               data-test-id='hint'

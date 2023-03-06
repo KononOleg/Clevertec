@@ -86,11 +86,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
                   register={{
                     ...register('password', {
                       required: 'Поле не может быть пустым',
-                      minLength: 8,
-                      validate: {
-                        passwordUpperLetter: (value: string) => /(?=.*[A-Z])/.test(value),
-                        passwordMinOneNum: (value: string) => /(?=.*[0-9])/.test(value),
-                      },
+                      pattern: /(?=.*[0-9])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/,
                     }),
                   }}
                   onBlur={() => setFocusedPassword(false)}
@@ -98,7 +94,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
                   error={errors.password}
                   shouldShowCheckmark={true}
                 />
-                {!errors.password?.message && (
+                {errors.password?.type !== 'required' && (
                   <p
                     className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
                     data-test-id='hint'

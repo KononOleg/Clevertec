@@ -6,14 +6,14 @@ interface IProps {
 
 export const ErrorTextUserName: FC<IProps> = ({ text }) => {
   if (text) {
-    if (/[A-Za-z]/.test(text) && !/[0-9]/.test(text)) {
+    if (/[A-Za-z]/.test(text) && !/[0-9]/.test(text) && !/[А-Яа-я]/.test(text)) {
       return (
         <Fragment>
           Используйте для логина латинский алфавит и <span className='color_error'>цифры</span>
         </Fragment>
       );
     }
-    if ((/[A-Za-z]/.test(text) && !/[0-9]/.test(text)) || (/[А-Яа-я]/.test(text) && /[0-9]/.test(text))) {
+    if ((!/[A-Za-z]/.test(text) && /[0-9]/.test(text)) || (/[А-Яа-я]/.test(text) && /[0-9]/.test(text))) {
       return (
         <Fragment>
           Используйте для логина <span className='color_error'>латинский алфавит</span> и цифры
