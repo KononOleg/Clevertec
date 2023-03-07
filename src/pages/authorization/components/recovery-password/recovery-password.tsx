@@ -24,7 +24,7 @@ interface IProps {
 export const RecoveryPassword: FC<IProps> = ({ code }) => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
     watch,
     reset,
@@ -91,10 +91,10 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
                   }}
                   onBlur={() => setFocusedPassword(false)}
                   onFocus={() => setFocusedPassword(true)}
-                  error={errors.password}
+                  error={focusedPassword ? undefined : errors.password}
                   shouldShowCheckmark={true}
                 />
-                {errors.password?.type !== 'required' && (
+                {(errors.password?.type !== 'required' || focusedPassword) && (
                   <p
                     className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
                     data-test-id='hint'
@@ -109,7 +109,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
                 isError={errors.passwordConfirmation}
                 register={{
                   ...register('passwordConfirmation', {
-                    required: true,
+                    required: 'Поле не может быть пустым',
                     validate: (val: string) => {
                       if (watch('password') !== val) {
                         return 'Пароли не совпадают';
@@ -123,7 +123,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
               />
             </div>
 
-            <button className='button' type='submit'>
+            <button className='button' type='submit' disabled={!isValid}>
               Сохранить изменения
             </button>
           </form>

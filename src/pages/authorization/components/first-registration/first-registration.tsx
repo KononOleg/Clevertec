@@ -31,14 +31,14 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             register={{
               ...register('username', {
                 required: 'Поле не может быть пустым',
-                pattern: /^[a-zA-Z][a-zA-Z\d]/,
+                pattern: /^[a-zA-Z\d]/,
               }),
             }}
             onBlur={() => setFocusedUserName(false)}
             onFocus={() => setFocusedUserName(true)}
-            error={errors.username}
+            error={focusedUserName ? undefined : errors.username}
           />
-          {errors.username?.type !== 'required' && (
+          {(errors.username?.type !== 'required' || focusedUserName) && (
             <p
               className={`error info_large ${!focusedUserName && errors.username ? 'color_error' : ''}`}
               data-test-id='hint'
