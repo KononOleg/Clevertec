@@ -24,11 +24,15 @@ interface IProps {
 export const RecoveryPassword: FC<IProps> = ({ code }) => {
   const {
     register,
-    formState: { errors, isValid },
+    formState: { errors, isValid, touchedFields },
     handleSubmit,
     watch,
     reset,
-  } = useForm<IFormInputs>({ mode: 'all' });
+    trigger,
+    clearErrors,
+    setError,
+    getValues,
+  } = useForm<IFormInputs>({ mode: 'all', criteriaMode: 'all' });
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -83,6 +87,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
                 <PasswordInput
                   label='Новый пароль'
                   isError={!focusedPassword && errors.password}
+                  IsValid={errors.password}
                   register={{
                     ...register('password', {
                       required: 'Поле не может быть пустым',
@@ -91,6 +96,9 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
                   }}
                   onBlur={() => setFocusedPassword(false)}
                   onFocus={() => setFocusedPassword(true)}
+                  onChange={() => {
+                    if (touchedFields.passwordConfirmation) trigger('passwordConfirmation');
+                  }}
                   error={focusedPassword ? undefined : errors.password}
                   shouldShowCheckmark={true}
                 />
@@ -107,17 +115,21 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
               <PasswordInput
                 label='Повторите пароль'
                 isError={errors.passwordConfirmation}
+                onFocus={() => {
+                  if (errors.passwordConfirmation?.type !== 'required') clearErrors('passwordConfirmation');
+                }}
+                onBlur={() => {
+                  if (getValues('passwordConfirmation') === '')
+                    setError('passwordConfirmation', { message: 'Поле не может быть пустым', type: 'required' });
+                  else if (getValues('passwordConfirmation') !== watchPassword)
+                    setError('passwordConfirmation', { message: 'Пароли не совпадают' });
+                }}
+                onChange={() => {
+                  if (getValues('passwordConfirmation') === '')
+                    setError('passwordConfirmation', { message: 'Поле не может быть пустым', type: 'required' });
+                }}
                 register={{
-                  ...register('passwordConfirmation', {
-                    required: 'Поле не может быть пустым',
-                    validate: (val: string) => {
-                      if (watch('password') !== val) {
-                        return 'Пароли не совпадают';
-                      }
-
-                      return true;
-                    },
-                  }),
+                  ...register('passwordConfirmation'),
                 }}
                 error={errors.passwordConfirmation}
               />

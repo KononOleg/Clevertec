@@ -1,10 +1,11 @@
-import { FC, Fragment, useEffect, useState } from 'react';
+import { FC, Fragment } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import { TextButton } from '../../../../components/text-button';
 import { HttpStatusCode, PATH } from '../../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { resetSlice } from '../../../../store/reducers/auth-slice';
 import { signIn } from '../../../../store/thunks/auth-thunks';
 import { ErrorModal } from '../error-modal';
 import { PasswordInput } from '../password-input';
@@ -24,27 +25,20 @@ export const Authorization: FC = () => {
 
   const dispatch = useAppDispatch();
   const { error } = useAppSelector((state) => state.authSlice);
-  const [isAuthError, setIsAuthError] = useState<boolean>(false);
-  const [isFatalError, setIsFatalError] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) =>
     dispatch(signIn({ login: data.identifier, password: data.password }));
 
-  useEffect(() => {
-    if (error) {
-      if (error?.status === HttpStatusCode.BAD_REQUEST) setIsAuthError(true);
-      else setIsFatalError(true);
-    }
-  }, [error]);
+  const isAuthError = error?.status === HttpStatusCode.BAD_REQUEST ? true : false;
 
   return (
     <div>
-      {isFatalError ? (
+      {error && !isAuthError ? (
         <ErrorModal
           title='Вход не выполнен'
           text='Что-то пошло не так. Попробуйте ещё раз'
           buttonText='повторить'
-          onClickHandler={() => setIsFatalError(false)}
+          onClickHandler={() => dispatch(resetSlice())}
         />
       ) : (
         <div className='authorization'>

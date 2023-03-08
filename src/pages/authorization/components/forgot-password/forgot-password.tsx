@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
@@ -20,17 +20,12 @@ export const ForgotPassword: FC = () => {
     register,
     formState: { errors },
     handleSubmit,
-    setError,
   } = useForm<IFormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
   const { isSuccessfulResetPassword, error } = useAppSelector((state) => state.authSlice);
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => dispatch(resetPassword(data.email));
-
-  useEffect(() => {
-    if (error) setError('email', { message: error.message });
-  }, [error, setError]);
 
   return (
     <div className='forgot-password '>
@@ -48,23 +43,31 @@ export const ForgotPassword: FC = () => {
             <h4>Восстановление</h4>
             <form className='form ' onSubmit={handleSubmit(onSubmit)} data-test-id='send-email-form'>
               <div className='fields'>
-                <TextInput
-                  label='Email'
-                  isError={errors.email}
-                  register={{
-                    ...register('email', {
-                      required: 'Поле не может быть пустым',
-                      pattern: {
-                        value: /^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/,
-                        message: 'Введите корректный e-mail',
-                      },
-                    }),
-                  }}
-                  error={errors.email}
-                />
+                <div className='input-container'>
+                  <TextInput
+                    label='Email'
+                    isError={errors.email}
+                    error={errors.email}
+                    register={{
+                      ...register('email', {
+                        required: 'Поле не может быть пустым',
+
+                        pattern: {
+                          value: /^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/,
+                          message: 'Введите корректный e-mail',
+                        },
+                      }),
+                    }}
+                  />
+                </div>
+                {error && (
+                  <p className='error info_large color_error' data-test-id='hint'>
+                    {error?.message}
+                  </p>
+                )}
               </div>
 
-              <p className={`info_large ${errors.email ? 'form_error' : ''}`} data-test-id='hint'>
+              <p className={`info_large ${errors.email ? 'form_error' : ''}`}>
                 На это email будет отправлено письмо с инструкциями по восстановлению пароля
               </p>
 

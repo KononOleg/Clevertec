@@ -13,8 +13,10 @@ interface IProps {
   register: UseFormRegisterReturn;
   error: FieldError | undefined;
   isError: FieldError | boolean | undefined;
+  IsValid?: FieldError | boolean | undefined;
   onBlur?: () => void;
   onFocus?: () => void;
+  onChange?: () => void;
   shouldShowCheckmark?: boolean;
 }
 
@@ -23,8 +25,10 @@ export const PasswordInput: FC<IProps> = ({
   register,
   error,
   isError,
+  IsValid,
   onBlur,
   onFocus,
+  onChange,
   shouldShowCheckmark,
 }) => {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
@@ -42,13 +46,14 @@ export const PasswordInput: FC<IProps> = ({
         onChange={(e) => {
           register.onChange(e);
           setPassword(e.target.value);
+          if (onChange) onChange();
         }}
         onBlur={(e) => {
           register.onBlur(e);
           if (onBlur) onBlur();
         }}
       />
-      {password && !error && shouldShowCheckmark && (
+      {password && !IsValid && shouldShowCheckmark && (
         <img className='checkmark' src={CheckmarkPNG} alt='checkmark' data-test-id='checkmark' />
       )}
 

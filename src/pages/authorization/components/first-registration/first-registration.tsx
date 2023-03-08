@@ -51,6 +51,7 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
           <PasswordInput
             label='Пароль'
             isError={!focusedPassword && errors.password}
+            IsValid={errors.password}
             register={{
               ...register('password', {
                 required: 'Поле не может быть пустым',
