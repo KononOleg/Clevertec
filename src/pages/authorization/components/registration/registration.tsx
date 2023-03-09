@@ -83,7 +83,7 @@ export const Registration: FC = () => {
       {!isSuccessfulRegistration && !error && (
         <div className='authorization'>
           <h4>Регистрация</h4>
-          <p className='subtitle_small'>{`${step} шаг из 3`}</p>
+          <p className='subtitle_small step'>{`${step} шаг из 3`}</p>
 
           <form className='form' onSubmit={handleSubmit(onSubmit)} data-test-id='register-form'>
             {step === 1 && (

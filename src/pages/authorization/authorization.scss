@@ -5,6 +5,7 @@
   border-radius: 16px;
   padding: 48px 56px;
 
+  width: 100%;
   max-width: 528px;
 
   .form {
@@ -19,7 +20,11 @@
     padding: 32px 0 20px;
   }
 
+  .step {
+    margin-top: 7px;
+  }
   .button {
+    width: 100%;
     padding: 17px 0;
     margin: 32px 0 16px;
     cursor: pointer;
@@ -37,7 +42,7 @@
   }
   .error {
     position: absolute;
-    bottom: -18px;
+    top: 100%;
     left: 12px;
     color: $grey40;
   }
@@ -51,9 +56,21 @@
   .authorization {
     padding: 24px 16px;
 
+    .forgot-password {
+      padding-left: 0;
+    }
+
+    .fields {
+      gap: 32px;
+    }
+
     .registration {
       flex-direction: column;
-      gap: 7px;
+      gap: 4px;
+    }
+
+    .button {
+      padding: 11px 0;
     }
   }
 }

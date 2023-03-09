@@ -40,7 +40,7 @@ export const ForgotPassword: FC = () => {
             <TextButton text='Вход в личный кабинет' />
           </Link>
           <div className='forgot-password__wrapper'>
-            <h4>Восстановление</h4>
+            <h4>Восстановление пароля</h4>
             <form className='form ' onSubmit={handleSubmit(onSubmit)} data-test-id='send-email-form'>
               <div className='fields'>
                 <div className='input-container'>

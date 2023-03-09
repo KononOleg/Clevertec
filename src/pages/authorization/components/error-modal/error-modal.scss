@@ -10,10 +10,30 @@
   flex-direction: column;
 
   align-items: center;
-  gap: 32px;
+  text-align: center;
+  gap: 35px;
 
   .button {
     width: 100%;
     padding: 17px 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .error-modal {
+    max-width: 600px;
+    width: 100%;
+
+    gap: 26px;
+    padding: 42px 16px 32px;
+
+    .title {
+      font-size: 18px;
+      line-height: 28px;
+    }
+
+    .button {
+      padding: 11px 0;
+    }
   }
 }

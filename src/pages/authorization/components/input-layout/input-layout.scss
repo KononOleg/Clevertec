@@ -9,7 +9,7 @@
 
   .input-label {
     position: absolute;
-    transform: translate(12px, 19px);
+    transform: translate(14px, 19px);
     pointer-events: none;
   }
 
@@ -42,7 +42,7 @@
 @media (max-width: 680px) {
   .input-container {
     .input {
-      width: 100%;
+      width: 256px;
     }
   }
 }
