@@ -7,6 +7,7 @@ import { HttpStatusCode, PATH } from '../../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { resetSlice } from '../../../../store/reducers/auth-slice';
 import { signUp } from '../../../../store/thunks/auth-thunks';
+import { RegistrationStep } from '../../../../types';
 import { ErrorModal } from '../error-modal';
 import { FirstRegistration } from '../first-registration';
 import { SecondRegistration } from '../second-registration';
@@ -86,7 +87,7 @@ export const Registration: FC = () => {
           <p className='subtitle_small step'>{`${step} шаг из 3`}</p>
 
           <form className='form' onSubmit={handleSubmit(onSubmit)} data-test-id='register-form'>
-            {step === 1 && (
+            {step === RegistrationStep.FirstStep && (
               <FirstRegistration
                 register={register}
                 errors={errors}
@@ -95,7 +96,7 @@ export const Registration: FC = () => {
                 watch={watch}
               />
             )}
-            {step === 2 && (
+            {step === RegistrationStep.SecondStep && (
               <SecondRegistration
                 register={register}
                 errors={errors}
@@ -103,7 +104,9 @@ export const Registration: FC = () => {
                 isValid={isValid}
               />
             )}
-            {step === 3 && <ThirdRegistration register={register} errors={errors} isValid={isValid} />}
+            {step === RegistrationStep.ThirdStep && (
+              <ThirdRegistration register={register} errors={errors} isValid={isValid} />
+            )}
           </form>
 
           <div className='registration'>

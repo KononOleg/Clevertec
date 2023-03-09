@@ -3,10 +3,10 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 import { PATH } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
-import { ErrorMessage } from '../error-message';
-import { Footer } from '../footer';
-import { Header } from '../header';
-import { Loading } from '../loading';
+import { ErrorMessage } from '../../components/error-message';
+import { Footer } from '../../components/footer';
+import { Header } from '../../components/header';
+import { Loading } from '../../components/loading';
 
 import './layout.scss';
 

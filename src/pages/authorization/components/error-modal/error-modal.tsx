@@ -11,7 +11,7 @@ interface IProps {
 
 export const ErrorModal: FC<IProps> = ({ title, text, buttonText, onClickHandler }) => (
   <div className='error-modal' data-test-id='status-block'>
-    <h4 className='title'>{title}</h4>
+    <h4>{title}</h4>
     <p>{text}</p>
     {buttonText && (
       <button className='button' type='button' onClick={onClickHandler}>

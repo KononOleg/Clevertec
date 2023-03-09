@@ -1,26 +1,30 @@
 import { FC, Fragment } from 'react';
 
+import { regex } from '../../../../constants/regex';
+
 interface IProps {
   text: string;
 }
 
+const { onlyLetter, onlyNumber, onlyCyrillic, firstUpper, password } = regex;
+
 export const ErrorTextUserName: FC<IProps> = ({ text }) => {
   if (text) {
-    if (/[A-Za-z]/.test(text) && !/[0-9]/.test(text) && !/[А-Яа-я]/.test(text)) {
+    if (onlyLetter.test(text) && !onlyNumber.test(text) && !onlyCyrillic.test(text)) {
       return (
         <Fragment>
           Используйте для логина латинский алфавит и <span className='color_error'>цифры</span>
         </Fragment>
       );
     }
-    if ((!/[A-Za-z]/.test(text) && /[0-9]/.test(text)) || (/[А-Яа-я]/.test(text) && /[0-9]/.test(text))) {
+    if ((!onlyLetter.test(text) && onlyNumber.test(text)) || (onlyCyrillic.test(text) && onlyNumber.test(text))) {
       return (
         <Fragment>
           Используйте для логина <span className='color_error'>латинский алфавит</span> и <span>цифры</span>
         </Fragment>
       );
     }
-    if ((/[А-Яа-я]/.test(text) && !/[0-9]/.test(text)) || /\s/.test(text)) {
+    if ((onlyCyrillic.test(text) && !onlyNumber.test(text)) || /\s/.test(text)) {
       return (
         <Fragment>
           Используйте для логина <span className='color_error'>латинский алфавит</span> и{' '}
@@ -35,7 +39,7 @@ export const ErrorTextUserName: FC<IProps> = ({ text }) => {
 
 export const ErrorTextPassword: FC<IProps> = ({ text }) => {
   if (text) {
-    if (/[A-Z]/.test(text) && /[0-9]/.test(text) && !/(?=.*[0-9])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g.test(text)) {
+    if (firstUpper.test(text) && onlyNumber.test(text) && !password.test(text)) {
       return (
         <Fragment>
           Пароль <span className='color_error'>не менее 8 символов</span>, с <span>заглавной буквой</span> и{' '}
@@ -43,7 +47,7 @@ export const ErrorTextPassword: FC<IProps> = ({ text }) => {
         </Fragment>
       );
     }
-    if (/[A-Z]/.test(text) && !/(?=.*[0-9])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g.test(text)) {
+    if (firstUpper.test(text) && !password.test(text)) {
       return (
         <Fragment>
           Пароль <span className='color_error'>не менее 8 символов</span>, c <span>заглавной буквой</span> и{' '}
@@ -51,7 +55,7 @@ export const ErrorTextPassword: FC<IProps> = ({ text }) => {
         </Fragment>
       );
     }
-    if (!/[A-Z]/.test(text) && /[0-9]/.test(text) && !/(?=.*[0-9])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g.test(text)) {
+    if (!firstUpper.test(text) && onlyNumber.test(text) && !password.test(text)) {
       return (
         <Fragment>
           Пароль <span className='color_error'>не менее 8 символов</span>, с{' '}
@@ -59,7 +63,7 @@ export const ErrorTextPassword: FC<IProps> = ({ text }) => {
         </Fragment>
       );
     }
-    if (!/[A-Z]/.test(text) && !/[0-9]/.test(text) && !/(?=.*[0-9])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g.test(text)) {
+    if (!firstUpper.test(text) && !onlyNumber.test(text) && !password.test(text)) {
       return (
         <Fragment>
           Пароль <span className='color_error'>не менее 8 символов</span>, с{' '}

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { TextButton } from '../../../../components/text-button';
 import { PATH } from '../../../../constants';
+import { regex } from '../../../../constants/regex';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { resetPassword } from '../../../../store/thunks/auth-thunks';
 import { ErrorModal } from '../error-modal';
@@ -53,7 +54,7 @@ export const ForgotPassword: FC = () => {
                         required: 'Поле не может быть пустым',
 
                         pattern: {
-                          value: /^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/,
+                          value: regex.email,
                           message: 'Введите корректный e-mail',
                         },
                       }),

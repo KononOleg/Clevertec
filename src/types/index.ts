@@ -9,6 +9,11 @@ export enum AuthorizationContentView {
   ForgotPass,
 }
 
+export enum RegistrationStep {
+  FirstStep = 1,
+  SecondStep,
+  ThirdStep,
+}
 export interface ILibrary extends ICategory {
   books: IBook[];
 }

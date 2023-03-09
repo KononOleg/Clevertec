@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { PATH } from '../../../../constants';
+import { regex } from '../../../../constants/regex';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { resetSlice } from '../../../../store/reducers/auth-slice';
 import { recoveryPassword } from '../../../../store/thunks/auth-thunks';
@@ -32,7 +33,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
     clearErrors,
     setError,
     getValues,
-  } = useForm<IFormInputs>({ mode: 'all', criteriaMode: 'all' });
+  } = useForm<IFormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
                   register={{
                     ...register('password', {
                       required: 'Поле не может быть пустым',
-                      pattern: /(?=.*[0-9])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/,
+                      pattern: regex.password,
                     }),
                   }}
                   onBlur={() => setFocusedPassword(false)}
@@ -119,13 +120,13 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
                   if (errors.passwordConfirmation?.type !== 'required') clearErrors('passwordConfirmation');
                 }}
                 onBlur={() => {
-                  if (getValues('passwordConfirmation') === '')
+                  if (!getValues('passwordConfirmation'))
                     setError('passwordConfirmation', { message: 'Поле не может быть пустым', type: 'required' });
                   else if (getValues('passwordConfirmation') !== watchPassword)
                     setError('passwordConfirmation', { message: 'Пароли не совпадают' });
                 }}
                 onChange={() => {
-                  if (getValues('passwordConfirmation') === '')
+                  if (!getValues('passwordConfirmation'))
                     setError('passwordConfirmation', { message: 'Поле не может быть пустым', type: 'required' });
                 }}
                 register={{

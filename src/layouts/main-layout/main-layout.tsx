@@ -1,7 +1,7 @@
 import { FC, Fragment } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { Navigation } from '../navigation';
+import { Navigation } from '../../components/navigation';
 
 import './main-layout.scss';
 

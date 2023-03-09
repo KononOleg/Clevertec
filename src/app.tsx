@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import { AuthorizationLayout } from './components/authorization-layout';
-import { Layout } from './components/layout';
-import { MainLayout } from './components/main-layout';
+import { AuthorizationLayout } from './layouts/authorization-layout';
+import { Layout } from './layouts/layout';
+import { MainLayout } from './layouts/main-layout';
 import { AuthorizationPage } from './pages/authorization';
 import { BookPage } from './pages/book';
 import { MainPage } from './pages/main';

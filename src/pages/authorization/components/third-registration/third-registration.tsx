@@ -1,6 +1,7 @@
 import { FC, Fragment } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
+import { regex } from '../../../../constants/regex';
 import { IRegistrationInputs } from '../registration/registration';
 import { TextInput } from '../text-input';
 
@@ -22,8 +23,7 @@ export const ThirdRegistration: FC<IProps> = ({ register, errors, isValid }) => 
           register={{
             ...register('phone', {
               required: 'Поле не может быть пустым',
-              pattern:
-                /^\+?375((\s\(33\)\s\d{3}-\d{2}-\d{2})|(\s\(29\)\s\d{3}-\d{2}-\d{2})|(\s\(44\)\s\d{3}-\d{2}-\d{2})|(\s\(25\)\s\d{3}-\d{2}-\d{2}))\s*$/,
+              pattern: regex.phone,
             }),
           }}
           error={errors.phone}
@@ -40,7 +40,7 @@ export const ThirdRegistration: FC<IProps> = ({ register, errors, isValid }) => 
           ...register('email', {
             required: 'Поле не может быть пустым',
             pattern: {
-              value: /^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/,
+              value: regex.email,
               message: 'Введите корректный e-mail',
             },
           }),

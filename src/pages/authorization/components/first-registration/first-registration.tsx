@@ -1,6 +1,7 @@
 import { FC, Fragment, useState } from 'react';
 import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
 
+import { regex } from '../../../../constants/regex';
 import { ErrorTextPassword, ErrorTextUserName } from '../error-text';
 import { PasswordInput } from '../password-input';
 import { IRegistrationInputs } from '../registration/registration';
@@ -31,7 +32,7 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             register={{
               ...register('username', {
                 required: 'Поле не может быть пустым',
-                pattern: /^[a-zA-Z\d]/,
+                pattern: regex.username,
               }),
             }}
             onBlur={() => setFocusedUserName(false)}
@@ -55,7 +56,7 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             register={{
               ...register('password', {
                 required: 'Поле не может быть пустым',
-                pattern: /(?=.*[0-9])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/,
+                pattern: regex.password,
               }),
             }}
             onBlur={() => setFocusedPassword(false)}

@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 import { PATH } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
-import { Loading } from '../loading';
+import { Loading } from '../../components/loading';
 
 import './authorization-layout.scss';
 
