@@ -1,9 +1,9 @@
 import { FC, Fragment, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
+import { Loading } from '../../components/loading';
 import { PATH } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
-import { Loading } from '../../components/loading';
 
 import './authorization-layout.scss';
 
