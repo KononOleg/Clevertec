@@ -25,22 +25,23 @@ interface IProps {
 export const RecoveryPassword: FC<IProps> = ({ code }) => {
   const {
     register,
-    formState: { errors, isValid, touchedFields },
+    formState: { errors, touchedFields },
     handleSubmit,
     watch,
     reset,
     trigger,
     clearErrors,
-    setError,
-    getValues,
   } = useForm<IFormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { error, isSuccessfulRecoveryPassword } = useAppSelector((state) => state.authSlice);
   const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
+  const [focusedPasswordConfirmation, setFocusedPasswordConfirmation] = useState<boolean>(false);
 
   const watchPassword = watch('password');
+
+  const isPasswordConfirmationError = !focusedPasswordConfirmation || errors.passwordConfirmation?.type === 'required';
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => {
     dispatch(
@@ -115,28 +116,23 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
 
               <PasswordInput
                 label='Повторите пароль'
-                isError={errors.passwordConfirmation}
+                isError={isPasswordConfirmationError ? errors.passwordConfirmation : undefined}
                 onFocus={() => {
                   if (errors.passwordConfirmation?.type !== 'required') clearErrors('passwordConfirmation');
+                  setFocusedPasswordConfirmation(true);
                 }}
-                onBlur={() => {
-                  if (!getValues('passwordConfirmation'))
-                    setError('passwordConfirmation', { message: 'Поле не может быть пустым', type: 'required' });
-                  else if (getValues('passwordConfirmation') !== watchPassword)
-                    setError('passwordConfirmation', { message: 'Пароли не совпадают' });
-                }}
-                onChange={() => {
-                  if (!getValues('passwordConfirmation'))
-                    setError('passwordConfirmation', { message: 'Поле не может быть пустым', type: 'required' });
-                }}
+                onBlur={() => setFocusedPasswordConfirmation(false)}
                 register={{
-                  ...register('passwordConfirmation'),
+                  ...register('passwordConfirmation', {
+                    validate: { match: (value) => value === watchPassword || 'Пароли не совпадают' },
+                    required: 'Поле не может быть пустым',
+                  }),
                 }}
-                error={errors.passwordConfirmation}
+                error={isPasswordConfirmationError ? errors.passwordConfirmation : undefined}
               />
             </div>
 
-            <button className='button' type='submit' disabled={!isValid}>
+            <button className='button' type='submit' disabled={!!errors.password || isPasswordConfirmationError}>
               Сохранить изменения
             </button>
           </form>

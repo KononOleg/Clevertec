@@ -1,12 +1,12 @@
 import { FC, Fragment, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import { PATH } from '../../constants';
-import { useAppSelector } from '../../hooks/redux';
 import { ErrorMessage } from '../../components/error-message';
 import { Footer } from '../../components/footer';
 import { Header } from '../../components/header';
 import { Loading } from '../../components/loading';
+import { PATH } from '../../constants';
+import { useAppSelector } from '../../hooks/redux';
 
 import './layout.scss';
 
