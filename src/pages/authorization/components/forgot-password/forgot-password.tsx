@@ -6,6 +6,7 @@ import { TextButton } from '../../../../components/text-button';
 import { PATH } from '../../../../constants';
 import { regex } from '../../../../constants/regex';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { authSelector } from '../../../../store/selectors/auth-selector';
 import { resetPassword } from '../../../../store/thunks/auth-thunks';
 import { ErrorModal } from '../error-modal';
 import { TextInput } from '../text-input';
@@ -24,7 +25,7 @@ export const ForgotPassword: FC = () => {
   } = useForm<IFormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
-  const { isSuccessfulResetPassword, error } = useAppSelector((state) => state.authSlice);
+  const { isSuccessfulResetPassword, error } = useAppSelector(authSelector);
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => dispatch(resetPassword(data.email));
 

@@ -6,6 +6,7 @@ import { PATH } from '../../../../constants';
 import { regex } from '../../../../constants/regex';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { resetSlice } from '../../../../store/reducers/auth-slice';
+import { authSelector } from '../../../../store/selectors/auth-selector';
 import { recoveryPassword } from '../../../../store/thunks/auth-thunks';
 import { ErrorModal } from '../error-modal';
 import { ErrorTextPassword } from '../error-text';
@@ -35,7 +36,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { error, isSuccessfulRecoveryPassword } = useAppSelector((state) => state.authSlice);
+  const { error, isSuccessfulRecoveryPassword } = useAppSelector(authSelector);
   const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
   const [focusedPasswordConfirmation, setFocusedPasswordConfirmation] = useState<boolean>(false);
 

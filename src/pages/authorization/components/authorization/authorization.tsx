@@ -6,6 +6,7 @@ import { TextButton } from '../../../../components/text-button';
 import { HttpStatusCode, PATH } from '../../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { resetSlice } from '../../../../store/reducers/auth-slice';
+import { authSelector } from '../../../../store/selectors/auth-selector';
 import { signIn } from '../../../../store/thunks/auth-thunks';
 import { ErrorModal } from '../error-modal';
 import { PasswordInput } from '../password-input';
@@ -24,7 +25,7 @@ export const Authorization: FC = () => {
   } = useForm<IFormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
-  const { error } = useAppSelector((state) => state.authSlice);
+  const { error } = useAppSelector(authSelector);
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) =>
     dispatch(signIn({ login: data.identifier, password: data.password }));

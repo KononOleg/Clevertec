@@ -4,12 +4,13 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { Loading } from '../../components/loading';
 import { PATH } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
+import { authSelector } from '../../store/selectors/auth-selector';
 
 import './authorization-layout.scss';
 
 export const AuthorizationLayout: FC = () => {
   const navigate = useNavigate();
-  const { isAuth, isPending } = useAppSelector((state) => state.authSlice);
+  const { isAuth, isPending } = useAppSelector(authSelector);
 
   useEffect(() => {
     if (isAuth) {

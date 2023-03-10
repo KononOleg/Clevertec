@@ -5,6 +5,7 @@ import LogoPNG from '../../assets/logo.png';
 import { PATH } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setIsBurgerActive } from '../../store/reducers/app-slice';
+import { appSelector } from '../../store/selectors/app-selector';
 
 import { BurgerNavigation } from './components/burger-navigation';
 import { Person } from './components/person';
@@ -13,7 +14,7 @@ import './header.scss';
 
 export const Header: FC = () => {
   const dispatch = useAppDispatch();
-  const { isBurgerActive } = useAppSelector((state) => state.appSlice);
+  const { isBurgerActive } = useAppSelector(appSelector);
 
   const burgerEl = useRef<HTMLButtonElement>(null);
 

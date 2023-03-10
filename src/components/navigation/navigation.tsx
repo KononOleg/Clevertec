@@ -6,6 +6,7 @@ import { PATH } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setIsBurgerActive } from '../../store/reducers/app-slice';
 import { signOut } from '../../store/reducers/auth-slice';
+import { librarySelector } from '../../store/selectors/library-selector';
 import { ILibrary } from '../../types';
 
 import './navigation.scss';
@@ -18,7 +19,7 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
   const dispatch = useAppDispatch();
   const isAllBooksPath = useMatch(PATH.allBooks);
   const isBookCategoryPath = useMatch(PATH.booksCategory);
-  const { library } = useAppSelector((state) => state.librarySlice);
+  const { library } = useAppSelector(librarySelector);
 
   const navLinkClassName = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : 'link');
 

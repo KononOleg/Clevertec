@@ -7,6 +7,7 @@ import { Highlighter } from '../../../../components/highlighter';
 import { Rating } from '../../../../components/rating';
 import { PATH } from '../../../../constants';
 import { useAppSelector } from '../../../../hooks/redux';
+import { librarySelector } from '../../../../store/selectors/library-selector';
 import { IBook } from '../../../../types';
 
 import './book-card.scss';
@@ -19,7 +20,7 @@ interface IProps {
 export const BookCard: FC<IProps> = ({ book, isTileView }) => {
   const { category } = useParams();
   const { id, issueYear, authors, title, image, rating, booking, delivery } = book;
-  const { filterText } = useAppSelector((state) => state.librarySlice);
+  const { filterText } = useAppSelector(librarySelector);
 
   return (
     <Link
