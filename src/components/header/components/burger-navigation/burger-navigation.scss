@@ -16,15 +16,14 @@
 
     max-width: 500px;
     width: 100%;
-    padding: 32px;
 
     background: $black5;
     box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
       0px 1px 5px rgba(191, 196, 201, 0.24);
     border-radius: 10px;
 
-    .navigation__wrapper .links {
-      padding: 0;
+    .links {
+      padding: 32px 32px 52px;
     }
   }
 
@@ -34,11 +33,9 @@
 }
 
 @media (max-width: 680px) {
-  .burger-navigation .navigation__wrapper {
-    max-width: 280px;
-    width: 100% !important;
-  }
   .burger-navigation {
-    padding: 32px 17px;
+    .links {
+      padding: 32px 17px 52px;
+    }
   }
 }

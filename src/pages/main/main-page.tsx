@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { filterBooks, filterCategory, sortBooks } from '../../helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { librarySelector } from '../../store/selectors/library-selector';
 import { getLibrary } from '../../store/thunks/library-thunks';
 import { IBook } from '../../types';
 
@@ -15,7 +16,7 @@ export const MainPage: FC = () => {
   const { category } = useParams();
   const dispatch = useAppDispatch();
   const [isTileView, setTileView] = useState<boolean>(true);
-  const { library, isPending, isDescendingOrder, filterText } = useAppSelector((state) => state.librarySlice);
+  const { library, isPending, isDescendingOrder, filterText } = useAppSelector(librarySelector);
 
   const filteredCategory = useMemo(() => filterCategory(library, category as string), [library, category]);
   const filteredBooks = useMemo(() => filterBooks(filteredCategory, filterText), [filteredCategory, filterText]);

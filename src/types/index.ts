@@ -3,6 +3,17 @@ export enum TermsContentView {
   Contract,
 }
 
+export enum AuthorizationContentView {
+  Auth,
+  Registration,
+  ForgotPass,
+}
+
+export enum RegistrationStep {
+  FirstStep = 1,
+  SecondStep,
+  ThirdStep,
+}
 export interface ILibrary extends ICategory {
   books: IBook[];
 }
@@ -69,10 +80,10 @@ export interface IComment {
   rating: number;
   text?: string;
   createdAt: string;
-  user: IUser;
+  user: IReviewer;
 }
 
-export interface IUser {
+export interface IReviewer {
   commentUserId: string;
   firstName: string;
   lastName: string;
@@ -89,4 +100,32 @@ export interface IError {
   name: string;
   message: string;
   details: object[];
+}
+
+export interface IUser {
+  id: string;
+  username: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: string;
+  updatedAt: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+}
+
+export interface AuthResponse {
+  jwt: string;
+  user: IUser;
+}
+
+export interface SignUpRequest {
+  username: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
 }

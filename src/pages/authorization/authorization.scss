@@ -1,0 +1,76 @@
+@import '../../index.variables.scss';
+
+.authorization {
+  background: $white;
+  border-radius: 16px;
+  padding: 48px 56px;
+
+  width: 100%;
+  max-width: 528px;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fields {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    padding: 32px 0 20px;
+  }
+
+  .step {
+    margin-top: 7px;
+  }
+  .button {
+    width: 100%;
+    padding: 17px 0;
+    margin: 32px 0 16px;
+    cursor: pointer;
+  }
+  .forgot-password {
+    padding-left: 13px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .registration {
+    display: flex;
+    gap: 16px;
+    color: $black70;
+  }
+  .error {
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    color: $grey40;
+  }
+
+  .color_error {
+    color: $negative;
+  }
+}
+
+@media (max-width: 680px) {
+  .authorization {
+    padding: 24px 16px;
+
+    .forgot-password {
+      padding-left: 0;
+    }
+
+    .fields {
+      gap: 32px;
+    }
+
+    .registration {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .button {
+      padding: 11px 0;
+    }
+  }
+}
