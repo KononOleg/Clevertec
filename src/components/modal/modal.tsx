@@ -12,7 +12,7 @@ interface IProps {
 export const Modal: FC<IProps> = ({ closeModal, children }) => (
   <div className='modal'>
     <div className='modal__wrapper' onClick={closeModal} role='presentation'>
-      <button type='button' onClick={closeModal}>
+      <button className='button_close' type='button' onClick={closeModal}>
         <CloseSVG />
       </button>
       <h4>Оцените книгу</h4>

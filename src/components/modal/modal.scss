@@ -27,9 +27,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    h4 {
+      margin-bottom: 32px;
+    }
+
+    .subtitle_large {
+      margin-bottom: 17px;
+    }
+
+    .button {
+      width: 416px;
+      padding: 16px 0;
+    }
   }
 
-  button {
+  .button_close {
     top: 43px;
     right: 43px;
     position: absolute;
