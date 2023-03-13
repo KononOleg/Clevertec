@@ -7,13 +7,15 @@ import { Header } from '../../components/header';
 import { Loading } from '../../components/loading';
 import { PATH } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
+import { authSelector } from '../../store/selectors/auth-selector';
+import { librarySelector } from '../../store/selectors/library-selector';
 
 import './layout.scss';
 
 export const Layout: FC = () => {
   const navigate = useNavigate();
-  const { isAuth } = useAppSelector((state) => state.authSlice);
-  const { isPending } = useAppSelector((state) => state.librarySlice);
+  const { isAuth } = useAppSelector(authSelector);
+  const { isPending } = useAppSelector(librarySelector);
 
   useEffect(() => {
     if (!isAuth) {

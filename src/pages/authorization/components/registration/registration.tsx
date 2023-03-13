@@ -6,6 +6,7 @@ import { TextButton } from '../../../../components/text-button';
 import { HttpStatusCode, PATH } from '../../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { resetSlice } from '../../../../store/reducers/auth-slice';
+import { authSelector } from '../../../../store/selectors/auth-selector';
 import { signUp } from '../../../../store/thunks/auth-thunks';
 import { RegistrationStep } from '../../../../types';
 import { ErrorModal } from '../error-modal';
@@ -33,8 +34,8 @@ export const Registration: FC = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { error, isSuccessfulRegistration } = useAppSelector((state) => state.authSlice);
-  const [step, setStep] = useState<number>(1);
+  const { error, isSuccessfulRegistration } = useAppSelector(authSelector);
+  const [step, setStep] = useState<number>(RegistrationStep.FirstStep);
 
   const onSubmit: SubmitHandler<IRegistrationInputs> = (data) => dispatch(signUp({ ...data }));
 

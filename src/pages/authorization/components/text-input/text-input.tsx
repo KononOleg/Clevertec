@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 
@@ -17,34 +17,37 @@ interface IProps {
   maskChar?: string;
 }
 
-export const TextInput: FC<IProps> = ({ label, register, error, isError, onFocus, onBlur, mask, maskChar }) => (
-  <InputLayout label={label} error={error}>
-    {mask ? (
-      <InputMask
-        className={`input ${isError ? 'input_error' : ''}`}
-        type='text'
-        mask={mask}
-        maskChar={maskChar}
-        placeholder=' '
-        onFocus={onFocus}
-        {...register}
-        onBlur={(e) => {
-          register.onBlur(e);
-          if (onBlur) onBlur();
-        }}
-      />
-    ) : (
-      <input
-        className={`input ${isError ? 'input_error' : ''}`}
-        type='text'
-        placeholder=' '
-        onFocus={onFocus}
-        {...register}
-        onBlur={(e) => {
-          register.onBlur(e);
-          if (onBlur) onBlur();
-        }}
-      />
-    )}
-  </InputLayout>
-);
+export const TextInput: FC<IProps> = ({ label, register, error, isError, onFocus, onBlur, mask, maskChar }) => {
+  const [, setIsFocus] = useState<boolean>(false);
+
+  return (
+    <InputLayout label={label} error={error}>
+      {mask ? (
+        <InputMask
+          className={`input ${isError ? 'input_error' : ''}`}
+          type='text'
+          mask={mask}
+          maskChar={maskChar}
+          placeholder=' '
+          {...register}
+        />
+      ) : (
+        <input
+          className={`input ${isError ? 'input_error' : ''}`}
+          type='text'
+          placeholder=' '
+          onFocus={() => {
+            setIsFocus(true);
+            if (onFocus) onFocus();
+          }}
+          {...register}
+          onBlur={(e) => {
+            register.onBlur(e);
+            setIsFocus(false);
+            if (onBlur) onBlur();
+          }}
+        />
+      )}
+    </InputLayout>
+  );
+};

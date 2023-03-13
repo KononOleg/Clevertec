@@ -7,6 +7,7 @@ import { ReactComponent as SearchSVG } from '../../../../assets/icon-search.svg'
 import { ReactComponent as SquareSVG } from '../../../../assets/icon-square.svg';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { setFilterText, switchOrder } from '../../../../store/reducers/library-slice';
+import { librarySelector } from '../../../../store/selectors/library-selector';
 
 import './navigation-list.scss';
 
@@ -18,7 +19,7 @@ interface IProps {
 export const NavigationList: FC<IProps> = ({ isTileView, setTileViewHandler }) => {
   const dispatch = useAppDispatch();
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-  const { isDescendingOrder, filterText } = useAppSelector((state) => state.librarySlice);
+  const { isDescendingOrder, filterText } = useAppSelector(librarySelector);
 
   return (
     <div className='navigation-list'>

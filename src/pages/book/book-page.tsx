@@ -6,6 +6,7 @@ import { Button } from '../../components/button';
 import { Rating } from '../../components/rating';
 import { PATH } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { librarySelector } from '../../store/selectors/library-selector';
 import { getBook } from '../../store/thunks/library-thunks';
 
 import { AboutBook } from './components/about-book';
@@ -19,7 +20,7 @@ export const BookPage: FC = () => {
   const { category, bookId } = useParams();
 
   const dispatch = useAppDispatch();
-  const { book, library } = useAppSelector((state) => state.librarySlice);
+  const { book, library } = useAppSelector(librarySelector);
   const categoryName =
     category === PATH.all ? 'Все книги' : library.find((currentCategory) => currentCategory.path === category)?.name;
 
