@@ -11,7 +11,7 @@ interface IProps {
 
 export const Modal: FC<IProps> = ({ closeModal, children }) => (
   <div className='modal'>
-    <div className='modal__wrapper' onClick={closeModal} role='presentation'>
+    <div className='modal__wrapper'>
       <button className='button_close' type='button' onClick={closeModal}>
         <CloseSVG />
       </button>

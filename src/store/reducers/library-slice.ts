@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IBook, IError, ILibrary } from '../../types';
-import { getBook, getLibrary } from '../thunks/library-thunks';
+import { createComment, getBook, getLibrary } from '../thunks/library-thunks';
 
 interface LibrarySliceState {
   isPending: boolean;
@@ -10,6 +10,7 @@ interface LibrarySliceState {
   book: IBook | null;
   isDescendingOrder: boolean;
   filterText: string;
+  isReviewModalActive: boolean;
 }
 
 const initialState: LibrarySliceState = {
@@ -19,6 +20,7 @@ const initialState: LibrarySliceState = {
   book: null,
   isDescendingOrder: true,
   filterText: '',
+  isReviewModalActive: false,
 };
 
 export const librarySlice = createSlice({
@@ -36,11 +38,17 @@ export const librarySlice = createSlice({
     setFilterText(state, action) {
       return { ...state, filterText: action.payload };
     },
+
+    setIsReviewModalActive(state, action) {
+      return { ...state, isReviewModalActive: action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getLibrary.pending, (state) => ({ ...state, isPending: true }));
 
     builder.addCase(getBook.pending, (state) => ({ ...state, isPending: true }));
+
+    builder.addCase(createComment.pending, (state) => ({ ...state, isPending: true }));
 
     builder.addCase(getLibrary.fulfilled.type, (state, action: PayloadAction<ILibrary[]>) => ({
       ...state,
@@ -52,6 +60,12 @@ export const librarySlice = createSlice({
       ...state,
       isPending: false,
       book: action.payload,
+    }));
+
+    builder.addCase(createComment.fulfilled.type, (state) => ({
+      ...state,
+      isPending: false,
+      isReviewModalActive: false,
     }));
 
     builder.addCase(getLibrary.rejected.type, (state, action: PayloadAction<IError>) => ({
@@ -69,7 +83,14 @@ export const librarySlice = createSlice({
       library: [],
       error: action.payload,
     }));
+
+    builder.addCase(createComment.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      error: action.payload,
+      isReviewModalActive: false,
+    }));
   },
 });
 
-export const { resetError, switchOrder, setFilterText } = librarySlice.actions;
+export const { resetError, switchOrder, setFilterText, setIsReviewModalActive } = librarySlice.actions;

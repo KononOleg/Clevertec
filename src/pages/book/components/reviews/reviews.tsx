@@ -5,16 +5,25 @@ import ArrowSVG from '../../../../assets/icon-arrow.svg';
 import ReviewAvatarPNG from '../../../../assets/review-avatar.png';
 import { Rating } from '../../../../components/rating';
 import { API_HOST } from '../../../../constants';
+import { useAppDispatch } from '../../../../hooks/redux';
+import { setIsReviewModalActive } from '../../../../store/reducers/library-slice';
 import { IComment } from '../../../../types';
 
 import './reviews.scss';
 
 interface IProps {
   reviews: IComment[];
+  userId: string;
 }
 
-export const Reviews: FC<IProps> = ({ reviews }) => {
+export const Reviews: FC<IProps> = ({ reviews, userId }) => {
   const [isTurn, setIsTurn] = useState<boolean>(true);
+
+  const dispatch = useAppDispatch();
+
+  const openModalHandler = () => dispatch(setIsReviewModalActive(true));
+
+  const disabled = reviews.find((review) => review.user.commentUserId === userId) ? true : false;
 
   return (
     <div className='reviews'>
@@ -54,7 +63,13 @@ export const Reviews: FC<IProps> = ({ reviews }) => {
         </div>
       )}
 
-      <button className='button button_rating' type='button' data-test-id='button-rating'>
+      <button
+        className='button button_rating'
+        type='button'
+        disabled={disabled}
+        data-test-id='button-rating'
+        onClick={openModalHandler}
+      >
         оценить книгу
       </button>
     </div>

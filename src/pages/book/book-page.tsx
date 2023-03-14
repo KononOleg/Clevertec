@@ -6,6 +6,7 @@ import { Button } from '../../components/button';
 import { Rating } from '../../components/rating';
 import { PATH } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { authSelector } from '../../store/selectors/auth-selector';
 import { librarySelector } from '../../store/selectors/library-selector';
 import { getBook } from '../../store/thunks/library-thunks';
 
@@ -21,7 +22,8 @@ export const BookPage: FC = () => {
   const { category, bookId } = useParams();
 
   const dispatch = useAppDispatch();
-  const { book, library } = useAppSelector(librarySelector);
+  const { book, library, isReviewModalActive } = useAppSelector(librarySelector);
+  const { user } = useAppSelector(authSelector);
   const categoryName =
     category === PATH.all ? 'Все книги' : library.find((currentCategory) => currentCategory.path === category)?.name;
 
@@ -31,7 +33,7 @@ export const BookPage: FC = () => {
 
   return (
     <Fragment>
-      <ReviewModal />
+      {isReviewModalActive && <ReviewModal book={bookId as string} />}
       <section className='book-page'>
         <div className='navigation-map'>
           <p>
@@ -71,7 +73,7 @@ export const BookPage: FC = () => {
               </div>
             </div>
             <Detailed book={book} category={categoryName as string} />
-            <Reviews reviews={book.comments} />
+            <Reviews reviews={book.comments} userId={user?.id as string} />
           </Fragment>
         )}
       </section>

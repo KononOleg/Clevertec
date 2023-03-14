@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { LibraryService } from '../../service/library-service';
-import { AxiosErrorDataType, IError, ILibrary } from '../../types';
+import { AxiosErrorDataType, CreateCommentRequest, IError, ILibrary } from '../../types';
 
 const ERROR_MESSAGE = 'Что-то пошло не так. Обновите страницу через некоторое время.';
 
@@ -48,6 +48,26 @@ export const getBook = createAsyncThunk(
       }
 
       return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
+    }
+  }
+);
+
+export const createComment = createAsyncThunk(
+  'library/createComment',
+
+  async (payload: CreateCommentRequest, thunkAPI) => {
+    try {
+      const response = await LibraryService.createComment(payload);
+
+      return response.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        const data = err.response.data as AxiosErrorDataType;
+
+        return thunkAPI.rejectWithValue(data.error);
+      }
+
+      return thunkAPI.rejectWithValue({ message: 'Оценка не была отправлена. Попробуйте позже' } as IError);
     }
   }
 );

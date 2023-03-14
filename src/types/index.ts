@@ -129,3 +129,10 @@ export interface SignUpRequest {
   lastName: string;
   phone: string;
 }
+
+export interface CreateCommentRequest {
+  rating: number;
+  text: string;
+  book: string;
+  user: string;
+}
