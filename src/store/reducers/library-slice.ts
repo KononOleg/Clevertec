@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IBook, IError, ILibrary } from '../../types';
+import { IBook, IError, ILibrary, ISuccess } from '../../types';
 import { createComment, getBook, getLibrary } from '../thunks/library-thunks';
 
 interface LibrarySliceState {
   isPending: boolean;
   error: IError | null;
+  success: ISuccess | null;
   library: ILibrary[];
   book: IBook | null;
   isDescendingOrder: boolean;
@@ -16,6 +17,7 @@ interface LibrarySliceState {
 const initialState: LibrarySliceState = {
   isPending: true,
   error: null,
+  success: null,
   library: [],
   book: null,
   isDescendingOrder: true,
@@ -29,6 +31,10 @@ export const librarySlice = createSlice({
   reducers: {
     resetError(state) {
       return { ...state, error: null };
+    },
+
+    resetSuccess(state) {
+      return { ...state, success: null };
     },
 
     switchOrder(state) {
@@ -66,6 +72,7 @@ export const librarySlice = createSlice({
       ...state,
       isPending: false,
       isReviewModalActive: false,
+      success: { message: 'Спасибо, что нашли время оценить книгу!' },
     }));
 
     builder.addCase(getLibrary.rejected.type, (state, action: PayloadAction<IError>) => ({
@@ -93,4 +100,4 @@ export const librarySlice = createSlice({
   },
 });
 
-export const { resetError, switchOrder, setFilterText, setIsReviewModalActive } = librarySlice.actions;
+export const { resetError, switchOrder, setFilterText, setIsReviewModalActive, resetSuccess } = librarySlice.actions;

@@ -102,6 +102,10 @@ export interface IError {
   details: object[];
 }
 
+export interface ISuccess {
+  message: string;
+}
+
 export interface IUser {
   id: string;
   username: string;
