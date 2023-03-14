@@ -7,6 +7,7 @@
     img {
       width: 40px;
       height: 40px;
+      cursor: pointer;
     }
 
     margin-bottom: 34px;
@@ -15,6 +16,7 @@
   .input {
     border-bottom: 0;
     height: 132px;
+    resize: none;
 
     margin-bottom: 52px;
   }

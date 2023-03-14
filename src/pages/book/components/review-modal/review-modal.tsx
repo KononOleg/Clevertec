@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Modal } from '../../../../components/modal';
 import { Rating } from '../../../../components/rating';
-import { TextInput } from '../../../authorization/components/text-input';
+import { TextAreaInput } from '../textarea-input';
 
 import './review-modal.scss';
 
@@ -12,25 +12,18 @@ interface IFormInputs {
 }
 
 export const ReviewModal: FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFormInputs>();
+  const { register, handleSubmit } = useForm<IFormInputs>();
 
   const onSubmit: SubmitHandler<IFormInputs> = () => {};
+
+  const [rating, setRating] = useState<number>(0);
 
   return (
     <Modal closeModal={() => {}}>
       <p className='subtitle_large'>Ваша оценка</p>
-      <Rating rating={4} />
+      <Rating rating={rating} setRating={setRating} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TextInput
-          label='Оставить отзыв'
-          isError={errors.comment}
-          register={{ ...register('comment') }}
-          error={errors.comment}
-        />
+        <TextAreaInput label='Оставить отзыв' register={{ ...register('comment') }} />
         <button className='button' type='submit'>
           Оценить
         </button>
