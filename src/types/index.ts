@@ -140,3 +140,16 @@ export interface CreateCommentRequest {
   book: string;
   user: string;
 }
+
+export interface CreateCommentResponse {
+  id: string;
+  attributes: CreateCommentAttributes;
+}
+
+export interface CreateCommentAttributes {
+  rating: number;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}

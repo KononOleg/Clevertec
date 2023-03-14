@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-import { CreateCommentRequest, IBook, ICategory } from '../types';
+import { CreateCommentRequest, CreateCommentResponse, IBook, ICategory } from '../types';
 
 import { $api } from './http';
 
@@ -17,8 +17,10 @@ export class LibraryService {
     return $api.get<ICategory[]>('/api/categories');
   }
 
-  static async createComment(createCommentRequest: CreateCommentRequest): Promise<AxiosResponse> {
-    return $api.post('/api/comments', {
+  static async createComment(
+    createCommentRequest: CreateCommentRequest
+  ): Promise<AxiosResponse<CreateCommentResponse>> {
+    return $api.post<CreateCommentResponse>('/api/comments', {
       data: createCommentRequest,
     });
   }
