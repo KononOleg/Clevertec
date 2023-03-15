@@ -13,6 +13,8 @@
     display: flex;
     justify-content: space-between;
 
+    color: $grey40;
+
     .buttons {
       display: flex;
       gap: 5px;
@@ -44,10 +46,19 @@
 
     .day_inactive {
       color: $grey20;
+      pointer-events: none;
     }
 
+    .today {
+      color: $orange10;
+    }
+    .day_select {
+      background: $hover;
+      color: $white;
+    }
     .holiday {
       background: $negative_background;
+      pointer-events: none;
     }
     .days {
       .days-div {

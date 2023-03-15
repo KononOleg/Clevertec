@@ -2,14 +2,15 @@ import { FC, useEffect, useState } from 'react';
 import moment, { Moment } from 'moment';
 
 import { ReactComponent as ArrowSVG } from '../../assets/icon-arrow.svg';
-import { dayNames } from '../../constants';
+import { dayNames, monthNames } from '../../constants';
 import {
   buildCalender,
-  differenceDates,
-  getCurrentMonth,
-  getCurrentYear,
+  compareDates,
   getNextMonth,
   getPrevMonth,
+  getSecondBookDate,
+  isHoliday,
+  isToday,
 } from '../../helpers';
 
 import './calendar.scss';
@@ -17,30 +18,28 @@ import './calendar.scss';
 export const Calendar: FC = () => {
   const [calender, setCalender] = useState<Moment[][]>([]);
   const [value, setValue] = useState<Moment>(moment());
+  const [selectDate, setSelectDate] = useState<Moment | null>(null);
+
+  const secondBookDate = getSecondBookDate(moment());
 
   useEffect(() => {
     setCalender(buildCalender(value));
   }, [value]);
 
-  const nextMonth = () => {
-    setValue(getPrevMonth(value));
-  };
-
-  const prevMonth = () => {
-    setValue(getNextMonth(value));
-  };
+  const nextMonth = () => setValue(getNextMonth(value));
+  const prevMonth = () => setValue(getPrevMonth(value));
 
   return (
     <div className='calendar'>
       <div className='navigation'>
         <p className='body_large'>
-          {getCurrentMonth(value)} {getCurrentYear(value)}
+          {monthNames[value.month()]} {value.year()}
         </p>
         <div className='buttons'>
-          <button type='button' onClick={nextMonth}>
+          <button type='button' onClick={prevMonth}>
             <ArrowSVG />
           </button>
-          <button className='button_down' type='button' onClick={prevMonth}>
+          <button className='button_down' type='button' onClick={nextMonth}>
             <ArrowSVG />
           </button>
         </div>
@@ -57,14 +56,16 @@ export const Calendar: FC = () => {
           {calender.map((week) => (
             <div key={week.toString()} className='days-div'>
               {week.map((day, index) => (
-                <div
+                <button
                   key={`${index.toString()}`}
-                  className={`day ${differenceDates(day) === 1 ? '' : 'day_inactive'} ${
-                    index === 5 || index === 6 ? 'holiday' : ''
-                  }`}
+                  type='button'
+                  className={`day ${compareDates(secondBookDate, day) || isToday(day) ? '' : 'day_inactive'} ${
+                    isHoliday(index) ? 'holiday' : ''
+                  } ${isToday(day) ? 'today' : ''} ${selectDate === day ? 'day_select' : ''}`}
+                  onClick={() => setSelectDate(day)}
                 >
-                  <p className='info_small'>{day.format('D').toString()} </p>
-                </div>
+                  <p className='info_small'>{day.format('D').toString()}</p>
+                </button>
               ))}
             </div>
           ))}

@@ -55,12 +55,26 @@ export const buildCalender = (value: Moment) => {
   return calenderMatrix;
 };
 
-export const getCurrentMonth = (value: Moment) => value.format('MMM');
+export const getPrevMonth = (value: Moment) => {
+  if (value.month() > 0) return value.clone().subtract(1, 'month');
 
-export const getCurrentYear = (value: Moment) => value.format('YYYY');
+  return moment().endOf('year');
+};
 
-export const getPrevMonth = (value: Moment) => value.clone().subtract(1, 'month');
+export const getNextMonth = (value: Moment) => {
+  if (value.month() < 11) return value.clone().add(1, 'month');
 
-export const getNextMonth = (value: Moment) => value.clone().add(1, 'month');
+  return moment().startOf('year');
+};
 
-export const differenceDates = (value: Moment) => value.diff(moment(new Date()));
+export const isToday = (value: Moment) => moment(value).isSame(moment(), 'day');
+
+export const compareDates = (firstValue: Moment, secondValue: Moment) => moment(firstValue).isSame(secondValue, 'day');
+
+export const getSecondBookDate = (value: Moment) => {
+  if (value.clone().add(1, 'day').day() === 6) return value.clone().add(3, 'day');
+
+  return value.clone().add(1, 'day');
+};
+
+export const isHoliday = (index: number) => index === 5 || index === 6;
