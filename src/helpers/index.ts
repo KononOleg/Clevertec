@@ -1,3 +1,5 @@
+import moment, { Moment } from 'moment';
+
 import { PATH } from '../constants';
 import { IBook, ILibrary } from '../types';
 
@@ -35,3 +37,30 @@ export const filterCategory = (library: ILibrary[], category: string) => {
 
   return [];
 };
+
+export const buildCalender = (value: Moment) => {
+  const startDay = value.clone().startOf('month').startOf('week');
+  const endDay = value.clone().endOf('month').endOf('week');
+
+  const calenderMatrix = [];
+
+  while (startDay.isBefore(endDay, 'day')) {
+    calenderMatrix.push(
+      Array(7)
+        .fill(0)
+        .map(() => startDay.add(1, 'day').clone())
+    );
+  }
+
+  return calenderMatrix;
+};
+
+export const getCurrentMonth = (value: Moment) => value.format('MMM');
+
+export const getCurrentYear = (value: Moment) => value.format('YYYY');
+
+export const getPrevMonth = (value: Moment) => value.clone().subtract(1, 'month');
+
+export const getNextMonth = (value: Moment) => value.clone().add(1, 'month');
+
+export const differenceDates = (value: Moment) => value.diff(moment(new Date()));
