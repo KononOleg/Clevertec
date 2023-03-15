@@ -1,6 +1,7 @@
 import { FC, Fragment, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
+import { BookingsModal } from '../../components/book-modal';
 import { ErrorMessage } from '../../components/error-message';
 import { Footer } from '../../components/footer';
 import { Header } from '../../components/header';
@@ -26,11 +27,10 @@ export const Layout: FC = () => {
   return (
     <Fragment>
       {isPending && <Loading />}
-
+      <BookingsModal />
       <div className='main-layout'>
         <div className='main-layout__wrapper'>
           <ErrorMessage />
-
           <Header />
           <main className='main'>
             <Outlet />
