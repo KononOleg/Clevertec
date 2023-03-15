@@ -10,7 +10,7 @@ export const BookingsModal: FC = () => {
   const [value, onChange] = useState(new Date());
 
   return (
-    <Modal closeModal={() => {}}>
+    <Modal title='Выбор даты бронирования' closeModal={() => {}}>
       <Calendar onChange={onChange} value={value} />
       <button className='button' type='button'>
         Забронировать

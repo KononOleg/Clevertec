@@ -32,7 +32,7 @@ export const ReviewModal: FC<IProps> = ({ book }) => {
   const closeModalHandler = () => dispatch(setIsReviewModalActive(false));
 
   return (
-    <Modal closeModal={closeModalHandler}>
+    <Modal title='Оцените книгу' closeModal={closeModalHandler}>
       <p className='subtitle_large'>Ваша оценка</p>
       <Rating rating={rating} setRating={setRating} />
       <form onSubmit={handleSubmit(onSubmit)}>
