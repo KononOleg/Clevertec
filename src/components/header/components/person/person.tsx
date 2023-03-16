@@ -13,7 +13,7 @@ export const Person: FC = () => {
   const { user } = useAppSelector((state) => state.authSlice);
   const [isActiveModal, setIsActiveModal] = useState<boolean>(false);
 
-  const resetSliceHandler = () => dispatch(signOut());
+  const signOutHandler = () => dispatch(signOut());
 
   return (
     <div className='person'>
@@ -23,12 +23,12 @@ export const Person: FC = () => {
       </button>
 
       {isActiveModal && (
-        <div className='modal'>
+        <div className='person__modal'>
           <Link to={PATH.profile}>
             <h5>Профиль</h5>
           </Link>
 
-          <button type='button' onClick={resetSliceHandler} data-test-id='exit-button'>
+          <button type='button' onClick={signOutHandler} data-test-id='exit-button'>
             <h5>Выход</h5>
           </button>
         </div>
