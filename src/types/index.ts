@@ -177,4 +177,5 @@ export interface BookingBookAttributes {
 export interface BookingModalParams {
   bookId: string;
   order: boolean;
+  bookingId: string;
 }

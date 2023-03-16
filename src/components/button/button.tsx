@@ -17,7 +17,7 @@ interface IProps {
 export const Button: FC<IProps> = ({ booking, delivery, bookId }) => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(authSelector);
-  const { order, dateOrder, customerId } = booking || ({} as IBooking);
+  const { id, order, dateOrder, customerId } = booking || ({} as IBooking);
   const { handed } = delivery || ({} as IDelivery);
 
   const isCurrentUserBooking = customerId === user?.id;
@@ -25,7 +25,7 @@ export const Button: FC<IProps> = ({ booking, delivery, bookId }) => {
   const onClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(setBookingModalParams({ bookId, order }));
+    dispatch(setBookingModalParams({ bookId, order, bookingId: id }));
   };
 
   return (

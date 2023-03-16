@@ -1,20 +1,20 @@
 import { FC, useState } from 'react';
 import { Moment } from 'moment';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setBookingModalParams } from '../../store/reducers/library-slice';
-import { authSelector } from '../../store/selectors/auth-selector';
-import { librarySelector } from '../../store/selectors/library-selector';
-import { bookingBook } from '../../store/thunks/library-thunks';
-import { Calendar } from '../calendar';
-import { Modal } from '../modal';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { setBookingModalParams } from '../../../../store/reducers/library-slice';
+import { authSelector } from '../../../../store/selectors/auth-selector';
+import { bookingBook } from '../../../../store/thunks/library-thunks';
+import { Calendar } from '../../../calendar';
+import { Modal } from '../../../modal';
 
-import './bookings-modal.scss';
+interface IProps {
+  bookId: string;
+}
 
-export const BookingsModal: FC = () => {
+export const CreateBooking: FC<IProps> = ({ bookId }) => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(authSelector);
-  const { bookingModalParams } = useAppSelector(librarySelector);
   const [dateOrder, setDateOrder] = useState<Moment | null>(null);
 
   const closeModalHandler = () => dispatch(setBookingModalParams(null));
@@ -22,9 +22,9 @@ export const BookingsModal: FC = () => {
   const bookingBookHandler = () =>
     dispatch(
       bookingBook({
-        order: bookingModalParams?.order || true,
+        order: true,
         dateOrder: dateOrder?.toISOString() as string,
-        book: bookingModalParams?.bookId as string,
+        book: bookId,
         customer: user?.id as string,
       })
     );
