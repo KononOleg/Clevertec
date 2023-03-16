@@ -37,7 +37,7 @@ export const ErrorMessage: FC = () => {
       <div className='error-message error-message_success' data-test-id='error'>
         <div className='left'>
           <img src={SuccessPNG} className='image' alt='warning' />
-          <p className='subtitle_large'>вфывфывыф</p>
+          <p className='subtitle_large'>{success.message}</p>
         </div>
 
         <button className='button_close' type='button' onClick={closeErrorMessage}>

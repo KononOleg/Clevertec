@@ -141,9 +141,21 @@ export interface CreateCommentRequest {
   user: string;
 }
 
+export interface BookingBookRequest {
+  order: boolean;
+  dateOrder: string;
+  book: string;
+  customer: string;
+}
+
 export interface CreateCommentResponse {
   id: string;
   attributes: CreateCommentAttributes;
+}
+
+export interface BookingBookResponse {
+  id: string;
+  attributes: BookingBookAttributes;
 }
 
 export interface CreateCommentAttributes {
@@ -152,4 +164,17 @@ export interface CreateCommentAttributes {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+}
+
+export interface BookingBookAttributes {
+  order: boolean;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  dateOrder: string;
+}
+
+export interface BookingModalParams {
+  bookId: string;
+  order: boolean;
 }

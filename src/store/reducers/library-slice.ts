@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IBook, IError, ILibrary, ISuccess } from '../../types';
-import { createComment, getBook, getLibrary } from '../thunks/library-thunks';
+import { BookingModalParams, IBook, IError, ILibrary, ISuccess } from '../../types';
+import { bookingBook, createComment, getBook, getLibrary } from '../thunks/library-thunks';
 
 interface LibrarySliceState {
   isPending: boolean;
@@ -12,6 +12,7 @@ interface LibrarySliceState {
   isDescendingOrder: boolean;
   filterText: string;
   isReviewModalActive: boolean;
+  bookingModalParams: BookingModalParams | null;
 }
 
 const initialState: LibrarySliceState = {
@@ -23,6 +24,7 @@ const initialState: LibrarySliceState = {
   isDescendingOrder: true,
   filterText: '',
   isReviewModalActive: false,
+  bookingModalParams: null,
 };
 
 export const librarySlice = createSlice({
@@ -48,13 +50,19 @@ export const librarySlice = createSlice({
     setIsReviewModalActive(state, action) {
       return { ...state, isReviewModalActive: action.payload };
     },
+
+    setBookingModalParams(state, action) {
+      return { ...state, bookingModalParams: action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getLibrary.pending, (state) => ({ ...state, isPending: true }));
 
     builder.addCase(getBook.pending, (state) => ({ ...state, isPending: true }));
 
-    builder.addCase(createComment.pending, (state) => ({ ...state, isPending: true }));
+    builder.addCase(createComment.pending, (state) => ({ ...state, isPending: true, isReviewModalActive: false }));
+
+    builder.addCase(bookingBook.pending, (state) => ({ ...state, isPending: true, bookingModalParams: null }));
 
     builder.addCase(getLibrary.fulfilled.type, (state, action: PayloadAction<ILibrary[]>) => ({
       ...state,
@@ -73,6 +81,13 @@ export const librarySlice = createSlice({
       isPending: false,
       isReviewModalActive: false,
       success: { message: 'Спасибо, что нашли время оценить книгу!' },
+    }));
+
+    builder.addCase(bookingBook.fulfilled.type, (state) => ({
+      ...state,
+      isPending: false,
+      bookingModalParams: null,
+      success: { message: 'Книга забронирована. Подробности можно посмотреть на странице Профиль' },
     }));
 
     builder.addCase(getLibrary.rejected.type, (state, action: PayloadAction<IError>) => ({
@@ -95,9 +110,15 @@ export const librarySlice = createSlice({
       ...state,
       isPending: false,
       error: action.payload,
-      isReviewModalActive: false,
+    }));
+
+    builder.addCase(bookingBook.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      error: action.payload,
     }));
   },
 });
 
-export const { resetError, switchOrder, setFilterText, setIsReviewModalActive, resetSuccess } = librarySlice.actions;
+export const { resetError, switchOrder, setFilterText, setIsReviewModalActive, resetSuccess, setBookingModalParams } =
+  librarySlice.actions;

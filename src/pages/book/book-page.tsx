@@ -55,7 +55,7 @@ export const BookPage: FC = () => {
                 <div>
                   <h3 data-test-id='book-title'>{book.title}</h3>
                   <h5 className='author'>{`${book.authors?.join(',')}, ${book.issueYear}`}</h5>
-                  <Button booking={book.booking} delivery={book.delivery} />
+                  <Button booking={book.booking} delivery={book.delivery} bookId={book.id} />
                   <div className='about-book_up'>
                     <AboutBook description={book.description} />
                   </div>

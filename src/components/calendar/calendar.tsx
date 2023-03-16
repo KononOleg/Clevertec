@@ -17,10 +17,14 @@ import {
 
 import './calendar.scss';
 
-export const Calendar: FC = () => {
+interface IProps {
+  dateOrder: Moment | null;
+  setDateOrder: (dateOrder: Moment) => void;
+}
+
+export const Calendar: FC<IProps> = ({ dateOrder, setDateOrder }) => {
   const [calender, setCalender] = useState<Moment[][]>([]);
   const [value, setValue] = useState<Moment>(moment());
-  const [selectDate, setSelectDate] = useState<Moment | null>(null);
 
   const secondBookDate = getSecondBookDate(moment());
 
@@ -70,8 +74,8 @@ export const Calendar: FC = () => {
                   type='button'
                   className={`day ${compareDates(secondBookDate, day) || isToday(day) ? '' : 'day_inactive'} ${
                     isHoliday(index) && isOneMonth(value, day) ? 'holiday' : ''
-                  } ${isToday(day) ? 'today' : ''} ${selectDate && compareDates(selectDate, day) ? 'day_select' : ''}`}
-                  onClick={() => setSelectDate(day)}
+                  } ${isToday(day) ? 'today' : ''} ${dateOrder && compareDates(dateOrder, day) ? 'day_select' : ''}`}
+                  onClick={() => setDateOrder(day)}
                 >
                   <p className='info_small'>{day.format('D').toString()}</p>
                 </button>

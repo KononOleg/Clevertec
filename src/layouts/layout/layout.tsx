@@ -16,7 +16,7 @@ import './layout.scss';
 export const Layout: FC = () => {
   const navigate = useNavigate();
   const { isAuth } = useAppSelector(authSelector);
-  const { isPending } = useAppSelector(librarySelector);
+  const { isPending, bookingModalParams } = useAppSelector(librarySelector);
 
   useEffect(() => {
     if (!isAuth) {
@@ -27,7 +27,7 @@ export const Layout: FC = () => {
   return (
     <Fragment>
       {isPending && <Loading />}
-      <BookingsModal />
+      {bookingModalParams && <BookingsModal />}
       <div className='main-layout'>
         <div className='main-layout__wrapper'>
           <ErrorMessage />

@@ -38,7 +38,7 @@ export const BookCard: FC<IProps> = ({ book, isTileView }) => {
           <Highlighter text={title} highlight={filterText} highlightedItemClass='title_highlight' />
         </p>
         <p className='body_small author'>{`${authors?.join(',')}, ${issueYear}`}</p>
-        <Button booking={booking} delivery={delivery} />
+        <Button booking={booking} delivery={delivery} bookId={id} />
       </div>
     </Link>
   );

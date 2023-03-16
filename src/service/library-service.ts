@@ -1,6 +1,13 @@
 import { AxiosResponse } from 'axios';
 
-import { CreateCommentRequest, CreateCommentResponse, IBook, ICategory } from '../types';
+import {
+  BookingBookAttributes,
+  BookingBookRequest,
+  CreateCommentRequest,
+  CreateCommentResponse,
+  IBook,
+  ICategory,
+} from '../types';
 
 import { $api } from './http';
 
@@ -22,6 +29,12 @@ export class LibraryService {
   ): Promise<AxiosResponse<CreateCommentResponse>> {
     return $api.post<CreateCommentResponse>('/api/comments', {
       data: createCommentRequest,
+    });
+  }
+
+  static async bokingBook(bookingBookRequest: BookingBookRequest): Promise<AxiosResponse<BookingBookAttributes>> {
+    return $api.post<BookingBookAttributes>('/api/bookings', {
+      data: bookingBookRequest,
     });
   }
 }
