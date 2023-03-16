@@ -2,8 +2,8 @@
 
 .calendar {
   width: 256px;
-  margin-bottom: 32px;
-  padding: 16px;
+  margin-bottom: 34px;
+  padding: 16px 16px 0;
 
   box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
     0px 1px 5px rgba(191, 196, 201, 0.24);
@@ -12,12 +12,25 @@
   .navigation {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
 
-    color: $grey40;
+    select {
+      border: 0;
+      outline: none;
+
+      color: $grey40;
+    }
 
     .buttons {
       display: flex;
-      gap: 5px;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
 
       .button_down {
         svg {

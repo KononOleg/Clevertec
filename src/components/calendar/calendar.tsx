@@ -37,9 +37,9 @@ export const Calendar: FC = () => {
   return (
     <div className='calendar'>
       <div className='navigation'>
-        <select value={(value.format('M') as unknown as number) - 1} onChange={setMonthHandler}>
+        <select className='body_large' value={(value.format('M') as unknown as number) - 1} onChange={setMonthHandler}>
           {monthNames.map((monthName, index) => (
-            <option className='body_large' value={index}>
+            <option value={index}>
               {monthName} {value.year()}
             </option>
           ))}
