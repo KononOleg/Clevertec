@@ -39,18 +39,18 @@ export const filterCategory = (library: ILibrary[], category: string) => {
 };
 
 export const buildCalender = (value: Moment) => {
-  const startDay = value.clone().startOf('month').startOf('week');
-  const endDay = value.clone().endOf('month').endOf('week');
+  const startDay = value.clone().startOf('month').startOf('isoWeek').subtract(1, 'day');
+  const endDay = value.clone().endOf('month');
 
   const calenderMatrix = [];
 
-  while (startDay.isBefore(endDay, 'day')) {
+  do {
     calenderMatrix.push(
       Array(7)
         .fill(0)
         .map(() => startDay.add(1, 'day').clone())
     );
-  }
+  } while (startDay.isBefore(endDay, 'day'));
 
   return calenderMatrix;
 };
@@ -78,3 +78,8 @@ export const getSecondBookDate = (value: Moment) => {
 };
 
 export const isHoliday = (index: number) => index === 5 || index === 6;
+
+export const setMonth = (index: number) => moment().set('month', index);
+
+export const isOneMonth = (firstValue: Moment, secondValue: Moment) =>
+  firstValue.format('M') === secondValue.format('M');

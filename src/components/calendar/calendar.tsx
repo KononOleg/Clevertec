@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import moment, { Moment } from 'moment';
 
 import { ReactComponent as ArrowSVG } from '../../assets/icon-arrow.svg';
@@ -10,7 +10,9 @@ import {
   getPrevMonth,
   getSecondBookDate,
   isHoliday,
+  isOneMonth,
   isToday,
+  setMonth,
 } from '../../helpers';
 
 import './calendar.scss';
@@ -29,12 +31,19 @@ export const Calendar: FC = () => {
   const nextMonth = () => setValue(getNextMonth(value));
   const prevMonth = () => setValue(getPrevMonth(value));
 
+  const setMonthHandler = (e: ChangeEvent<HTMLSelectElement>) =>
+    setValue(setMonth(e.target.value as unknown as number));
+
   return (
     <div className='calendar'>
       <div className='navigation'>
-        <p className='body_large'>
-          {monthNames[value.month()]} {value.year()}
-        </p>
+        <select value={(value.format('M') as unknown as number) - 1} onChange={setMonthHandler}>
+          {monthNames.map((monthName, index) => (
+            <option className='body_large' value={index}>
+              {monthName} {value.year()}
+            </option>
+          ))}
+        </select>
         <div className='buttons'>
           <button type='button' onClick={prevMonth}>
             <ArrowSVG />
@@ -60,8 +69,8 @@ export const Calendar: FC = () => {
                   key={`${index.toString()}`}
                   type='button'
                   className={`day ${compareDates(secondBookDate, day) || isToday(day) ? '' : 'day_inactive'} ${
-                    isHoliday(index) ? 'holiday' : ''
-                  } ${isToday(day) ? 'today' : ''} ${selectDate === day ? 'day_select' : ''}`}
+                    isHoliday(index) && isOneMonth(value, day) ? 'holiday' : ''
+                  } ${isToday(day) ? 'today' : ''} ${selectDate && compareDates(selectDate, day) ? 'day_select' : ''}`}
                   onClick={() => setSelectDate(day)}
                 >
                   <p className='info_small'>{day.format('D').toString()}</p>
