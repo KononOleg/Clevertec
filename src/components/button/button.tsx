@@ -1,8 +1,9 @@
 import { FC, MouseEvent } from 'react';
 import Moment from 'moment';
 
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setBookingModalParams } from '../../store/reducers/library-slice';
+import { authSelector } from '../../store/selectors/auth-selector';
 import { IBooking, IDelivery } from '../../types';
 
 import './button.scss';
@@ -15,10 +16,14 @@ interface IProps {
 
 export const Button: FC<IProps> = ({ booking, delivery, bookId }) => {
   const dispatch = useAppDispatch();
-  const { order, dateOrder } = booking || ({} as IBooking);
+  const { user } = useAppSelector(authSelector);
+  const { order, dateOrder, customerId } = booking || ({} as IBooking);
   const { handed } = delivery || ({} as IDelivery);
 
+  const isCurrentUserBooking = customerId === user?.id;
+
   const onClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     e.stopPropagation();
     dispatch(setBookingModalParams({ bookId, order }));
   };
@@ -27,11 +32,11 @@ export const Button: FC<IProps> = ({ booking, delivery, bookId }) => {
     <button
       className={`button ${order || handed ? 'button_secondary' : ''}`}
       type='button'
-      disabled={order || handed}
+      disabled={(order && !isCurrentUserBooking) || handed}
       onClick={onClickHandler}
     >
-      {handed && 'Забронировано'}
-      {order && `занята до ${Moment(dateOrder).format('DD.MM')}`}
+      {order && !handed && 'Забронирована'}
+      {handed && !order && `занята до ${Moment(dateOrder).format('DD.MM')}`}
       {!order && !handed && 'Забронировать'}
     </button>
   );
