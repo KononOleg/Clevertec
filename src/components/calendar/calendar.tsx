@@ -43,7 +43,7 @@ export const Calendar: FC<IProps> = ({ dateOrder, setDateOrder }) => {
       <div className='navigation'>
         <select className='body_large' value={(value.format('M') as unknown as number) - 1} onChange={setMonthHandler}>
           {monthNames.map((monthName, index) => (
-            <option value={index}>
+            <option value={index} key={`${index.toString()}`}>
               {monthName} {value.year()}
             </option>
           ))}
