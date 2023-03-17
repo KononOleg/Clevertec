@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 
 import { ReactComponent as CloseSVG } from '../../assets/icon-close.svg';
 import SuccessPNG from '../../assets/icon-success.png';
@@ -9,14 +9,24 @@ import { librarySelector } from '../../store/selectors/library-selector';
 
 import './error-message.scss';
 
+const CLOSE_TIMEOUT = 4000;
+
 export const ErrorMessage: FC = () => {
   const dispatch = useAppDispatch();
   const { error, success } = useAppSelector(librarySelector);
 
-  const closeErrorMessage = () => {
+  const closeErrorMessage = useCallback(() => {
     dispatch(resetError());
     dispatch(resetSuccess());
-  };
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error || success) {
+      setTimeout(() => {
+        closeErrorMessage();
+      }, CLOSE_TIMEOUT);
+    }
+  }, [closeErrorMessage, dispatch, error, success]);
 
   if (error)
     return (
