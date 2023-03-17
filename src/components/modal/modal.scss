@@ -56,3 +56,32 @@
     }
   }
 }
+
+@media (max-width: 680px) {
+  .modal {
+    .modal__wrapper {
+      width: 288px;
+      min-height: 438px;
+      padding: 42px 16px 32px;
+
+      h4 {
+        margin-bottom: 24px;
+      }
+
+      .button {
+        width: 100%;
+        padding: 11px 0;
+      }
+
+      .button_close {
+        top: 24px;
+        right: 24px;
+
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+  }
+}

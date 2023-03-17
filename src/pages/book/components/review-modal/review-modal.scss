@@ -21,3 +21,11 @@
     margin-bottom: 52px;
   }
 }
+
+@media (max-width: 680px) {
+  .modal__wrapper {
+    .input {
+      margin-bottom: 44px;
+    }
+  }
+}
