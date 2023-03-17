@@ -22,10 +22,14 @@ export const BookPage: FC = () => {
   const { category, bookId } = useParams();
 
   const dispatch = useAppDispatch();
-  const { book, library, isReviewModalActive } = useAppSelector(librarySelector);
+  const { book, library, isReviewModalActive, success } = useAppSelector(librarySelector);
   const { user } = useAppSelector(authSelector);
   const categoryName =
     category === PATH.all ? 'Все книги' : library.find((currentCategory) => currentCategory.path === category)?.name;
+
+  useEffect(() => {
+    if (success) dispatch(getBook({ bookId: bookId as string }));
+  }, [bookId, dispatch, success]);
 
   useEffect(() => {
     dispatch(getBook({ bookId: bookId as string }));

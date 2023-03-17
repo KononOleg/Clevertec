@@ -16,7 +16,7 @@ export const MainPage: FC = () => {
   const { category } = useParams();
   const dispatch = useAppDispatch();
   const [isTileView, setTileView] = useState<boolean>(true);
-  const { library, isPending, isDescendingOrder, filterText } = useAppSelector(librarySelector);
+  const { library, isPending, isDescendingOrder, filterText, success } = useAppSelector(librarySelector);
 
   const filteredCategory = useMemo(() => filterCategory(library, category as string), [library, category]);
   const filteredBooks = useMemo(() => filterBooks(filteredCategory, filterText), [filteredCategory, filterText]);
@@ -25,6 +25,10 @@ export const MainPage: FC = () => {
   const setTileViewHandler = (tileView: boolean) => setTileView(tileView);
 
   const dataFetchedRef = useRef(false);
+
+  useEffect(() => {
+    dispatch(getLibrary());
+  }, [dispatch, success]);
 
   useEffect(() => {
     if (dataFetchedRef.current) return;
