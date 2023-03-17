@@ -36,7 +36,7 @@ export const ErrorMessage: FC = () => {
           <p className='subtitle_large'>{error.message}</p>
         </div>
 
-        <button className='button_close' type='button' onClick={closeErrorMessage}>
+        <button className='button_close' data-test-id='alert-close' type='button' onClick={closeErrorMessage}>
           <CloseSVG />
         </button>
       </div>
@@ -50,7 +50,7 @@ export const ErrorMessage: FC = () => {
           <p className='subtitle_large'>{success.message}</p>
         </div>
 
-        <button className='button_close' type='button' onClick={closeErrorMessage}>
+        <button className='button_close' data-test-id='alert-close' type='button' onClick={closeErrorMessage}>
           <CloseSVG />
         </button>
       </div>

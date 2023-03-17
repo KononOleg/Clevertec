@@ -10,6 +10,6 @@ interface IProps {
 
 export const TextAreaInput: FC<IProps> = ({ label, register }) => (
   <InputLayout label={label} error={undefined}>
-    <textarea className='input textarea' placeholder=' ' {...register} />
+    <textarea className='input textarea' data-test-id='comment' placeholder=' ' {...register} />
   </InputLayout>
 );

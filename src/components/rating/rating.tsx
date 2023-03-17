@@ -20,19 +20,21 @@ export const Rating: FC<IProps> = ({ rating, setRating }) => {
 
   if (setRating)
     return (
-      <div className='stars'>
+      <div className='stars' data-test-id='rating'>
         {stars.map((star, index) => (
-          <img
-            key={star}
-            src={index + 1 <= (hover || rating) ? StarPNG : StarEmptyPNG}
-            role='presentation'
-            onClick={() => setRating(star)}
-            onMouseOver={() => hoverHandler(star)}
-            onFocus={() => hoverHandler(star)}
-            onMouseOut={() => setHover(0)}
-            onBlur={() => setHover(0)}
-            alt='star'
-          />
+          <div key={star} data-test-id='star'>
+            <img
+              data-test-id={index + 1 <= (hover || rating) ? 'star-active' : ''}
+              src={index + 1 <= (hover || rating) ? StarPNG : StarEmptyPNG}
+              role='presentation'
+              onClick={() => setRating(star)}
+              onMouseOver={() => hoverHandler(star)}
+              onFocus={() => hoverHandler(star)}
+              onMouseOut={() => setHover(0)}
+              onBlur={() => setHover(0)}
+              alt='star'
+            />
+          </div>
         ))}
       </div>
     );

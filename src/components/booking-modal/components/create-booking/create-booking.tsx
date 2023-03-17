@@ -31,7 +31,13 @@ export const CreateBooking: FC<IProps> = ({ bookId, userId }) => {
   return (
     <Modal title='Выбор даты бронирования' closeModal={closeModalHandler}>
       <Calendar dateOrder={dateOrder} setDateOrder={setDateOrder} />
-      <button className='button' type='button' onClick={bookingBookHandler} disabled={!dateOrder}>
+      <button
+        className='button'
+        type='button'
+        data-test-id='booking-button'
+        onClick={bookingBookHandler}
+        disabled={!dateOrder}
+      >
         Забронировать
       </button>
     </Modal>

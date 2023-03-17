@@ -26,7 +26,7 @@ export const Reviews: FC<IProps> = ({ reviews, userId }) => {
   const disabled = reviews.find((review) => review.user.commentUserId === userId) ? true : false;
 
   return (
-    <div className='reviews'>
+    <div className='reviews' data-test-id='reviews'>
       <div className='title'>
         <h5>
           Отзывы <span>{reviews?.length || 0}</span>
@@ -43,7 +43,7 @@ export const Reviews: FC<IProps> = ({ reviews, userId }) => {
       {reviews && (
         <div className={`reviews-list ${isTurn ? 'reviews-list_unturn' : 'reviews-list_turn'}`}>
           {reviews.map(({ id, rating, createdAt, text, user }) => (
-            <div key={id} className='review'>
+            <div key={id} className='review' data-test-id='comment-wrapper'>
               <div className='user'>
                 <img
                   className='image'
@@ -52,12 +52,18 @@ export const Reviews: FC<IProps> = ({ reviews, userId }) => {
                 />
 
                 <div className='name'>
-                  <p className='body_large'>{`${user.firstName} ${user.lastName}`}</p>
-                  <p className='body_large'>{Moment(createdAt).format('DD MMMM YYYY')}</p>
+                  <p className='body_large' data-test-id='comment-author'>{`${user.firstName} ${user.lastName}`}</p>
+                  <p className='body_large' data-test-id='comment-date'>
+                    {Moment(createdAt).format('DD MMMM YYYY')}
+                  </p>
                 </div>
               </div>
               <Rating rating={rating} />
-              {text && <p className='body_large'>{text}</p>}
+              {text && (
+                <p className='body_large' data-test-id='comment-text'>
+                  {text}
+                </p>
+              )}
             </div>
           ))}
         </div>
@@ -67,7 +73,7 @@ export const Reviews: FC<IProps> = ({ reviews, userId }) => {
         className='button button_rating'
         type='button'
         disabled={disabled}
-        data-test-id='button-rating'
+        data-test-id='button-rate-book'
         onClick={openModalHandler}
       >
         оценить книгу

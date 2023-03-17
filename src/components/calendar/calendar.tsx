@@ -39,9 +39,14 @@ export const Calendar: FC<IProps> = ({ dateOrder, setDateOrder }) => {
     setValue(setMonth(e.target.value as unknown as number));
 
   return (
-    <div className='calendar'>
+    <div className='calendar' data-test-id='calendar'>
       <div className='navigation'>
-        <select className='body_large' value={(value.format('M') as unknown as number) - 1} onChange={setMonthHandler}>
+        <select
+          className='body_large'
+          data-test-id='month-select'
+          value={(value.format('M') as unknown as number) - 1}
+          onChange={setMonthHandler}
+        >
           {monthNames.map((monthName, index) => (
             <option value={index} key={`${index.toString()}`}>
               {monthName} {value.year()}
@@ -49,10 +54,10 @@ export const Calendar: FC<IProps> = ({ dateOrder, setDateOrder }) => {
           ))}
         </select>
         <div className='buttons'>
-          <button type='button' onClick={prevMonth}>
+          <button type='button' data-test-id='button-prev-month' onClick={prevMonth}>
             <ArrowSVG />
           </button>
-          <button className='button_down' type='button' onClick={nextMonth}>
+          <button className='button_down' data-test-id='button-next-month' type='button' onClick={nextMonth}>
             <ArrowSVG />
           </button>
         </div>
@@ -71,6 +76,7 @@ export const Calendar: FC<IProps> = ({ dateOrder, setDateOrder }) => {
               {week.map((day, index) => (
                 <button
                   key={`${index.toString()}`}
+                  data-test-id='day-button'
                   type='button'
                   className={`day ${compareDates(secondBookDate, day) || isToday(day) ? '' : 'day_inactive'} ${
                     isHoliday(index) && isOneMonth(value, day) ? 'holiday' : ''

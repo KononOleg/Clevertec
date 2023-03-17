@@ -40,7 +40,7 @@ export const MainPage: FC = () => {
     <section className='main-page'>
       <NavigationList isTileView={isTileView} setTileViewHandler={setTileViewHandler} />
       {!isPending && (
-        <div className={isTileView ? 'books_vertical' : 'books_horizontal'}>
+        <div className={isTileView ? 'books_vertical' : 'books_horizontal'} data-test-id='content'>
           {sortedBooks.length ? (
             sortedBooks.map((book: IBook) => <BookCard book={book} key={book.id} isTileView={isTileView} />)
           ) : filterText ? (

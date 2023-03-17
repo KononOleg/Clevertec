@@ -42,10 +42,21 @@ export const EditBooking: FC<IProps> = ({ bookId, bookingId, dateOrder, userId }
     <Modal title='Изменение даты бронирования' closeModal={closeModalHandler}>
       <Calendar dateOrder={rebookingDate} setDateOrder={setRebookingDate} />
       <div className='modal__buttons'>
-        <button className='button' type='button' onClick={bookingBookHandler} disabled={isDisabledButton}>
+        <button
+          className='button'
+          data-test-id='booking-button'
+          type='button'
+          onClick={bookingBookHandler}
+          disabled={isDisabledButton}
+        >
           Забронировать
         </button>
-        <button className='button button_secondary' type='button' onClick={deleteBookingHandler}>
+        <button
+          className='button button_secondary'
+          data-test-id='booking-cancel-button'
+          type='button'
+          onClick={deleteBookingHandler}
+        >
           Отменить бронь
         </button>
       </div>

@@ -37,7 +37,7 @@ export const ReviewModal: FC<IProps> = ({ book }) => {
       <Rating rating={rating} setRating={setRating} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextAreaInput label='Оставить отзыв' register={{ ...register('comment') }} />
-        <button className='button' type='submit'>
+        <button className='button' type='submit' data-test-id='button-comment'>
           Оценить
         </button>
       </form>

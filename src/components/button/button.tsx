@@ -32,6 +32,7 @@ export const Button: FC<IProps> = ({ booking, delivery, bookId }) => {
     <button
       className={`button ${order || handed ? 'button_secondary' : ''}`}
       type='button'
+      data-test-id='booking-button'
       disabled={(order && !isCurrentUserBooking) || handed}
       onClick={onClickHandler}
     >
