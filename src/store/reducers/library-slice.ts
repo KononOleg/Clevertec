@@ -1,7 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { BookingModalParams, IBook, IError, ILibrary, ISuccess } from '../../types';
-import { bookingBook, createComment, getBook, getLibrary } from '../thunks/library-thunks';
+import {
+  bookingBook,
+  createComment,
+  deleteBooking,
+  getBook,
+  getLibrary,
+  rebookingBook,
+} from '../thunks/library-thunks';
 
 interface LibrarySliceState {
   isPending: boolean;
@@ -60,9 +67,13 @@ export const librarySlice = createSlice({
 
     builder.addCase(getBook.pending, (state) => ({ ...state, isPending: true }));
 
-    builder.addCase(createComment.pending, (state) => ({ ...state, isPending: true, isReviewModalActive: false }));
+    builder.addCase(createComment.pending, (state) => ({ ...state, isPending: true }));
 
-    builder.addCase(bookingBook.pending, (state) => ({ ...state, isPending: true, bookingModalParams: null }));
+    builder.addCase(bookingBook.pending, (state) => ({ ...state, isPending: true }));
+
+    builder.addCase(deleteBooking.pending, (state) => ({ ...state, isPending: true }));
+
+    builder.addCase(rebookingBook.pending, (state) => ({ ...state, isPending: true }));
 
     builder.addCase(getLibrary.fulfilled.type, (state, action: PayloadAction<ILibrary[]>) => ({
       ...state,
@@ -90,6 +101,22 @@ export const librarySlice = createSlice({
       success: { message: 'Книга забронирована. Подробности можно посмотреть на странице Профиль' },
     }));
 
+    builder.addCase(deleteBooking.fulfilled.type, (state) => ({
+      ...state,
+      isPending: false,
+      bookingModalParams: null,
+      success: { message: 'Бронирование книги успешно отменено' },
+    }));
+
+    builder.addCase(rebookingBook.fulfilled.type, (state) => ({
+      ...state,
+      isPending: false,
+      bookingModalParams: null,
+      success: {
+        message: 'Бронирование новой даты успешно изменено. Подробности можно посмотреть на странице Профиль',
+      },
+    }));
+
     builder.addCase(getLibrary.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
@@ -109,12 +136,28 @@ export const librarySlice = createSlice({
     builder.addCase(createComment.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
+      isReviewModalActive: false,
       error: action.payload,
     }));
 
     builder.addCase(bookingBook.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
+      bookingModalParams: null,
+      error: action.payload,
+    }));
+
+    builder.addCase(deleteBooking.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      bookingModalParams: null,
+      error: action.payload,
+    }));
+
+    builder.addCase(rebookingBook.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      bookingModalParams: null,
       error: action.payload,
     }));
   },

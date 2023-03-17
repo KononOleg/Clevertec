@@ -25,7 +25,7 @@ export const Button: FC<IProps> = ({ booking, delivery, bookId }) => {
   const onClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(setBookingModalParams({ bookId, order, bookingId: id }));
+    dispatch(setBookingModalParams({ bookId, order, bookingId: id, dateOrder }));
   };
 
   return (

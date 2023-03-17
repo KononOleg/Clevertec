@@ -88,7 +88,51 @@ export const bookingBook = createAsyncThunk(
       }
 
       return thunkAPI.rejectWithValue({
-        message: 'Что-то пошло не так, книга не забронирована. Попробуйте позже!',
+        message: 'Что-то пошло не так, дату бронирования не удалось изменить. Попробуйте позже!',
+      } as IError);
+    }
+  }
+);
+
+export const rebookingBook = createAsyncThunk(
+  'library/rebookingBook',
+
+  async (payload: { bookingBookRequest: BookingBookRequest; bookingId: string }, thunkAPI) => {
+    try {
+      const response = await LibraryService.rebokingBook(payload.bookingBookRequest, payload.bookingId);
+
+      return response.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        const data = err.response.data as AxiosErrorDataType;
+
+        return thunkAPI.rejectWithValue(data.error);
+      }
+
+      return thunkAPI.rejectWithValue({
+        message: 'Изменение не были сохранены. Попробуйте позже!',
+      } as IError);
+    }
+  }
+);
+
+export const deleteBooking = createAsyncThunk(
+  'library/deleteBooking',
+
+  async (bookingId: string, thunkAPI) => {
+    try {
+      const response = await LibraryService.deleteBooking(bookingId);
+
+      return response.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        const data = err.response.data as AxiosErrorDataType;
+
+        return thunkAPI.rejectWithValue(data.error);
+      }
+
+      return thunkAPI.rejectWithValue({
+        message: 'Не удалось отменить бронирование книги. Попробуйте позже!',
       } as IError);
     }
   }

@@ -178,4 +178,5 @@ export interface BookingModalParams {
   bookId: string;
   order: boolean;
   bookingId: string;
+  dateOrder: string;
 }

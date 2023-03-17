@@ -37,4 +37,17 @@ export class LibraryService {
       data: bookingBookRequest,
     });
   }
+
+  static async rebokingBook(
+    rebookingBookRequest: BookingBookRequest,
+    bookingId: string
+  ): Promise<AxiosResponse<BookingBookAttributes>> {
+    return $api.put<BookingBookAttributes>(`/api/bookings/${bookingId}`, {
+      data: rebookingBookRequest,
+    });
+  }
+
+  static async deleteBooking(bookingId: string): Promise<AxiosResponse<BookingBookAttributes>> {
+    return $api.delete<BookingBookAttributes>(`/api/bookings/${bookingId}`);
+  }
 }
