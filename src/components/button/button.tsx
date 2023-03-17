@@ -18,7 +18,7 @@ export const Button: FC<IProps> = ({ booking, delivery, bookId }) => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(authSelector);
   const { id, order, dateOrder, customerId } = booking || ({} as IBooking);
-  const { handed } = delivery || ({} as IDelivery);
+  const { handed, dateHandedTo } = delivery || ({} as IDelivery);
 
   const isCurrentUserBooking = customerId === user?.id;
 
@@ -37,7 +37,7 @@ export const Button: FC<IProps> = ({ booking, delivery, bookId }) => {
       onClick={onClickHandler}
     >
       {order && !handed && 'Забронирована'}
-      {handed && !order && `занята до ${Moment(dateOrder).format('DD.MM')}`}
+      {handed && !order && `занята до ${Moment(dateHandedTo).format('DD.MM')}`}
       {!order && !handed && 'Забронировать'}
     </button>
   );

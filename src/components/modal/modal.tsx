@@ -11,8 +11,13 @@ interface IProps {
 }
 
 export const Modal: FC<IProps> = ({ title, closeModal, children }) => (
-  <div className='modal' data-test-id='modal-outer'>
-    <div className='modal__wrapper' data-test-id='booking-modal'>
+  <div className='modal' data-test-id='modal-outer' role='presentation' onClick={closeModal}>
+    <div
+      className='modal__wrapper'
+      data-test-id='booking-modal'
+      role='presentation'
+      onClick={(e) => e.stopPropagation()}
+    >
       <button className='button_close' type='button' data-test-id='modal-close-button' onClick={closeModal}>
         <CloseSVG />
       </button>

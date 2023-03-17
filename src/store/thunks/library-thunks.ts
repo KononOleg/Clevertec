@@ -60,13 +60,7 @@ export const createComment = createAsyncThunk(
       const response = await LibraryService.createComment(payload);
 
       return response.data;
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const data = err.response.data as AxiosErrorDataType;
-
-        return thunkAPI.rejectWithValue(data.error);
-      }
-
+    } catch {
       return thunkAPI.rejectWithValue({ message: 'Оценка не была отправлена. Попробуйте позже' } as IError);
     }
   }
@@ -80,15 +74,9 @@ export const bookingBook = createAsyncThunk(
       const response = await LibraryService.bokingBook(payload);
 
       return response.data;
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const data = err.response.data as AxiosErrorDataType;
-
-        return thunkAPI.rejectWithValue(data.error);
-      }
-
+    } catch {
       return thunkAPI.rejectWithValue({
-        message: 'Что-то пошло не так, дату бронирования не удалось изменить. Попробуйте позже!',
+        message: 'Что-то пошло не так, книга не забронирована. Попробуйте позже!',
       } as IError);
     }
   }
@@ -102,13 +90,7 @@ export const rebookingBook = createAsyncThunk(
       const response = await LibraryService.rebokingBook(payload.bookingBookRequest, payload.bookingId);
 
       return response.data;
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const data = err.response.data as AxiosErrorDataType;
-
-        return thunkAPI.rejectWithValue(data.error);
-      }
-
+    } catch {
       return thunkAPI.rejectWithValue({
         message: 'Изменение не были сохранены. Попробуйте позже!',
       } as IError);
@@ -124,13 +106,7 @@ export const deleteBooking = createAsyncThunk(
       const response = await LibraryService.deleteBooking(bookingId);
 
       return response.data;
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const data = err.response.data as AxiosErrorDataType;
-
-        return thunkAPI.rejectWithValue(data.error);
-      }
-
+    } catch {
       return thunkAPI.rejectWithValue({
         message: 'Не удалось отменить бронирование книги. Попробуйте позже!',
       } as IError);

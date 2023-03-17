@@ -59,11 +59,11 @@
       justify-content: center;
       align-items: center;
       border-radius: 16px;
+      color: $dark;
     }
 
     .day_inactive {
-      color: $grey20;
-      pointer-events: none;
+      color: $grey40;
     }
 
     .today {
@@ -75,7 +75,6 @@
     }
     .holiday {
       background: $negative_background;
-      pointer-events: none;
     }
     .days {
       .days-div {

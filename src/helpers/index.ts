@@ -73,6 +73,7 @@ export const compareDates = (firstValue: Moment, secondValue: Moment) => moment(
 
 export const getSecondBookDate = (value: Moment) => {
   if (value.clone().add(1, 'day').day() === 6) return value.clone().add(3, 'day');
+  if (value.clone().add(1, 'day').day() === 7) return value.clone().add(2, 'day');
 
   return value.clone().add(1, 'day');
 };
