@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+import { createLibrary } from '../../helpers';
 import { LibraryService } from '../../service/library-service';
-import { AxiosErrorDataType, BookingBookRequest, CreateCommentRequest, IError, ILibrary } from '../../types';
+import { AxiosErrorDataType, BookingBookRequest, CreateCommentRequest, IError } from '../../types';
 import { RootState } from '../store';
 
 const ERROR_MESSAGE = 'Что-то пошло не так. Обновите страницу через некоторое время.';
@@ -11,15 +12,7 @@ export const getLibrary = createAsyncThunk('library/getLibrary', async (_, thunk
   try {
     const [books, categories] = await Promise.all([LibraryService.getBooks(), LibraryService.getCategories()]);
 
-    const library: ILibrary[] = categories.data.map((category) => ({ ...category, books: [] }));
-
-    books.data.forEach((book) => {
-      book.categories.forEach((category) => {
-        const categoryIndex = library.findIndex((currentCategory) => currentCategory.name === category);
-
-        library[categoryIndex].books.push(book);
-      });
-    });
+    const library = createLibrary(categories.data, books.data);
 
     return library;
   } catch (err) {
@@ -39,17 +32,9 @@ export const getBooks = createAsyncThunk('library/getBooks', async (_, { getStat
 
     const { librarySlice } = getState() as RootState;
 
-    const newLibrary: ILibrary[] = librarySlice.library.map((category) => ({ ...category, books: [] }));
+    const library = createLibrary(librarySlice.library, books.data);
 
-    books.data.forEach((book) => {
-      book.categories.forEach((category) => {
-        const categoryIndex = newLibrary.findIndex((currentCategory) => currentCategory.name === category);
-
-        newLibrary[categoryIndex].books.push(book);
-      });
-    });
-
-    return newLibrary;
+    return library;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
       const data = err.response.data as AxiosErrorDataType;
@@ -86,9 +71,9 @@ export const createComment = createAsyncThunk(
 
   async (payload: CreateCommentRequest, thunkAPI) => {
     try {
-      const response = await LibraryService.createComment(payload);
+      await LibraryService.createComment(payload);
 
-      return response.data;
+      return { message: 'Спасибо, что нашли время оценить книгу!' };
     } catch {
       return thunkAPI.rejectWithValue({ message: 'Оценка не была отправлена. Попробуйте позже' } as IError);
     }
@@ -100,9 +85,9 @@ export const bookingBook = createAsyncThunk(
 
   async (payload: BookingBookRequest, thunkAPI) => {
     try {
-      const response = await LibraryService.bokingBook(payload);
+      await LibraryService.bokingBook(payload);
 
-      return response.data;
+      return { message: 'Книга забронирована. Подробности можно посмотреть на странице Профиль' };
     } catch {
       return thunkAPI.rejectWithValue({
         message: 'Что-то пошло не так, книга не забронирована. Попробуйте позже!',
@@ -116,9 +101,9 @@ export const rebookingBook = createAsyncThunk(
 
   async (payload: { bookingBookRequest: BookingBookRequest; bookingId: string }, thunkAPI) => {
     try {
-      const response = await LibraryService.rebokingBook(payload.bookingBookRequest, payload.bookingId);
+      await LibraryService.rebokingBook(payload.bookingBookRequest, payload.bookingId);
 
-      return response.data;
+      return { message: 'Изменения успешно сохранены!' };
     } catch {
       return thunkAPI.rejectWithValue({
         message: 'Изменения не были сохранены. Попробуйте позже!',
@@ -132,9 +117,9 @@ export const deleteBooking = createAsyncThunk(
 
   async (bookingId: string, thunkAPI) => {
     try {
-      const response = await LibraryService.deleteBooking(bookingId);
+      await LibraryService.deleteBooking(bookingId);
 
-      return response.data;
+      return { message: 'Бронирование книги успешно отменено!' };
     } catch {
       return thunkAPI.rejectWithValue({
         message: 'Не удалось снять бронирование книги. Попробуйте позже!',

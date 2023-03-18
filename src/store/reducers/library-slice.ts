@@ -96,34 +96,32 @@ export const librarySlice = createSlice({
       library: action.payload,
     }));
 
-    builder.addCase(createComment.fulfilled.type, (state) => ({
+    builder.addCase(createComment.fulfilled.type, (state, action: PayloadAction<ISuccess>) => ({
       ...state,
       isPending: false,
       isReviewModalActive: false,
-      success: { message: 'Спасибо, что нашли время оценить книгу!' },
+      success: action.payload,
     }));
 
-    builder.addCase(bookingBook.fulfilled.type, (state) => ({
+    builder.addCase(bookingBook.fulfilled.type, (state, action: PayloadAction<ISuccess>) => ({
       ...state,
       isPending: false,
       bookingModalParams: null,
-      success: { message: 'Книга забронирована. Подробности можно посмотреть на странице Профиль' },
+      success: action.payload,
     }));
 
-    builder.addCase(deleteBooking.fulfilled.type, (state) => ({
+    builder.addCase(deleteBooking.fulfilled.type, (state, action: PayloadAction<ISuccess>) => ({
       ...state,
       isPending: false,
       bookingModalParams: null,
-      success: { message: 'Бронирование книги успешно отменено!' },
+      success: action.payload,
     }));
 
-    builder.addCase(rebookingBook.fulfilled.type, (state) => ({
+    builder.addCase(rebookingBook.fulfilled.type, (state, action: PayloadAction<ISuccess>) => ({
       ...state,
       isPending: false,
       bookingModalParams: null,
-      success: {
-        message: 'Изменения успешно сохранены!',
-      },
+      success: action.payload,
     }));
 
     builder.addCase(getLibrary.rejected.type, (state, action: PayloadAction<IError>) => ({

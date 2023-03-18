@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment';
 
 import { PATH } from '../constants';
-import { IBook, IComment, ILibrary } from '../types';
+import { IBook, ICategory, IComment, ILibrary } from '../types';
 
 export const sortBooks = (books: IBook[], isDescendingOrder: boolean) => {
   const booksWithoutRating = books.filter((book) => book.rating === null);
@@ -36,6 +36,20 @@ export const filterCategory = (library: ILibrary[], category: string) => {
   if (foundCategory) return foundCategory.books;
 
   return [];
+};
+
+export const createLibrary = (categories: ICategory[], books: IBook[]) => {
+  const library: ILibrary[] = categories.map((category) => ({ ...category, books: [] }));
+
+  books.forEach((book) => {
+    book.categories.forEach((category) => {
+      const categoryIndex = library.findIndex((currentCategory) => currentCategory.name === category);
+
+      library[categoryIndex].books.push(book);
+    });
+  });
+
+  return library;
 };
 
 export const sortComments = (comments: IComment[]) =>
@@ -87,3 +101,5 @@ export const setMonth = (index: number) => moment().set('month', index);
 
 export const isOneMonth = (firstValue: Moment, secondValue: Moment) =>
   firstValue.format('M') === secondValue.format('M');
+
+export const getNumberMonth = (value: Moment) => (value.format('M') as unknown as number) - 1;

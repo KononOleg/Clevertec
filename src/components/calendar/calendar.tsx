@@ -7,6 +7,7 @@ import {
   buildCalender,
   compareDates,
   getNextMonth,
+  getNumberMonth,
   getPrevMonth,
   getSecondBookDate,
   isHoliday,
@@ -44,7 +45,7 @@ export const Calendar: FC<IProps> = ({ dateOrder, setDateOrder }) => {
         <select
           className='body_large'
           data-test-id='month-select'
-          value={(value.format('M') as unknown as number) - 1}
+          value={getNumberMonth(value)}
           onChange={setMonthHandler}
         >
           {monthNames.map((monthName, index) => (
