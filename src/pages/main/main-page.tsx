@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { filterBooks, filterCategory, sortBooks } from '../../helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { librarySelector } from '../../store/selectors/library-selector';
-import { getLibrary } from '../../store/thunks/library-thunks';
+import { getBooks, getLibrary } from '../../store/thunks/library-thunks';
 import { IBook } from '../../types';
 
 import { BookCard } from './components/book-card';
@@ -27,7 +27,7 @@ export const MainPage: FC = () => {
   const dataFetchedRef = useRef(false);
 
   useEffect(() => {
-    dispatch(getLibrary());
+    if (success) dispatch(getBooks());
   }, [dispatch, success]);
 
   useEffect(() => {

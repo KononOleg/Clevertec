@@ -22,14 +22,14 @@ export const CreateBooking: FC<IProps> = ({ bookId, userId }) => {
     dispatch(
       bookingBook({
         order: true,
-        dateOrder: dateOrder?.toISOString() as string,
+        dateOrder: dateOrder?.toISOString(true) as string,
         book: bookId,
         customer: userId,
       })
     );
 
   return (
-    <Modal title='Выбор даты бронирования' closeModal={closeModalHandler}>
+    <Modal title='Выбор даты бронирования' testId='booking-modal' closeModal={closeModalHandler}>
       <Calendar dateOrder={dateOrder} setDateOrder={setDateOrder} />
       <button
         className='button'

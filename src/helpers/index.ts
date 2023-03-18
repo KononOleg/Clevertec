@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment';
 
 import { PATH } from '../constants';
-import { IBook, ILibrary } from '../types';
+import { IBook, IComment, ILibrary } from '../types';
 
 export const sortBooks = (books: IBook[], isDescendingOrder: boolean) => {
   const booksWithoutRating = books.filter((book) => book.rating === null);
@@ -38,6 +38,9 @@ export const filterCategory = (library: ILibrary[], category: string) => {
   return [];
 };
 
+export const sortComments = (comments: IComment[]) =>
+  [...comments].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
 export const buildCalender = (value: Moment) => {
   const startDay = value.clone().startOf('month').startOf('isoWeek').subtract(1, 'day');
   const endDay = value.clone().endOf('month');
@@ -72,13 +75,13 @@ export const isToday = (value: Moment) => moment(value).isSame(moment(), 'day');
 export const compareDates = (firstValue: Moment, secondValue: Moment) => moment(firstValue).isSame(secondValue, 'day');
 
 export const getSecondBookDate = (value: Moment) => {
-  if (value.clone().add(1, 'day').day() === 6) return value.clone().add(3, 'day');
-  if (value.clone().add(1, 'day').day() === 7) return value.clone().add(2, 'day');
+  if (value.clone().day() === 5) return value.clone().add(3, 'day');
+  if (value.clone().day() === 6) return value.clone().add(2, 'day');
 
   return value.clone().add(1, 'day');
 };
 
-export const isHoliday = (index: number) => index === 5 || index === 6;
+export const isHoliday = (value: Moment) => value.day() === 6 || value.day() === 0;
 
 export const setMonth = (index: number) => moment().set('month', index);
 

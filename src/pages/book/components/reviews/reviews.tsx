@@ -5,11 +5,14 @@ import ArrowSVG from '../../../../assets/icon-arrow.svg';
 import ReviewAvatarPNG from '../../../../assets/review-avatar.png';
 import { Rating } from '../../../../components/rating';
 import { API_HOST } from '../../../../constants';
+import { sortComments } from '../../../../helpers';
 import { useAppDispatch } from '../../../../hooks/redux';
 import { setIsReviewModalActive } from '../../../../store/reducers/library-slice';
 import { IComment } from '../../../../types';
 
 import './reviews.scss';
+
+import 'moment/locale/ru';
 
 interface IProps {
   reviews: IComment[];
@@ -42,7 +45,7 @@ export const Reviews: FC<IProps> = ({ reviews, userId }) => {
       </div>
       {reviews && (
         <div className={`reviews-list ${isTurn ? 'reviews-list_unturn' : 'reviews-list_turn'}`}>
-          {reviews.map(({ id, rating, createdAt, text, user }) => (
+          {[...sortComments(reviews)].map(({ id, rating, createdAt, text, user }) => (
             <div key={id} className='review' data-test-id='comment-wrapper'>
               <div className='user'>
                 <img
@@ -54,7 +57,7 @@ export const Reviews: FC<IProps> = ({ reviews, userId }) => {
                 <div className='name'>
                   <p className='body_large' data-test-id='comment-author'>{`${user.firstName} ${user.lastName}`}</p>
                   <p className='body_large' data-test-id='comment-date'>
-                    {Moment(createdAt).format('DD MMMM YYYY')}
+                    {Moment(createdAt).locale('ru').format('DD MMMM YYYY')}
                   </p>
                 </div>
               </div>

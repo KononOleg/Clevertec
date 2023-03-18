@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { LibraryService } from '../../service/library-service';
 import { AxiosErrorDataType, BookingBookRequest, CreateCommentRequest, IError, ILibrary } from '../../types';
+import { RootState } from '../store';
 
 const ERROR_MESSAGE = 'Что-то пошло не так. Обновите страницу через некоторое время.';
 
@@ -29,6 +30,34 @@ export const getLibrary = createAsyncThunk('library/getLibrary', async (_, thunk
     }
 
     return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
+  }
+});
+
+export const getBooks = createAsyncThunk('library/getBooks', async (_, { getState, rejectWithValue }) => {
+  try {
+    const books = await LibraryService.getBooks();
+
+    const { librarySlice } = getState() as RootState;
+
+    const newLibrary: ILibrary[] = librarySlice.library.map((category) => ({ ...category, books: [] }));
+
+    books.data.forEach((book) => {
+      book.categories.forEach((category) => {
+        const categoryIndex = newLibrary.findIndex((currentCategory) => currentCategory.name === category);
+
+        newLibrary[categoryIndex].books.push(book);
+      });
+    });
+
+    return newLibrary;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      const data = err.response.data as AxiosErrorDataType;
+
+      return rejectWithValue(data.error);
+    }
+
+    return rejectWithValue({ message: ERROR_MESSAGE } as IError);
   }
 });
 
@@ -92,7 +121,7 @@ export const rebookingBook = createAsyncThunk(
       return response.data;
     } catch {
       return thunkAPI.rejectWithValue({
-        message: 'Изменение не были сохранены. Попробуйте позже!',
+        message: 'Изменения не были сохранены. Попробуйте позже!',
       } as IError);
     }
   }
@@ -108,7 +137,7 @@ export const deleteBooking = createAsyncThunk(
       return response.data;
     } catch {
       return thunkAPI.rejectWithValue({
-        message: 'Не удалось отменить бронирование книги. Попробуйте позже!',
+        message: 'Не удалось снять бронирование книги. Попробуйте позже!',
       } as IError);
     }
   }

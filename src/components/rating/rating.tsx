@@ -40,9 +40,16 @@ export const Rating: FC<IProps> = ({ rating, setRating }) => {
     );
 
   return (
-    <div className='stars'>
+    <div className='stars' data-test-id='rating'>
       {stars.map((star, index) => (
-        <img key={star} src={index + 1 <= rating ? StarPNG : StarEmptyPNG} alt='star' />
+        <div key={star} data-test-id='star'>
+          <img
+            data-test-id={index + 1 <= (hover || rating) ? 'star-active' : ''}
+            key={star}
+            src={index + 1 <= rating ? StarPNG : StarEmptyPNG}
+            alt='star'
+          />
+        </div>
       ))}
     </div>
   );

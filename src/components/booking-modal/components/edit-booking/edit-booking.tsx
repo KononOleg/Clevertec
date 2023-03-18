@@ -28,7 +28,7 @@ export const EditBooking: FC<IProps> = ({ bookId, bookingId, dateOrder, userId }
       rebookingBook({
         bookingBookRequest: {
           order: true,
-          dateOrder: rebookingDate?.toISOString() as string,
+          dateOrder: rebookingDate.toISOString(true),
           book: bookId,
           customer: userId,
         },
@@ -39,7 +39,7 @@ export const EditBooking: FC<IProps> = ({ bookId, bookingId, dateOrder, userId }
   const deleteBookingHandler = () => dispatch(deleteBooking(bookingId));
 
   return (
-    <Modal title='Изменение даты бронирования' closeModal={closeModalHandler}>
+    <Modal title='Изменение даты бронирования' testId='booking-modal' closeModal={closeModalHandler}>
       <Calendar dateOrder={rebookingDate} setDateOrder={setRebookingDate} />
       <div className='modal__buttons'>
         <button

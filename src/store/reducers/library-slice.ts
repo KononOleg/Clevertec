@@ -6,6 +6,7 @@ import {
   createComment,
   deleteBooking,
   getBook,
+  getBooks,
   getLibrary,
   rebookingBook,
 } from '../thunks/library-thunks';
@@ -67,6 +68,8 @@ export const librarySlice = createSlice({
 
     builder.addCase(getBook.pending, (state) => ({ ...state, isPending: true }));
 
+    builder.addCase(getBooks.pending, (state) => ({ ...state, isPending: true }));
+
     builder.addCase(createComment.pending, (state) => ({ ...state, isPending: true }));
 
     builder.addCase(bookingBook.pending, (state) => ({ ...state, isPending: true }));
@@ -87,6 +90,12 @@ export const librarySlice = createSlice({
       book: action.payload,
     }));
 
+    builder.addCase(getBooks.fulfilled.type, (state, action: PayloadAction<ILibrary[]>) => ({
+      ...state,
+      isPending: false,
+      library: action.payload,
+    }));
+
     builder.addCase(createComment.fulfilled.type, (state) => ({
       ...state,
       isPending: false,
@@ -105,7 +114,7 @@ export const librarySlice = createSlice({
       ...state,
       isPending: false,
       bookingModalParams: null,
-      success: { message: 'Бронирование книги успешно отменено' },
+      success: { message: 'Бронирование книги успешно отменено!' },
     }));
 
     builder.addCase(rebookingBook.fulfilled.type, (state) => ({
@@ -113,7 +122,7 @@ export const librarySlice = createSlice({
       isPending: false,
       bookingModalParams: null,
       success: {
-        message: 'Бронирование новой даты успешно изменено. Подробности можно посмотреть на странице Профиль',
+        message: 'Изменения успешно сохранены!',
       },
     }));
 
@@ -122,6 +131,13 @@ export const librarySlice = createSlice({
       isPending: false,
       book: null,
       library: [],
+      error: action.payload,
+    }));
+
+    builder.addCase(getBooks.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      book: null,
       error: action.payload,
     }));
 

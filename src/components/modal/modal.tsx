@@ -8,16 +8,12 @@ interface IProps {
   title: string;
   closeModal: () => void;
   children: ReactNode;
+  testId: string;
 }
 
-export const Modal: FC<IProps> = ({ title, closeModal, children }) => (
+export const Modal: FC<IProps> = ({ title, closeModal, children, testId }) => (
   <div className='modal' data-test-id='modal-outer' role='presentation' onClick={closeModal}>
-    <div
-      className='modal__wrapper'
-      data-test-id='booking-modal'
-      role='presentation'
-      onClick={(e) => e.stopPropagation()}
-    >
+    <div className='modal__wrapper' data-test-id={testId} role='presentation' onClick={(e) => e.stopPropagation()}>
       <button className='button_close' type='button' data-test-id='modal-close-button' onClick={closeModal}>
         <CloseSVG />
       </button>

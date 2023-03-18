@@ -78,10 +78,10 @@ export const Calendar: FC<IProps> = ({ dateOrder, setDateOrder }) => {
                   key={`${index.toString()}`}
                   data-test-id='day-button'
                   type='button'
-                  disabled={!isToday(day) && !compareDates(secondBookDate, day)}
+                  disabled={(!isToday(day) && !compareDates(secondBookDate, day)) || isHoliday(day)}
                   className={`day info_small ${
                     compareDates(secondBookDate, day) || isToday(day) ? '' : 'day_inactive'
-                  } ${isHoliday(index) && isOneMonth(value, day) ? 'holiday' : ''} ${isToday(day) ? 'today' : ''} ${
+                  } ${isHoliday(day) && isOneMonth(value, day) ? 'holiday' : ''} ${isToday(day) ? 'today' : ''} ${
                     dateOrder && compareDates(dateOrder, day) ? 'day_select' : ''
                   }`}
                   onClick={() => setDateOrder(day)}
