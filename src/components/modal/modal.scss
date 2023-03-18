@@ -1,0 +1,87 @@
+@import '../../index.variables.scss';
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background: $dark30;
+  backdrop-filter: blur(10px);
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal__wrapper {
+    background: $white;
+    border-radius: 16px;
+
+    width: 528px;
+    min-height: 508px;
+    padding: 48px 56px;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h4 {
+      margin-bottom: 32px;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .subtitle_large {
+      margin-bottom: 17px;
+    }
+
+    .button {
+      width: 416px;
+      padding: 16px 0;
+    }
+  }
+
+  .button_close {
+    top: 43px;
+    right: 43px;
+    position: absolute;
+
+    svg {
+      width: 25px;
+      height: 25px;
+      fill: $orange10;
+    }
+  }
+}
+
+@media (max-width: 680px) {
+  .modal {
+    .modal__wrapper {
+      width: 288px;
+      min-height: 438px;
+      padding: 42px 16px 32px;
+
+      h4 {
+        margin-bottom: 24px;
+      }
+
+      .button {
+        width: 100%;
+        padding: 11px 0;
+      }
+
+      .button_close {
+        top: 24px;
+        right: 24px;
+
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { filterBooks, filterCategory, sortBooks } from '../../helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { librarySelector } from '../../store/selectors/library-selector';
-import { getLibrary } from '../../store/thunks/library-thunks';
+import { getBooks, getLibrary } from '../../store/thunks/library-thunks';
 import { IBook } from '../../types';
 
 import { BookCard } from './components/book-card';
@@ -16,7 +16,7 @@ export const MainPage: FC = () => {
   const { category } = useParams();
   const dispatch = useAppDispatch();
   const [isTileView, setTileView] = useState<boolean>(true);
-  const { library, isPending, isDescendingOrder, filterText } = useAppSelector(librarySelector);
+  const { library, isPending, isDescendingOrder, filterText, success } = useAppSelector(librarySelector);
 
   const filteredCategory = useMemo(() => filterCategory(library, category as string), [library, category]);
   const filteredBooks = useMemo(() => filterBooks(filteredCategory, filterText), [filteredCategory, filterText]);
@@ -25,6 +25,10 @@ export const MainPage: FC = () => {
   const setTileViewHandler = (tileView: boolean) => setTileView(tileView);
 
   const dataFetchedRef = useRef(false);
+
+  useEffect(() => {
+    if (success) dispatch(getBooks());
+  }, [dispatch, success]);
 
   useEffect(() => {
     if (dataFetchedRef.current) return;
@@ -36,7 +40,7 @@ export const MainPage: FC = () => {
     <section className='main-page'>
       <NavigationList isTileView={isTileView} setTileViewHandler={setTileViewHandler} />
       {!isPending && (
-        <div className={isTileView ? 'books_vertical' : 'books_horizontal'}>
+        <div className={isTileView ? 'books_vertical' : 'books_horizontal'} data-test-id='content'>
           {sortedBooks.length ? (
             sortedBooks.map((book: IBook) => <BookCard book={book} key={book.id} isTileView={isTileView} />)
           ) : filterText ? (

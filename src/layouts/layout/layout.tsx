@@ -1,6 +1,7 @@
 import { FC, Fragment, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
+import { BookingModal } from '../../components/booking-modal';
 import { ErrorMessage } from '../../components/error-message';
 import { Footer } from '../../components/footer';
 import { Header } from '../../components/header';
@@ -15,7 +16,7 @@ import './layout.scss';
 export const Layout: FC = () => {
   const navigate = useNavigate();
   const { isAuth } = useAppSelector(authSelector);
-  const { isPending } = useAppSelector(librarySelector);
+  const { isPending, bookingModalParams } = useAppSelector(librarySelector);
 
   useEffect(() => {
     if (!isAuth) {
@@ -26,11 +27,10 @@ export const Layout: FC = () => {
   return (
     <Fragment>
       {isPending && <Loading />}
-
+      {bookingModalParams && <BookingModal />}
       <div className='main-layout'>
         <div className='main-layout__wrapper'>
           <ErrorMessage />
-
           <Header />
           <main className='main'>
             <Outlet />

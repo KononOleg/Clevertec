@@ -123,8 +123,19 @@ h5 {
   line-height: 16px;
 }
 
+.info_small {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+
 @media (max-width: 680px) {
   h3 {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  h4 {
     font-size: 18px;
     line-height: 28px;
   }
@@ -209,6 +220,12 @@ button:disabled {
   font-size: 16px;
   line-height: 18px;
   text-transform: uppercase;
+}
+
+@media (max-width: 680px) {
+  .button {
+    font-size: 12px;
+  }
 }
 
 .button:hover {

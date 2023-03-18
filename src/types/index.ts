@@ -102,6 +102,10 @@ export interface IError {
   details: object[];
 }
 
+export interface ISuccess {
+  message: string;
+}
+
 export interface IUser {
   id: string;
   username: string;
@@ -128,4 +132,51 @@ export interface SignUpRequest {
   firstName: string;
   lastName: string;
   phone: string;
+}
+
+export interface CreateCommentRequest {
+  rating: number;
+  text: string;
+  book: string;
+  user: string;
+}
+
+export interface BookingBookRequest {
+  order: boolean;
+  dateOrder: string;
+  book: string;
+  customer: string;
+}
+
+export interface CreateCommentResponse {
+  id: string;
+  attributes: CreateCommentAttributes;
+}
+
+export interface BookingBookResponse {
+  id: string;
+  attributes: BookingBookAttributes;
+}
+
+export interface CreateCommentAttributes {
+  rating: number;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface BookingBookAttributes {
+  order: boolean;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  dateOrder: string;
+}
+
+export interface BookingModalParams {
+  bookId: string;
+  order: boolean;
+  bookingId: string;
+  dateOrder: string;
 }

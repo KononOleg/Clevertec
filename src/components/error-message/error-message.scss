@@ -6,12 +6,9 @@
 
   right: 0;
   left: 0;
-  z-index: 10;
+  z-index: 30;
 
   padding: 24px 32px;
-
-  border: 1.5px solid #f42c4f;
-  background: #feebea;
   border-radius: 5px;
 
   display: flex;
@@ -33,6 +30,16 @@
       fill: $dark;
     }
   }
+}
+
+.error-message_error {
+  border: 2px solid $negative;
+  background: $negative_background;
+}
+
+.error-message_success {
+  border: 2px solid $positive;
+  background: $positive_background;
 }
 
 @media (max-width: 1100px) {
