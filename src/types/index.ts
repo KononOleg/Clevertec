@@ -180,3 +180,39 @@ export interface BookingModalParams {
   bookingId: string;
   dateOrder: string;
 }
+
+export interface IAccount extends IUser {
+  role: IRole;
+  comments: IComment[];
+  avatar: string;
+  booking: IUserBooking;
+  delivery: IUserDelivery;
+  history: IUserHistory;
+}
+
+export interface IRole {
+  id: string;
+  name: string;
+  description: string;
+  type: string;
+}
+
+export interface IUserBooking {
+  id: string;
+  order: boolean;
+  dateOrder: string;
+  book: IBook;
+}
+
+export interface IUserDelivery {
+  id: string;
+  handed: boolean;
+  dateHandedFrom: string;
+  dateHandedTo: string;
+  book: IBook;
+}
+
+export interface IUserHistory {
+  id: string;
+  books: IBook[];
+}
