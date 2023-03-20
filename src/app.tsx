@@ -7,6 +7,7 @@ import { MainLayout } from './layouts/main-layout';
 import { AuthorizationPage } from './pages/authorization';
 import { BookPage } from './pages/book';
 import { MainPage } from './pages/main';
+import { Profile } from './pages/profile';
 import { TermsPage } from './pages/terms';
 import { PATH } from './constants';
 import { AuthorizationContentView, TermsContentView } from './types';
@@ -24,6 +25,7 @@ export const App: FC = () => (
           </Route>
         </Route>
         <Route path={PATH.booksId} element={<BookPage />} />
+        <Route path={PATH.profile} element={<Profile />} />
       </Route>
       <Route element={<AuthorizationLayout />}>
         <Route path={PATH.auth} element={<AuthorizationPage contentView={AuthorizationContentView.Auth} />} />
