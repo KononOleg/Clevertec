@@ -4,12 +4,12 @@ import { IAccount, IUser } from '../types';
 
 import { $api } from './http';
 
-export class UserService {
-  static async getUser(userId: string): Promise<AxiosResponse<IAccount>> {
-    return $api.post<IAccount>(`/api/users/${userId}`);
+export class AccountService {
+  static async getAccount(userId: string): Promise<AxiosResponse<IAccount>> {
+    return $api.get<IAccount>(`/api/users/${userId}`);
   }
 
-  static async updateUser(userId: string, user: IUser): Promise<AxiosResponse<IAccount>> {
+  static async updateAccount(userId: string, user: IUser): Promise<AxiosResponse<IAccount>> {
     return $api.post<IAccount>(`/api/users/${userId}`, {
       ...user,
     });
