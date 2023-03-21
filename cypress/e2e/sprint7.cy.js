@@ -3191,7 +3191,7 @@ describe('Sprint 2', () => {
       cy.get('[data-test-id=navigation-books]').should('not.be.visible');
       cy.get('[data-test-id=navigation-showcase]').click();
       cy.get('[data-test-id=navigation-books]').should('be.visible').should('be.exist');
-      cy.get('[data-test-id=navigation-terms]').should('be.exist').eq(1).click();
+      cy.get('[data-test-id=navigation-terms]').should('be.exist').click();
       cy.get('[data-test-id=navigation-books]').should('not.be.visible');
     });
 
@@ -3231,7 +3231,7 @@ describe('Sprint 2', () => {
       cy.get('[data-test-id=burger-books]').should('not.be.visible');
       cy.get('[data-test-id=burger-showcase]').click();
       cy.get('[data-test-id=burger-books]').should('be.visible').should('be.exist');
-      cy.get('[data-test-id=navigation-terms]').should('be.exist').eq(0).click();
+      cy.get('[data-test-id=burger-terms]').should('be.exist').click();
       cy.get('[data-test-id=burger-books]').should('not.be.visible');
     });
 
