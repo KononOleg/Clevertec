@@ -1,3 +1,5 @@
+@import '../../index.variables.scss';
+
 .profile-page {
   padding: 29px 0 0;
 
@@ -7,5 +9,34 @@
 
   .subtitle {
     margin: 10px 0 28px;
+  }
+
+  .card {
+    position: relative;
+  }
+
+  .empty {
+    height: 218px;
+    border-radius: 10px;
+    padding: 16px;
+
+    backdrop-filter: blur(10px);
+    color: $white;
+    opacity: 0.7;
+
+    h3 {
+      max-width: 400px;
+    }
+  }
+
+  .empty_blue {
+    background: $blue;
+  }
+
+  .empty_red {
+    width: 100%;
+    background: $red;
+    position: absolute;
+    top: 0;
   }
 }

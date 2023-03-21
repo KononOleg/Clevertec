@@ -5,6 +5,7 @@ import { accountSelector } from '../../store/selectors/account-selector';
 import { authSelector } from '../../store/selectors/auth-selector';
 import { getAccount } from '../../store/thunks/account-thunks';
 
+import { Booking } from './components/booking';
 import { Сredentials } from './components/credentials';
 import { UserAvatar } from './components/user-avatar';
 
@@ -25,6 +26,7 @@ export const Profile: FC = () => {
         <Fragment>
           <UserAvatar account={account} />
           <Сredentials account={account} password={password} />
+          <Booking booking={account.booking} />
         </Fragment>
       )}
     </section>
