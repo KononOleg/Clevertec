@@ -5,6 +5,8 @@ import { accountSelector } from '../../store/selectors/account-selector';
 import { authSelector } from '../../store/selectors/auth-selector';
 import { getAccount } from '../../store/thunks/account-thunks';
 
+import { UserAvatar } from './components/user-avatar';
+
 import './profile.scss';
 
 export const Profile: FC = () => {
@@ -16,9 +18,5 @@ export const Profile: FC = () => {
     dispatch(getAccount(user?.id as string));
   }, [dispatch, user?.id]);
 
-  return (
-    <section>
-      <p>{account?.firstName}</p>
-    </section>
-  );
+  return <section className='profile-page'>{account && <UserAvatar account={account} />}</section>;
 };
