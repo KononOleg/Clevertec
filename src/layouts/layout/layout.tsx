@@ -8,6 +8,7 @@ import { Header } from '../../components/header';
 import { Loading } from '../../components/loading';
 import { PATH } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
+import { accountSelector } from '../../store/selectors/account-selector';
 import { authSelector } from '../../store/selectors/auth-selector';
 import { librarySelector } from '../../store/selectors/library-selector';
 
@@ -16,7 +17,8 @@ import './layout.scss';
 export const Layout: FC = () => {
   const navigate = useNavigate();
   const { isAuth } = useAppSelector(authSelector);
-  const { isPending, bookingModalParams } = useAppSelector(librarySelector);
+  const { isPending: isPendingLibrary, bookingModalParams } = useAppSelector(librarySelector);
+  const { isPending: isPendingAccount } = useAppSelector(accountSelector);
 
   useEffect(() => {
     if (!isAuth) {
@@ -26,7 +28,7 @@ export const Layout: FC = () => {
 
   return (
     <Fragment>
-      {isPending && <Loading />}
+      {(isPendingLibrary || isPendingAccount) && <Loading />}
       {bookingModalParams && <BookingModal />}
       <div className='main-layout'>
         <div className='main-layout__wrapper'>

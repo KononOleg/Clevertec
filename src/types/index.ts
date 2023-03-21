@@ -153,6 +153,15 @@ export interface CreateCommentResponse {
   attributes: CreateCommentAttributes;
 }
 
+export interface UpdateAccountResponse {
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+}
+
 export interface BookingBookResponse {
   id: string;
   attributes: BookingBookAttributes;
@@ -215,4 +224,14 @@ export interface IUserDelivery {
 export interface IUserHistory {
   id: string;
   books: IBook[];
+}
+
+export interface AccountPayloadAction {
+  account: IAccount;
+  success: ISuccess;
+}
+
+export interface SignInPayloadAction {
+  user: IUser;
+  password: string;
 }

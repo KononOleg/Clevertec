@@ -16,7 +16,7 @@ export const signIn = createAsyncThunk(
 
       sessionStorage.setItem('token', jwt);
 
-      return user;
+      return { user, password: payload.password };
     } catch (err) {
       const { response } = (await err) as AxiosError;
 

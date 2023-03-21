@@ -1,25 +1,34 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IAccount, IError } from '../../types';
+import { AccountPayloadAction, IAccount, IError, ISuccess } from '../../types';
 import { getAccount, updateAccount } from '../thunks/account-thunks';
 
 interface AccountSliceState {
   account: IAccount | null;
   isPending: boolean;
+  success: ISuccess | null;
   error: IError | null;
 }
 
 const initialState: AccountSliceState = {
   account: null,
   isPending: false,
-
+  success: null,
   error: null,
 };
 
 export const accountSlice = createSlice({
   name: 'account',
   initialState,
-  reducers: {},
+  reducers: {
+    resetErrorAccount(state) {
+      return { ...state, error: null };
+    },
+
+    resetSuccessAccount(state) {
+      return { ...state, success: null };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAccount.pending, (state) => ({ ...state, isPending: true }));
 
@@ -31,10 +40,11 @@ export const accountSlice = createSlice({
       account: action.payload,
     }));
 
-    builder.addCase(updateAccount.fulfilled.type, (state, action: PayloadAction<IAccount>) => ({
+    builder.addCase(updateAccount.fulfilled.type, (state, action: PayloadAction<AccountPayloadAction>) => ({
       ...state,
       isPending: false,
-      account: action.payload,
+      account: action.payload.account,
+      success: action.payload.success,
     }));
 
     builder.addCase(getAccount.rejected.type, (state, action: PayloadAction<IError>) => ({
@@ -50,3 +60,4 @@ export const accountSlice = createSlice({
     }));
   },
 });
+export const { resetErrorAccount, resetSuccessAccount } = accountSlice.actions;

@@ -39,11 +39,11 @@ export const librarySlice = createSlice({
   name: 'library',
   initialState,
   reducers: {
-    resetError(state) {
+    resetErrorLibrary(state) {
       return { ...state, error: null };
     },
 
-    resetSuccess(state) {
+    resetSuccessLibrary(state) {
       return { ...state, success: null };
     },
 
@@ -177,5 +177,11 @@ export const librarySlice = createSlice({
   },
 });
 
-export const { resetError, switchOrder, setFilterText, setIsReviewModalActive, resetSuccess, setBookingModalParams } =
-  librarySlice.actions;
+export const {
+  resetErrorLibrary,
+  switchOrder,
+  setFilterText,
+  setIsReviewModalActive,
+  resetSuccessLibrary,
+  setBookingModalParams,
+} = librarySlice.actions;

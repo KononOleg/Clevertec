@@ -12,7 +12,7 @@ import './profile.scss';
 
 export const Profile: FC = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(authSelector);
+  const { user, password } = useAppSelector(authSelector);
   const { account } = useAppSelector(accountSelector);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export const Profile: FC = () => {
       {account && (
         <Fragment>
           <UserAvatar account={account} />
-          <Сredentials account={account} />
+          <Сredentials account={account} password={password} />
         </Fragment>
       )}
     </section>

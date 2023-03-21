@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IError, IUser } from '../../types';
+import { IError, IUser, SignInPayloadAction } from '../../types';
 import { recoveryPassword, resetPassword, signIn, signUp } from '../thunks/auth-thunks';
 
 interface AuthSliceState {
   isPending: boolean;
   isAuth: boolean;
+  password: string;
   error: IError | null;
   user: IUser | null;
   isSuccessfulRegistration: boolean;
@@ -16,6 +17,7 @@ interface AuthSliceState {
 const initialState: AuthSliceState = {
   isPending: false,
   isAuth: false,
+  password: '',
   error: null,
   user: null,
   isSuccessfulRegistration: false,
@@ -53,11 +55,12 @@ export const authSlice = createSlice({
     builder.addCase(resetPassword.pending, (state) => ({ ...state, isPending: true }));
     builder.addCase(recoveryPassword.pending, (state) => ({ ...state, isPending: true }));
 
-    builder.addCase(signIn.fulfilled.type, (state, action: PayloadAction<IUser>) => ({
+    builder.addCase(signIn.fulfilled.type, (state, action: PayloadAction<SignInPayloadAction>) => ({
       ...state,
       isPending: false,
       isAuth: true,
-      user: action.payload,
+      user: action.payload.user,
+      password: action.payload.password,
     }));
 
     builder.addCase(signUp.fulfilled.type, (state, action: PayloadAction<IUser>) => ({

@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { regex } from '../../../../constants/regex';
 import { useAppDispatch } from '../../../../hooks/redux';
+import { updateAccount } from '../../../../store/thunks/account-thunks';
 import { IAccount } from '../../../../types';
 import { ErrorTextPassword, ErrorTextUserName } from '../../../authorization/components/error-text';
 import { PasswordInput } from '../../../authorization/components/password-input';
@@ -12,6 +13,7 @@ import './credentials.scss';
 
 interface IProps {
   account: IAccount;
+  password: string;
 }
 
 interface IFormInputs {
@@ -23,7 +25,7 @@ interface IFormInputs {
   email: string;
 }
 
-export const Сredentials: FC<IProps> = ({ account }) => {
+export const Сredentials: FC<IProps> = ({ account, password }) => {
   const dispatch = useAppDispatch();
   const { lastName, firstName, username, phone, email } = account;
 
@@ -39,6 +41,7 @@ export const Сredentials: FC<IProps> = ({ account }) => {
       phone,
       username,
       email,
+      password,
     },
     mode: 'all',
   });
@@ -50,12 +53,12 @@ export const Сredentials: FC<IProps> = ({ account }) => {
   const watchUserName = watch('username');
   const watchPassword = watch('password');
 
-  const onSubmit: SubmitHandler<IFormInputs> = () => {};
+  const onSubmit: SubmitHandler<IFormInputs> = (data) => dispatch(updateAccount({ user: data, userId: account.id }));
 
   return (
     <div className='credentials'>
       <h4>Учётные данные</h4>
-      <p className='body_large'>Здесь вы можете отредактировать информацию о себе</p>
+      <p className='body_large subtitle'>Здесь вы можете отредактировать информацию о себе</p>
       <form className='form' onSubmit={handleSubmit(onSubmit)}>
         <fieldset className='fields' disabled={isDisabledInputs}>
           <div className='side'>
@@ -163,7 +166,7 @@ export const Сredentials: FC<IProps> = ({ account }) => {
             Редактировать
           </button>
 
-          <button type='button' className='button' disabled={isDisabledInputs}>
+          <button type='submit' className='button' disabled={isDisabledInputs}>
             Сохранить изменения
           </button>
         </div>
