@@ -24,6 +24,11 @@
     height: 56px;
     width: 416px;
   }
+  .error {
+    position: absolute;
+    top: 100%;
+    left: 12px;
+  }
 
   .input_error {
     border-bottom: 1px solid $negative;

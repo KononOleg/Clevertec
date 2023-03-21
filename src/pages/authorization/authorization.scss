@@ -40,16 +40,6 @@
     gap: 16px;
     color: $black70;
   }
-  .error {
-    position: absolute;
-    top: 100%;
-    left: 12px;
-    color: $grey40;
-  }
-
-  .color_error {
-    color: $negative;
-  }
 }
 
 @media (max-width: 680px) {

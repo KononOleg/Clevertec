@@ -61,10 +61,10 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             }}
             onBlur={() => setFocusedPassword(false)}
             onFocus={() => setFocusedPassword(true)}
-            error={errors.password}
+            error={focusedPassword ? undefined : errors.password}
             shouldShowCheckmark={true}
           />
-          {errors.password?.type !== 'required' && (
+          {(errors.password?.type !== 'required' || focusedUserName) && (
             <p
               className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
               data-test-id='hint'
