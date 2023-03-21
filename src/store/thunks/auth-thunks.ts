@@ -14,7 +14,7 @@ export const signIn = createAsyncThunk(
 
       const { jwt, user } = response.data;
 
-      localStorage.setItem('token', jwt);
+      sessionStorage.setItem('token', jwt);
 
       return user;
     } catch (err) {
