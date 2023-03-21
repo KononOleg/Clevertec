@@ -35,6 +35,15 @@ export const authSlice = createSlice({
       return {
         ...state,
         isAuth: false,
+        password: '',
+      };
+    },
+
+    updateUser(state, action) {
+      return {
+        ...state,
+        password: action.payload.password,
+        user: { ...state.user, ...action.payload.updatedUser },
       };
     },
 
@@ -42,6 +51,7 @@ export const authSlice = createSlice({
       return {
         ...state,
         isPending: false,
+        password: '',
         error: null,
         user: null,
         isSuccessfulRegistration: false,
@@ -108,4 +118,4 @@ export const authSlice = createSlice({
   },
 });
 
-export const { resetSlice, signOut } = authSlice.actions;
+export const { resetSlice, signOut, updateUser } = authSlice.actions;

@@ -1,8 +1,9 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { regex } from '../../../../constants/regex';
 import { useAppDispatch } from '../../../../hooks/redux';
+import { updateUser } from '../../../../store/reducers/auth-slice';
 import { updateAccount } from '../../../../store/thunks/account-thunks';
 import { IAccount } from '../../../../types';
 import { ErrorTextPassword, ErrorTextUserName } from '../../../authorization/components/error-text';
@@ -54,6 +55,10 @@ export const Сredentials: FC<IProps> = ({ account, password }) => {
   const watchPassword = watch('password');
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => dispatch(updateAccount({ user: data, userId: account.id }));
+
+  useEffect(() => {
+    dispatch(updateUser({ updatedUser: { lastName, firstName, phone, username, email }, password }));
+  }, [dispatch, email, firstName, lastName, password, phone, username]);
 
   return (
     <div className='credentials'>
