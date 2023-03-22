@@ -480,7 +480,7 @@ const USER_EXPIRED_BOOKING = {
     id: 460,
     handed: true,
     dateHandedFrom: '2023-03-06T18:44:05.903Z',
-    dateHandedTo: '2023-03-20T18:44:05.903Z',
+    dateHandedTo: '2023-03-30T18:44:05.903Z',
     book: {
       id: 71,
       title: 'Нескучная детская психология. Как общаться с ребенком, чтобы он вас слушался, и слышал',
@@ -3308,6 +3308,7 @@ describe('Sprint 3', () => {
 
     describe('getSuccessBookId', () => {
       beforeEach(() => {
+        getFullData();
         cy.intercept('https://strapi.cleverland.by/api/books/2', BOOK_2).as('get-books-success-id');
         cy.viewport('macbook-16');
       });
@@ -4180,6 +4181,20 @@ describe('Sprint 6', () => {
     },
   };
 
+  const USER_ME = {
+    id: myId,
+    username: 'pihoozzz',
+    email: 'psioozzz@tut.by',
+    provider: 'local',
+    confirmed: true,
+    blocked: false,
+    createdAt: '2022-10-23T16:58:49.851Z',
+    updatedAt: '2022-10-23T16:58:49.851Z',
+    firstName: myName,
+    lastName: myLastName,
+    phone: '+375 (33) 333-33-33',
+  };
+
   const BOOK_INFO_ITEM = {
     id: 1,
     title: 'Книга 1',
@@ -4396,7 +4411,7 @@ describe('Sprint 6', () => {
   const getContentnBooking = () => {
     cy.intercept('/api/categories', CATEGORIES).as('categories');
     cy.intercept('/api/books', BOOKS_LIST_BASE).as('books');
-    cy.intercept('GET', /users\/me/, USER).as('me');
+    cy.intercept('GET', /users\/me/, USER_ME).as('me');
   };
 
   const authorize = () => {
@@ -4961,11 +4976,11 @@ describe('Sprint 7', () => {
         cy.viewport(320, 800);
         cy.get('[data-test-id=profile-avatar]')
           .contains('Фамилия', { matchCase: false })
-          .should('have.css', 'font-size', '36px')
+          .should('have.css', 'font-size', '26px')
           .should('have.css', 'font-weight', '500');
         cy.get('[data-test-id=profile-avatar]')
           .contains('Имя', { matchCase: false })
-          .should('have.css', 'font-size', '36px')
+          .should('have.css', 'font-size', '26px')
           .should('have.css', 'font-weight', '500');
       });
     });

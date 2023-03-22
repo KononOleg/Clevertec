@@ -26,7 +26,7 @@ export const Reviews: FC<IProps> = ({ reviews, userId }) => {
 
   const openModalHandler = () => dispatch(setIsReviewModalActive(true));
 
-  const disabled = reviews.find((review) => review.user.commentUserId === userId) ? true : false;
+  const disabled = !reviews || reviews.find((review) => review.user.commentUserId === userId) ? true : false;
 
   return (
     <div className='reviews' data-test-id='reviews'>

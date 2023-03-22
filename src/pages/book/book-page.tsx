@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect } from 'react';
+import { FC, Fragment, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { BookImage } from '../../components/book-image';
@@ -8,7 +8,8 @@ import { PATH } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { accountSelector } from '../../store/selectors/account-selector';
 import { librarySelector } from '../../store/selectors/library-selector';
-import { getBook } from '../../store/thunks/library-thunks';
+import { getAccount } from '../../store/thunks/account-thunks';
+import { getBook, getLibrary } from '../../store/thunks/library-thunks';
 
 import { AboutBook } from './components/about-book';
 import { Detailed } from './components/detailed';
@@ -24,6 +25,7 @@ export const BookPage: FC = () => {
   const dispatch = useAppDispatch();
   const { book, library, isReviewModalActive, success } = useAppSelector(librarySelector);
   const { account } = useAppSelector(accountSelector);
+  const dataFetchedRef = useRef(false);
   const categoryName =
     category === PATH.all ? 'Все книги' : library.find((currentCategory) => currentCategory.path === category)?.name;
 
@@ -34,6 +36,15 @@ export const BookPage: FC = () => {
   useEffect(() => {
     dispatch(getBook({ bookId: bookId as string }));
   }, [bookId, dispatch]);
+
+  useEffect(() => {
+    if (library) {
+      if (dataFetchedRef.current) return;
+      dataFetchedRef.current = true;
+      dispatch(getLibrary());
+      dispatch(getAccount());
+    }
+  }, [dispatch, library]);
 
   return (
     <Fragment>
