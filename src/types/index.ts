@@ -235,3 +235,42 @@ export interface SignInPayloadAction {
   user: IUser;
   password: string;
 }
+
+export interface UploadFileResponse {
+  id: string;
+  name: string;
+  alternativeText: string;
+  caption: string;
+  width: number;
+  height: number;
+  formats: Formats;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: null;
+  provider: string;
+  provider_metadata: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Thumbnail {
+  name: string;
+  hash: string;
+  ext: string;
+  mime: string;
+  path: string;
+  width: number;
+  height: number;
+  size: number;
+  url: string;
+}
+
+export interface Formats {
+  thumbnail: Thumbnail;
+  large: Thumbnail;
+  medium: Thumbnail;
+  small: Thumbnail;
+}

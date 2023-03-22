@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { AccountPayloadAction, IAccount, IError, ISuccess } from '../../types';
-import { getAccount, updateAccount } from '../thunks/account-thunks';
+import { getAccount, updateAccount, uploadFile } from '../thunks/account-thunks';
 
 interface AccountSliceState {
   account: IAccount | null;
@@ -34,6 +34,8 @@ export const accountSlice = createSlice({
 
     builder.addCase(updateAccount.pending, (state) => ({ ...state, isPending: true }));
 
+    builder.addCase(uploadFile.pending, (state) => ({ ...state, isPending: true }));
+
     builder.addCase(getAccount.fulfilled.type, (state, action: PayloadAction<IAccount>) => ({
       ...state,
       isPending: false,
@@ -47,6 +49,13 @@ export const accountSlice = createSlice({
       success: action.payload.success,
     }));
 
+    builder.addCase(uploadFile.fulfilled.type, (state, action: PayloadAction<AccountPayloadAction>) => ({
+      ...state,
+      isPending: false,
+      account: action.payload.account,
+      success: action.payload.success,
+    }));
+
     builder.addCase(getAccount.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
@@ -54,6 +63,12 @@ export const accountSlice = createSlice({
     }));
 
     builder.addCase(updateAccount.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      error: action.payload,
+    }));
+
+    builder.addCase(uploadFile.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
       error: action.payload,

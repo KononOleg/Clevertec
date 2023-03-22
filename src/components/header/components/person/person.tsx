@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import AvatarPNG from '../../../../assets/avatar.png';
-import { PATH } from '../../../../constants';
+import { API_HOST, PATH } from '../../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { signOut } from '../../../../store/reducers/auth-slice';
 import { accountSelector } from '../../../../store/selectors/account-selector';
@@ -20,7 +20,7 @@ export const Person: FC = () => {
     <div className='person'>
       <p className='subtitle_small'>Привет, {account?.firstName}!</p>
       <button type='button' onClick={() => setIsActiveModal(!isActiveModal)}>
-        <img className='image' src={AvatarPNG} alt='avatar' />
+        <img className='image' src={account?.avatar ? `${API_HOST}${account.avatar}` : AvatarPNG} alt='avatar' />
       </button>
 
       {isActiveModal && (

@@ -28,3 +28,20 @@ export const updateAccount = createAsyncThunk(
     }
   }
 );
+
+export const uploadFile = createAsyncThunk(
+  'account/uploadFile',
+  async (payload: { files: FormData; userId: string }, thunkAPI) => {
+    try {
+      const { data } = await AccountService.uploadFile(payload.files);
+      const response = await AccountService.updateAvatar(payload.userId, data[0].id);
+      const success = { message: 'Фото успешно сохранено' };
+
+      return { success, account: response.data };
+    } catch {
+      return thunkAPI.rejectWithValue({
+        message: 'Что-то пошло не так, фото не сохранилось. Попробуйте позже!',
+      } as IError);
+    }
+  }
+);
