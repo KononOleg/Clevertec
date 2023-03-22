@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IError, IUser, SignInPayloadAction } from '../../types';
+import { IError, SignInPayloadAction } from '../../types';
 import { recoveryPassword, resetPassword, signIn, signUp } from '../thunks/auth-thunks';
 
 interface AuthSliceState {
@@ -8,18 +8,16 @@ interface AuthSliceState {
   isAuth: boolean;
   password: string;
   error: IError | null;
-  user: IUser | null;
   isSuccessfulRegistration: boolean;
   isSuccessfulResetPassword: boolean;
   isSuccessfulRecoveryPassword: boolean;
 }
 
 const initialState: AuthSliceState = {
-  isPending: false,
+  isPending: true,
   isAuth: false,
   password: '',
   error: null,
-  user: null,
   isSuccessfulRegistration: false,
   isSuccessfulResetPassword: false,
   isSuccessfulRecoveryPassword: false,
@@ -31,6 +29,7 @@ export const authSlice = createSlice({
   reducers: {
     signOut(state) {
       sessionStorage.removeItem('token');
+      sessionStorage.removeItem('password');
 
       return {
         ...state,
@@ -39,11 +38,22 @@ export const authSlice = createSlice({
       };
     },
 
-    updateUser(state, action) {
+    checkisAuth(state) {
+      const token = sessionStorage.getItem('token');
+      const password = sessionStorage.getItem('password');
+
+      if (token && password)
+        return {
+          ...state,
+          isAuth: true,
+          isPending: false,
+          password,
+        };
+
       return {
         ...state,
-        password: action.payload.password,
-        user: { ...state.user, ...action.payload.updatedUser },
+        isPending: false,
+        isAuth: false,
       };
     },
 
@@ -69,15 +79,13 @@ export const authSlice = createSlice({
       ...state,
       isPending: false,
       isAuth: true,
-      user: action.payload.user,
       password: action.payload.password,
     }));
 
-    builder.addCase(signUp.fulfilled.type, (state, action: PayloadAction<IUser>) => ({
+    builder.addCase(signUp.fulfilled.type, (state) => ({
       ...state,
       isPending: false,
       isSuccessfulRegistration: true,
-      user: action.payload,
     }));
 
     builder.addCase(resetPassword.fulfilled.type, (state) => ({
@@ -118,4 +126,4 @@ export const authSlice = createSlice({
   },
 });
 
-export const { resetSlice, signOut, updateUser } = authSlice.actions;
+export const { resetSlice, signOut, checkisAuth } = authSlice.actions;

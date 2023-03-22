@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { filterBooks, filterCategory, sortBooks } from '../../helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { librarySelector } from '../../store/selectors/library-selector';
+import { getAccount } from '../../store/thunks/account-thunks';
 import { getBooks, getLibrary } from '../../store/thunks/library-thunks';
 import { IBook } from '../../types';
 
@@ -34,10 +35,11 @@ export const MainPage: FC = () => {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     dispatch(getLibrary());
+    dispatch(getAccount());
   }, [dispatch]);
 
   return (
-    <section className='main-page'>
+    <section className='main-page' data-test-id='main-page'>
       <NavigationList isTileView={isTileView} setTileViewHandler={setTileViewHandler} />
       {!isPending && (
         <div className={isTileView ? 'books_vertical' : 'books_horizontal'} data-test-id='content'>

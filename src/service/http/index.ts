@@ -11,5 +11,3 @@ $api.interceptors.request.use((config) => {
 
   return newConfig;
 });
-
-$api.interceptors.request.use((config) => config);

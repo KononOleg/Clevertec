@@ -14,9 +14,9 @@ export const AuthorizationLayout: FC = () => {
 
   useEffect(() => {
     if (isAuth) {
-      navigate(PATH.allBooks);
+      if (!isPending) navigate(PATH.allBooks);
     }
-  }, [isAuth, navigate]);
+  }, [isAuth, isPending, navigate]);
 
   return (
     <Fragment>

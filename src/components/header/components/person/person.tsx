@@ -5,19 +5,20 @@ import AvatarPNG from '../../../../assets/avatar.png';
 import { PATH } from '../../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { signOut } from '../../../../store/reducers/auth-slice';
+import { accountSelector } from '../../../../store/selectors/account-selector';
 
 import './person.scss';
 
 export const Person: FC = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.authSlice);
+  const { account } = useAppSelector(accountSelector);
   const [isActiveModal, setIsActiveModal] = useState<boolean>(false);
 
   const signOutHandler = () => dispatch(signOut());
 
   return (
     <div className='person'>
-      <p className='subtitle_small'>Привет, {user?.firstName}!</p>
+      <p className='subtitle_small'>Привет, {account?.firstName}!</p>
       <button type='button' onClick={() => setIsActiveModal(!isActiveModal)}>
         <img className='image' src={AvatarPNG} alt='avatar' />
       </button>

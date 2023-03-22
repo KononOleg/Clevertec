@@ -5,9 +5,9 @@ import { IError, UpdateAccountResponse } from '../../types';
 
 const ERROR_MESSAGE = 'Что-то пошло не так. Обновите страницу через некоторое время.';
 
-export const getAccount = createAsyncThunk('account/getAccount', async (userId: string, thunkAPI) => {
+export const getAccount = createAsyncThunk('account/getAccount', async (_, thunkAPI) => {
   try {
-    const response = await AccountService.getAccount(userId);
+    const response = await AccountService.getAccount();
 
     return response.data;
   } catch {

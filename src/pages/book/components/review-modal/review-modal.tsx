@@ -5,7 +5,7 @@ import { Modal } from '../../../../components/modal';
 import { Rating } from '../../../../components/rating';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { setIsReviewModalActive } from '../../../../store/reducers/library-slice';
-import { authSelector } from '../../../../store/selectors/auth-selector';
+import { accountSelector } from '../../../../store/selectors/account-selector';
 import { createComment } from '../../../../store/thunks/library-thunks';
 import { TextAreaInput } from '../textarea-input';
 
@@ -21,13 +21,13 @@ interface IProps {
 
 export const ReviewModal: FC<IProps> = ({ book }) => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(authSelector);
+  const { account } = useAppSelector(accountSelector);
   const { register, handleSubmit } = useForm<IFormInputs>();
 
   const [rating, setRating] = useState<number>(0);
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) =>
-    dispatch(createComment({ rating, text: data.comment, book, user: user?.id as string }));
+    dispatch(createComment({ rating, text: data.comment, book, user: account?.id as string }));
 
   const closeModalHandler = () => dispatch(setIsReviewModalActive(false));
 

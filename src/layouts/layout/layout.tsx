@@ -16,15 +16,15 @@ import './layout.scss';
 
 export const Layout: FC = () => {
   const navigate = useNavigate();
-  const { isAuth } = useAppSelector(authSelector);
+  const { isAuth, isPending } = useAppSelector(authSelector);
   const { isPending: isPendingLibrary, bookingModalParams } = useAppSelector(librarySelector);
   const { isPending: isPendingAccount } = useAppSelector(accountSelector);
 
   useEffect(() => {
     if (!isAuth) {
-      navigate(PATH.auth);
+      if (!isPending) navigate(PATH.auth);
     }
-  }, [isAuth, navigate]);
+  }, [isAuth, isPending, navigate]);
 
   return (
     <Fragment>
