@@ -6,6 +6,7 @@ import { authSelector } from '../../store/selectors/auth-selector';
 
 import { Booking } from './components/booking';
 import { Сredentials } from './components/credentials';
+import { Delivery } from './components/delivery';
 import { UserAvatar } from './components/user-avatar';
 
 import './profile.scss';
@@ -21,6 +22,7 @@ export const Profile: FC = () => {
           <UserAvatar account={account} />
           <Сredentials account={account} password={password} />
           <Booking booking={account.booking} />
+          <Delivery delivery={account.delivery} />
         </Fragment>
       )}
     </section>

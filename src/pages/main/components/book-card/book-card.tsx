@@ -1,5 +1,6 @@
 import { FC, MouseEvent } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import moment from 'moment';
 
 import { BookImage } from '../../../../components/book-image';
 import { Button } from '../../../../components/button';
@@ -17,10 +18,12 @@ interface IProps {
   book: IBook;
   isTileView: boolean;
   isBooking?: boolean;
+  isDelivery?: boolean;
   bookingId?: string;
+  dateHandedTo?: string;
 }
 
-export const BookCard: FC<IProps> = ({ book, isTileView, isBooking, bookingId }) => {
+export const BookCard: FC<IProps> = ({ book, isTileView, isBooking, isDelivery, bookingId, dateHandedTo }) => {
   const { category } = useParams();
   const dispatch = useAppDispatch();
   const { id, issueYear, authors, title, image, rating, booking, delivery } = book;
@@ -48,11 +51,17 @@ export const BookCard: FC<IProps> = ({ book, isTileView, isBooking, bookingId })
           <Highlighter text={title} highlight={filterText} highlightedItemClass='title_highlight' />
         </p>
         <p className='body_small author'>{`${authors?.join(',')}, ${issueYear}`}</p>
-        {!isBooking && <Button booking={booking} delivery={delivery} bookId={id} />}
+        {!isBooking && !isDelivery && <Button booking={booking} delivery={delivery} bookId={id} />}
 
         {isBooking && (
           <button className='button' type='button' onClick={deleteBookingHandler}>
             Отменить бронь
+          </button>
+        )}
+
+        {isDelivery && (
+          <button className='button .button_text' type='button' disabled={true}>
+            Возврат {moment(dateHandedTo).format('DD.MM')}
           </button>
         )}
       </div>
