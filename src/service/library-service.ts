@@ -32,6 +32,15 @@ export class LibraryService {
     });
   }
 
+  static async updateComment(
+    createCommentRequest: CreateCommentRequest,
+    commentId: string
+  ): Promise<AxiosResponse<CreateCommentResponse>> {
+    return $api.post<CreateCommentResponse>(`/api/comments${commentId}`, {
+      data: createCommentRequest,
+    });
+  }
+
   static async bokingBook(bookingBookRequest: BookingBookRequest): Promise<AxiosResponse<BookingBookAttributes>> {
     return $api.post<BookingBookAttributes>('/api/bookings', {
       data: bookingBookRequest,

@@ -8,9 +8,10 @@ import { Highlighter } from '../../../../components/highlighter';
 import { Rating } from '../../../../components/rating';
 import { PATH } from '../../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { setReviewModalParams } from '../../../../store/reducers/library-slice';
 import { librarySelector } from '../../../../store/selectors/library-selector';
 import { deleteBooking } from '../../../../store/thunks/library-thunks';
-import { IBook } from '../../../../types';
+import { IBook, IComment } from '../../../../types';
 
 import './book-card.scss';
 
@@ -22,7 +23,7 @@ interface IProps {
   isHistory?: boolean;
   bookingId?: string;
   dateHandedTo?: string;
-  isUserComment?: boolean;
+  comment?: IComment;
 }
 
 export const BookCard: FC<IProps> = ({
@@ -33,7 +34,7 @@ export const BookCard: FC<IProps> = ({
   isHistory,
   bookingId,
   dateHandedTo,
-  isUserComment,
+  comment,
 }) => {
   const { category } = useParams();
   const dispatch = useAppDispatch();
@@ -44,6 +45,18 @@ export const BookCard: FC<IProps> = ({
     e.preventDefault();
     e.stopPropagation();
     dispatch(deleteBooking(bookingId as string));
+  };
+
+  const openCreateReviewModalHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(setReviewModalParams({ book }));
+  };
+
+  const openUpdateReviewModalHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(setReviewModalParams({ book, comment }));
   };
 
   return (
@@ -77,13 +90,13 @@ export const BookCard: FC<IProps> = ({
         )}
 
         {isHistory &&
-          (isUserComment ? (
-            <button className='button' type='button'>
-              Оценить
+          (comment ? (
+            <button className='button button_secondary' type='button' onClick={openUpdateReviewModalHandler}>
+              Изменить оценку
             </button>
           ) : (
-            <button className='button button_secondary' type='button'>
-              Изменить оценку
+            <button className='button' type='button' onClick={openCreateReviewModalHandler}>
+              Оценить
             </button>
           ))}
       </div>

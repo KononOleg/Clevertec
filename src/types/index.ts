@@ -192,7 +192,7 @@ export interface BookingModalParams {
 
 export interface ReviewModalParams {
   book: IBook;
-  commentId?: string;
+  comment?: IComment;
 }
 
 export interface IAccount extends IUser {

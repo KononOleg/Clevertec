@@ -61,6 +61,20 @@ export const createComment = createAsyncThunk(
   }
 );
 
+export const updateComment = createAsyncThunk(
+  'library/updateComment',
+
+  async (payload: { data: CreateCommentRequest; commentId: string }, thunkAPI) => {
+    try {
+      await LibraryService.updateComment(payload.data, payload.commentId);
+
+      return { message: 'Спасибо, что нашли время изменить оценку!' };
+    } catch {
+      return thunkAPI.rejectWithValue({ message: 'Изменения не были сохранены. Попробуйте позже!' } as IError);
+    }
+  }
+);
+
 export const bookingBook = createAsyncThunk(
   'library/bookingBook',
 

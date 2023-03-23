@@ -9,6 +9,7 @@ import {
   getBooks,
   getLibrary,
   rebookingBook,
+  updateComment,
 } from '../thunks/library-thunks';
 
 interface LibrarySliceState {
@@ -72,6 +73,8 @@ export const librarySlice = createSlice({
 
     builder.addCase(createComment.pending, (state) => ({ ...state, isPending: true }));
 
+    builder.addCase(updateComment.pending, (state) => ({ ...state, isPending: true }));
+
     builder.addCase(bookingBook.pending, (state) => ({ ...state, isPending: true }));
 
     builder.addCase(deleteBooking.pending, (state) => ({ ...state, isPending: true }));
@@ -97,6 +100,13 @@ export const librarySlice = createSlice({
     }));
 
     builder.addCase(createComment.fulfilled.type, (state, action: PayloadAction<ISuccess>) => ({
+      ...state,
+      isPending: false,
+      reviewModalParams: null,
+      success: action.payload,
+    }));
+
+    builder.addCase(updateComment.fulfilled.type, (state, action: PayloadAction<ISuccess>) => ({
       ...state,
       isPending: false,
       reviewModalParams: null,
@@ -148,6 +158,13 @@ export const librarySlice = createSlice({
     }));
 
     builder.addCase(createComment.rejected.type, (state, action: PayloadAction<IError>) => ({
+      ...state,
+      isPending: false,
+      reviewModalParams: null,
+      error: action.payload,
+    }));
+
+    builder.addCase(updateComment.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
       reviewModalParams: null,

@@ -1,5 +1,8 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { librarySelector } from '../../../../store/selectors/library-selector';
+import { getAccount } from '../../../../store/thunks/account-thunks';
 import { IComment, IUserHistory } from '../../../../types';
 import { BookCard } from '../../../main/components/book-card';
 
@@ -13,7 +16,14 @@ interface IProps {
 export const History: FC<IProps> = ({ history, comments }) => {
   const { books } = history;
 
-  const isUserComment = (id: string) => (comments.find((comment) => comment.id === id) ? false : true);
+  const dispatch = useAppDispatch();
+  const { success } = useAppSelector(librarySelector);
+
+  const searchComment = (id: string) => comments.find((comment) => comment.id === id);
+
+  useEffect(() => {
+    if (success) dispatch(getAccount());
+  }, [dispatch, success]);
 
   return (
     <div className='history'>
@@ -23,13 +33,7 @@ export const History: FC<IProps> = ({ history, comments }) => {
       {books ? (
         <div className='cards'>
           {books.map((book) => (
-            <BookCard
-              key={book.id}
-              book={book}
-              isTileView={true}
-              isHistory={true}
-              isUserComment={isUserComment(book.id)}
-            />
+            <BookCard key={book.id} book={book} isTileView={true} isHistory={true} comment={searchComment(book.id)} />
           ))}
         </div>
       ) : (
