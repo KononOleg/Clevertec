@@ -19,11 +19,22 @@ interface IProps {
   isTileView: boolean;
   isBooking?: boolean;
   isDelivery?: boolean;
+  isHistory?: boolean;
   bookingId?: string;
   dateHandedTo?: string;
+  isUserComment?: boolean;
 }
 
-export const BookCard: FC<IProps> = ({ book, isTileView, isBooking, isDelivery, bookingId, dateHandedTo }) => {
+export const BookCard: FC<IProps> = ({
+  book,
+  isTileView,
+  isBooking,
+  isDelivery,
+  isHistory,
+  bookingId,
+  dateHandedTo,
+  isUserComment,
+}) => {
   const { category } = useParams();
   const dispatch = useAppDispatch();
   const { id, issueYear, authors, title, image, rating, booking, delivery } = book;
@@ -51,7 +62,7 @@ export const BookCard: FC<IProps> = ({ book, isTileView, isBooking, isDelivery, 
           <Highlighter text={title} highlight={filterText} highlightedItemClass='title_highlight' />
         </p>
         <p className='body_small author'>{`${authors?.join(',')}, ${issueYear}`}</p>
-        {!isBooking && !isDelivery && <Button booking={booking} delivery={delivery} bookId={id} />}
+        {!isBooking && !isDelivery && !isHistory && <Button booking={booking} delivery={delivery} bookId={id} />}
 
         {isBooking && (
           <button className='button' type='button' onClick={deleteBookingHandler}>
@@ -60,10 +71,21 @@ export const BookCard: FC<IProps> = ({ book, isTileView, isBooking, isDelivery, 
         )}
 
         {isDelivery && (
-          <button className='button .button_text' type='button' disabled={true}>
+          <button className='button button_text' type='button' disabled={true}>
             Возврат {moment(dateHandedTo).format('DD.MM')}
           </button>
         )}
+
+        {isHistory &&
+          (isUserComment ? (
+            <button className='button' type='button'>
+              Оценить
+            </button>
+          ) : (
+            <button className='button button_secondary' type='button'>
+              Изменить оценку
+            </button>
+          ))}
       </div>
     </Link>
   );
