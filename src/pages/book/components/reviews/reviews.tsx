@@ -7,8 +7,8 @@ import { Rating } from '../../../../components/rating';
 import { API_HOST } from '../../../../constants';
 import { sortComments } from '../../../../helpers';
 import { useAppDispatch } from '../../../../hooks/redux';
-import { setIsReviewModalActive } from '../../../../store/reducers/library-slice';
-import { IComment } from '../../../../types';
+import { setReviewModalParams } from '../../../../store/reducers/library-slice';
+import { IBook, IComment } from '../../../../types';
 
 import './reviews.scss';
 
@@ -17,14 +17,15 @@ import 'moment/locale/ru';
 interface IProps {
   reviews: IComment[];
   userId: string;
+  book: IBook;
 }
 
-export const Reviews: FC<IProps> = ({ reviews, userId }) => {
+export const Reviews: FC<IProps> = ({ reviews, userId, book }) => {
   const [isTurn, setIsTurn] = useState<boolean>(true);
 
   const dispatch = useAppDispatch();
 
-  const openModalHandler = () => dispatch(setIsReviewModalActive(true));
+  const openModalHandler = () => dispatch(setReviewModalParams({ book }));
 
   const disabled = !reviews || reviews.find((review) => review.user.commentUserId === userId) ? true : false;
 

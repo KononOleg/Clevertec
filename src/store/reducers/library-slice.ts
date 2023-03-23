@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { BookingModalParams, IBook, IError, ILibrary, ISuccess } from '../../types';
+import { BookingModalParams, IBook, IError, ILibrary, ISuccess, ReviewModalParams } from '../../types';
 import {
   bookingBook,
   createComment,
@@ -19,8 +19,8 @@ interface LibrarySliceState {
   book: IBook | null;
   isDescendingOrder: boolean;
   filterText: string;
-  isReviewModalActive: boolean;
   bookingModalParams: BookingModalParams | null;
+  reviewModalParams: ReviewModalParams | null;
 }
 
 const initialState: LibrarySliceState = {
@@ -31,8 +31,8 @@ const initialState: LibrarySliceState = {
   book: null,
   isDescendingOrder: true,
   filterText: '',
-  isReviewModalActive: false,
   bookingModalParams: null,
+  reviewModalParams: null,
 };
 
 export const librarySlice = createSlice({
@@ -55,8 +55,8 @@ export const librarySlice = createSlice({
       return { ...state, filterText: action.payload };
     },
 
-    setIsReviewModalActive(state, action) {
-      return { ...state, isReviewModalActive: action.payload };
+    setReviewModalParams(state, action) {
+      return { ...state, reviewModalParams: action.payload };
     },
 
     setBookingModalParams(state, action) {
@@ -99,7 +99,7 @@ export const librarySlice = createSlice({
     builder.addCase(createComment.fulfilled.type, (state, action: PayloadAction<ISuccess>) => ({
       ...state,
       isPending: false,
-      isReviewModalActive: false,
+      reviewModalParams: null,
       success: action.payload,
     }));
 
@@ -150,7 +150,7 @@ export const librarySlice = createSlice({
     builder.addCase(createComment.rejected.type, (state, action: PayloadAction<IError>) => ({
       ...state,
       isPending: false,
-      isReviewModalActive: false,
+      reviewModalParams: null,
       error: action.payload,
     }));
 
@@ -181,7 +181,7 @@ export const {
   resetErrorLibrary,
   switchOrder,
   setFilterText,
-  setIsReviewModalActive,
+  setReviewModalParams,
   resetSuccessLibrary,
   setBookingModalParams,
 } = librarySlice.actions;

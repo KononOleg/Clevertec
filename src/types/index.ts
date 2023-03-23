@@ -190,6 +190,11 @@ export interface BookingModalParams {
   dateOrder: string;
 }
 
+export interface ReviewModalParams {
+  book: IBook;
+  commentId?: string;
+}
+
 export interface IAccount extends IUser {
   role: IRole;
   comments: IComment[];

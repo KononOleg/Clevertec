@@ -1,35 +1,39 @@
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Modal } from '../../../../components/modal';
-import { Rating } from '../../../../components/rating';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { setIsReviewModalActive } from '../../../../store/reducers/library-slice';
-import { accountSelector } from '../../../../store/selectors/account-selector';
+import { useAppDispatch } from '../../../../hooks/redux';
+import { TextAreaInput } from '../../../../pages/book/components/textarea-input';
+import { setReviewModalParams } from '../../../../store/reducers/library-slice';
 import { createComment } from '../../../../store/thunks/library-thunks';
-import { TextAreaInput } from '../textarea-input';
-
-import './review-modal.scss';
+import { Modal } from '../../../modal';
+import { Rating } from '../../../rating';
 
 interface IFormInputs {
   comment: string;
 }
 
 interface IProps {
-  book: string;
+  bookId: string;
+  userId: string;
 }
 
-export const ReviewModal: FC<IProps> = ({ book }) => {
+export const CreateReview: FC<IProps> = ({ bookId, userId }) => {
   const dispatch = useAppDispatch();
-  const { account } = useAppSelector(accountSelector);
   const { register, handleSubmit } = useForm<IFormInputs>();
 
   const [rating, setRating] = useState<number>(0);
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) =>
-    dispatch(createComment({ rating, text: data.comment, book, user: account?.id as string }));
+    dispatch(
+      createComment({
+        rating,
+        text: data.comment,
+        book: bookId,
+        user: userId,
+      })
+    );
 
-  const closeModalHandler = () => dispatch(setIsReviewModalActive(false));
+  const closeModalHandler = () => dispatch(setReviewModalParams(null));
 
   return (
     <Modal title='Оцените книгу' testId='modal-rate-book' closeModal={closeModalHandler}>
