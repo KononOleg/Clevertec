@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { librarySelector } from '../../../../store/selectors/library-selector';
 import { getAccount } from '../../../../store/thunks/account-thunks';
 import { IComment, IUserHistory } from '../../../../types';
-import { BookCard } from '../../../main/components/book-card';
+import { HistorySlide } from '../history-slide';
 
 import './history.scss';
 
@@ -15,11 +15,8 @@ interface IProps {
 
 export const History: FC<IProps> = ({ history, comments }) => {
   const { books } = history;
-
   const dispatch = useAppDispatch();
   const { success } = useAppSelector(librarySelector);
-
-  const searchComment = (id: string) => comments.find((comment) => comment.id === id);
 
   useEffect(() => {
     if (success) dispatch(getAccount());
@@ -31,11 +28,7 @@ export const History: FC<IProps> = ({ history, comments }) => {
       <p className='body_large subtitle'>Список прочитанных книг</p>
 
       {books ? (
-        <div className='cards'>
-          {books.map((book) => (
-            <BookCard key={book.id} book={book} isTileView={true} isHistory={true} comment={searchComment(book.id)} />
-          ))}
-        </div>
+        <HistorySlide books={books} comments={comments} />
       ) : (
         <div className='empty empty_blue'>
           <h3>Вы не читали книг из нашей библиотеки </h3>

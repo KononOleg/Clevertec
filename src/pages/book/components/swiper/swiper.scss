@@ -4,28 +4,7 @@
   max-width: 445px;
 
   .swiper-pagination {
-    padding-top: 24px;
     display: none;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .swiper-pagination-bullet {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    box-sizing: content-box;
-    background: $grey20;
-    cursor: pointer;
-  }
-
-  .swiper-pagination-bullet-active {
-    width: 9px;
-    height: 9px;
-    background: $dark;
-    pointer-events: none;
   }
 
   .swiper_up {
