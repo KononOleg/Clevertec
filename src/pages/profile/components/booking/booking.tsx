@@ -22,7 +22,7 @@ export const Booking: FC<IProps> = ({ booking }) => {
         <div className='card'>
           <BookCard book={book} isTileView={false} isBooking={true} bookingId={booking.id} />
           {moment().isBefore(dateOrder, 'minute') && (
-            <div className='empty empty_red'>
+            <div className='empty empty_red' data-test-id='expired'>
               <h3>{'Дата бронирования\nкниги истекла'}</h3>
               <p className='subtitle_large'>Через 24 часа книга будет доступна всем</p>
             </div>

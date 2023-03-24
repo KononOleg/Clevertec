@@ -78,7 +78,7 @@ export const BookCard: FC<IProps> = ({
         {!isBooking && !isDelivery && !isHistory && <Button booking={booking} delivery={delivery} bookId={id} />}
 
         {isBooking && (
-          <button className='button' type='button' onClick={deleteBookingHandler}>
+          <button className='button' type='button' onClick={deleteBookingHandler} data-test-id='cancel-booking-button'>
             Отменить бронь
           </button>
         )}
@@ -91,11 +91,21 @@ export const BookCard: FC<IProps> = ({
 
         {isHistory &&
           (comment ? (
-            <button className='button button_secondary' type='button' onClick={openUpdateReviewModalHandler}>
+            <button
+              className='button button_secondary'
+              type='button'
+              onClick={openUpdateReviewModalHandler}
+              data-test-id='history-review-button'
+            >
               Изменить оценку
             </button>
           ) : (
-            <button className='button' type='button' onClick={openCreateReviewModalHandler}>
+            <button
+              className='button'
+              type='button'
+              onClick={openCreateReviewModalHandler}
+              data-test-id='history-review-button'
+            >
               Оценить
             </button>
           ))}

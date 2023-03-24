@@ -56,7 +56,7 @@ export const Сredentials: FC<IProps> = ({ account, password }) => {
   const onSubmit: SubmitHandler<IFormInputs> = (data) => dispatch(updateAccount({ user: data, userId: account.id }));
 
   return (
-    <div className='credentials'>
+    <div className='credentials' data-test-id='profile-form'>
       <h4>Учётные данные</h4>
       <p className='body_large subtitle'>Здесь вы можете отредактировать информацию о себе</p>
       <form className='form' onSubmit={handleSubmit(onSubmit)}>
@@ -162,11 +162,16 @@ export const Сredentials: FC<IProps> = ({ account, password }) => {
         </fieldset>
 
         <div className='buttons'>
-          <button type='button' className='button button_secondary' onClick={() => setIsDisabledInputs(false)}>
+          <button
+            type='button'
+            data-test-id='edit-button'
+            className='button button_secondary'
+            onClick={() => setIsDisabledInputs(false)}
+          >
             Редактировать
           </button>
 
-          <button type='submit' className='button' disabled={isDisabledInputs}>
+          <button type='submit' data-test-id='save-button' className='button' disabled={isDisabledInputs}>
             Сохранить изменения
           </button>
         </div>

@@ -23,7 +23,7 @@ export const History: FC<IProps> = ({ history, comments }) => {
   }, [dispatch, success]);
 
   return (
-    <div className='history'>
+    <div className='history' data-test-id='history'>
       <h4>История</h4>
       <p className='body_large subtitle'>Список прочитанных книг</p>
 

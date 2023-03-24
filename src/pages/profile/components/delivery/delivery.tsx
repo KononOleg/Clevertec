@@ -22,7 +22,7 @@ export const Delivery: FC<IProps> = ({ delivery }) => {
         <div className='card'>
           <BookCard book={book} isTileView={false} isDelivery={true} dateHandedTo={dateHandedTo} />
           {moment().isBefore(dateHandedTo, 'minute') && (
-            <div className='empty empty_red'>
+            <div className='empty empty_red' data-test-id='expired'>
               <h3>{'Вышел срок\nпользования книги'} </h3>
               <p className='subtitle_large'>Через 24 часа книга будет доступна всем</p>
             </div>

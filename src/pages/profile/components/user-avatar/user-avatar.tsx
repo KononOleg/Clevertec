@@ -27,7 +27,7 @@ export const UserAvatar: FC<IProps> = ({ account }) => {
   };
 
   return (
-    <div className='user-avatar'>
+    <div className='user-avatar' data-test-id='profile-avatar'>
       <div className='file-input'>
         <img src={avatar ? `${API_HOST}${avatar}` : AvatarPNG} alt='avatar' />
         <input className='file' type='file' accept='image/*' onChange={onImageChange} />

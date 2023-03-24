@@ -42,7 +42,7 @@ export const HistorySlide: FC<IProps> = ({ books, comments }) => {
         }}
       >
         {books.map((book) => (
-          <SwiperSlide key={book.id}>
+          <SwiperSlide key={book.id} data-test-id='history-slide'>
             <BookCard book={book} isTileView={true} isHistory={true} comment={searchComment(book.id)} />
           </SwiperSlide>
         ))}
