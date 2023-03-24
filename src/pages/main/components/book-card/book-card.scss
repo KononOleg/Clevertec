@@ -19,7 +19,7 @@
     line-height: 18px;
   }
 
-  .button_text {
+  .button_text:disabled {
     background: transparent;
     color: $red;
   }

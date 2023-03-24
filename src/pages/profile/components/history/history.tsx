@@ -30,7 +30,7 @@ export const History: FC<IProps> = ({ history, comments }) => {
       {books ? (
         <HistorySlide books={books as unknown as IBook[]} comments={comments} />
       ) : (
-        <div className='empty empty_blue'>
+        <div className='empty empty_blue' data-test-id='empty-blue-card'>
           <h3>{'Вы не читали книг\nиз нашей библиотеки'} </h3>
         </div>
       )}

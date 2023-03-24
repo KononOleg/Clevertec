@@ -19,7 +19,7 @@ export const Person: FC = () => {
   return (
     <div className='person'>
       <p className='subtitle_small'>Привет, {account?.firstName}!</p>
-      <button type='button' onClick={() => setIsActiveModal(!isActiveModal)}>
+      <button type='button' onClick={() => setIsActiveModal(!isActiveModal)} data-test-id='profile-button'>
         <img className='image' src={account?.avatar ? `${API_HOST}${account.avatar}` : AvatarPNG} alt='avatar' />
       </button>
 

@@ -21,15 +21,15 @@ export const Delivery: FC<IProps> = ({ delivery }) => {
       {book ? (
         <div className='card'>
           <BookCard book={book} isTileView={false} isDelivery={true} dateHandedTo={dateHandedTo} />
-          {moment().isBefore(dateHandedTo, 'minute') && (
+          {moment().isAfter(dateHandedTo, 'minute') && (
             <div className='empty empty_red' data-test-id='expired'>
               <h3>{'Вышел срок\nпользования книги'} </h3>
-              <p className='subtitle_large'>Через 24 часа книга будет доступна всем</p>
+              <p className='subtitle_large'>Верните книгу, пожалуйста</p>
             </div>
           )}
         </div>
       ) : (
-        <div className='empty empty_blue'>
+        <div className='empty empty_blue' data-test-id='empty-blue-card'>
           <h3>{'Прочитав книгу,\nона отобразится в истории'} </h3>
         </div>
       )}

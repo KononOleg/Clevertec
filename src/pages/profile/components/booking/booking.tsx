@@ -21,7 +21,7 @@ export const Booking: FC<IProps> = ({ booking }) => {
       {book ? (
         <div className='card'>
           <BookCard book={book} isTileView={false} isBooking={true} bookingId={booking.id} />
-          {moment().isBefore(dateOrder, 'minute') && (
+          {moment().isAfter(dateOrder, 'minute') && (
             <div className='empty empty_red' data-test-id='expired'>
               <h3>{'Дата бронирования\nкниги истекла'}</h3>
               <p className='subtitle_large'>Через 24 часа книга будет доступна всем</p>
@@ -29,7 +29,7 @@ export const Booking: FC<IProps> = ({ booking }) => {
           )}
         </div>
       ) : (
-        <div className='empty empty_blue'>
+        <div className='empty empty_blue' data-test-id='empty-blue-card'>
           <h3>{'Забронируйте книгу\nи она отобразится'}</h3>
         </div>
       )}

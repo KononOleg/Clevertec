@@ -106,7 +106,7 @@ export const BookCard: FC<IProps> = ({
               onClick={openCreateReviewModalHandler}
               data-test-id='history-review-button'
             >
-              Оценить
+              Оставить отзыв
             </button>
           ))}
       </div>

@@ -35,7 +35,7 @@ export const uploadFile = createAsyncThunk(
     try {
       const { data } = await AccountService.uploadFile(payload.files);
       const response = await AccountService.updateAvatar(payload.userId, data[0].id);
-      const success = { message: 'Фото успешно сохранено' };
+      const success = { message: 'Фото успешно сохранено!' };
 
       return { success, account: response.data };
     } catch {
