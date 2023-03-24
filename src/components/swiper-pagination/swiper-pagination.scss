@@ -1,7 +1,6 @@
 @import '../../index.variables.scss';
 
 .swiper-pagination {
-  padding-top: 24px;
   display: flex;
   gap: 10px;
   justify-content: center;
@@ -9,6 +8,7 @@
 }
 
 .swiper-pagination-bullet {
+  margin-top: 24px;
   display: inline-block;
   width: 7px;
   height: 7px;
@@ -23,4 +23,8 @@
   height: 9px;
   background: $dark;
   pointer-events: none;
+}
+
+.swiper-pagination-bullet:only-child {
+  display: none;
 }

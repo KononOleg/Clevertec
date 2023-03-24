@@ -23,14 +23,14 @@ export const Delivery: FC<IProps> = ({ delivery }) => {
           <BookCard book={book} isTileView={false} isDelivery={true} dateHandedTo={dateHandedTo} />
           {moment().isBefore(dateHandedTo, 'minute') && (
             <div className='empty empty_red'>
-              <h3>Вышел срок пользования книги </h3>
+              <h3>{'Вышел срок\nпользования книги'} </h3>
               <p className='subtitle_large'>Через 24 часа книга будет доступна всем</p>
             </div>
           )}
         </div>
       ) : (
         <div className='empty empty_blue'>
-          <h3>Прочитав книгу, она отобразится в истории </h3>
+          <h3>{'Прочитав книгу,\nона отобразится в истории'} </h3>
         </div>
       )}
     </div>

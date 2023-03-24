@@ -18,7 +18,29 @@ export const HistorySlide: FC<IProps> = ({ books, comments }) => {
 
   return (
     <div className='history-slide'>
-      <Swiper spaceBetween={30} slidesPerView={4} pagination={SwiperPagination} modules={[Pagination]}>
+      <Swiper
+        pagination={SwiperPagination}
+        modules={[Pagination]}
+        breakpoints={{
+          1300: {
+            width: 1110,
+            spaceBetween: 30,
+            slidesPerView: 4,
+          },
+
+          786: {
+            width: 640,
+            spaceBetween: 35,
+            slidesPerView: 3,
+          },
+
+          500: {
+            width: 288,
+            spaceBetween: 10,
+            slidesPerView: 1,
+          },
+        }}
+      >
         {books.map((book) => (
           <SwiperSlide key={book.id}>
             <BookCard book={book} isTileView={true} isHistory={true} comment={searchComment(book.id)} />

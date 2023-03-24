@@ -3,7 +3,7 @@ import { FC, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { librarySelector } from '../../../../store/selectors/library-selector';
 import { getAccount } from '../../../../store/thunks/account-thunks';
-import { IComment, IUserHistory } from '../../../../types';
+import { IBook, IComment, IUserHistory } from '../../../../types';
 import { HistorySlide } from '../history-slide';
 
 import './history.scss';
@@ -28,10 +28,10 @@ export const History: FC<IProps> = ({ history, comments }) => {
       <p className='body_large subtitle'>Список прочитанных книг</p>
 
       {books ? (
-        <HistorySlide books={books} comments={comments} />
+        <HistorySlide books={books as unknown as IBook[]} comments={comments} />
       ) : (
         <div className='empty empty_blue'>
-          <h3>Вы не читали книг из нашей библиотеки </h3>
+          <h3>{'Вы не читали книг\nиз нашей библиотеки'} </h3>
         </div>
       )}
     </div>

@@ -1,14 +1,14 @@
 @import '../../index.variables.scss';
 
 .profile-page {
-  padding: 29px 0 110px;
+  padding: 29px 0 62px;
 
   display: flex;
   flex-direction: column;
   gap: 89px;
 
   .subtitle {
-    margin: 10px 0 28px;
+    margin: 10px 0 30px;
   }
 
   .card {
@@ -19,13 +19,12 @@
     height: 218px;
     border-radius: 10px;
     padding: 16px;
-
-    backdrop-filter: blur(10px);
     color: $white;
     opacity: 0.7;
+    backdrop-filter: blur(10px);
 
     h3 {
-      max-width: 400px;
+      white-space: pre-wrap;
     }
   }
 
@@ -35,8 +34,35 @@
 
   .empty_red {
     width: 100%;
-    background: $red;
+    background-color: $red;
     position: absolute;
     top: 0;
+  }
+}
+
+@media (max-width: 1100px) {
+  .profile-page {
+    gap: 64px;
+
+    .empty {
+      height: 204px;
+    }
+  }
+}
+
+@media (max-width: 680px) {
+  .profile-page {
+    padding: 29px 0 32px;
+
+    gap: 44px;
+
+    .subtitle {
+      margin: 8px 0 12px;
+    }
+
+    .empty {
+      padding: 17px 10px;
+      height: 182px;
+    }
   }
 }

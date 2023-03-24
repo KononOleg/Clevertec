@@ -1,6 +1,7 @@
 import { ChangeEvent, FC } from 'react';
 
 import AvatarPNG from '../../../../assets/avatar.png';
+import PhotoPNG from '../../../../assets/icon-photo.png';
 import { API_HOST } from '../../../../constants';
 import { useAppDispatch } from '../../../../hooks/redux';
 import { uploadFile } from '../../../../store/thunks/account-thunks';
@@ -30,6 +31,9 @@ export const UserAvatar: FC<IProps> = ({ account }) => {
       <div className='file-input'>
         <img src={avatar ? `${API_HOST}${avatar}` : AvatarPNG} alt='avatar' />
         <input className='file' type='file' accept='image/*' onChange={onImageChange} />
+        <div className='intersect'>
+          <img className='photo' src={PhotoPNG} alt='avatar' />
+        </div>
       </div>
       <h1>
         <span>{lastName}</span> <span>{firstName}</span>

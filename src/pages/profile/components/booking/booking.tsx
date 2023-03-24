@@ -23,14 +23,14 @@ export const Booking: FC<IProps> = ({ booking }) => {
           <BookCard book={book} isTileView={false} isBooking={true} bookingId={booking.id} />
           {moment().isBefore(dateOrder, 'minute') && (
             <div className='empty empty_red'>
-              <h3>Дата бронирования книги истекла</h3>
+              <h3>{'Дата бронирования\nкниги истекла'}</h3>
               <p className='subtitle_large'>Через 24 часа книга будет доступна всем</p>
             </div>
           )}
         </div>
       ) : (
         <div className='empty empty_blue'>
-          <h3>Забронируйте книгу и она отобразится</h3>
+          <h3>{'Забронируйте книгу\nи она отобразится'}</h3>
         </div>
       )}
     </div>
