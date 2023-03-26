@@ -5,7 +5,7 @@ import SwiperClass from 'swiper/types/swiper-class';
 
 import { SwiperPagination } from '../../../../components/swiper-pagination';
 import { API_HOST } from '../../../../constants';
-import { IImage } from '../../../../types';
+import { Image } from '../../../../types';
 
 import './swiper.scss';
 
@@ -14,11 +14,11 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
-interface IProps {
-  images: IImage[];
-}
+type Props = {
+  images: Image[];
+};
 
-export const BookSwiper: FC<IProps> = ({ images }) => {
+export const BookSwiper: FC<Props> = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass>();
 
   return (

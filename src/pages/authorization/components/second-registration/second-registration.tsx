@@ -1,17 +1,17 @@
 import { FC, Fragment } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
-import { IRegistrationInputs } from '../registration/registration';
+import { RegistrationInputs } from '../registration/registration';
 import { TextInput } from '../text-input';
 
-interface IProps {
-  register: UseFormRegister<IRegistrationInputs>;
-  errors: FieldErrors<IRegistrationInputs>;
+type Props = {
+  register: UseFormRegister<RegistrationInputs>;
+  errors: FieldErrors<RegistrationInputs>;
   nextStepHandler: () => void;
   isValid: boolean;
-}
+};
 
-export const SecondRegistration: FC<IProps> = ({ register, errors, nextStepHandler, isValid }) => (
+export const SecondRegistration: FC<Props> = ({ register, errors, nextStepHandler, isValid }) => (
   <Fragment>
     <div className='fields'>
       <TextInput

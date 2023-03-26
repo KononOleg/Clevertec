@@ -99,3 +99,7 @@ export const monthNames = [
 ];
 
 export const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
+export const phoneMask = '+375 (99) 999-99-99';
+
+export const ERROR_MESSAGE = 'Что-то пошло не так. Обновите страницу через некоторое время.';

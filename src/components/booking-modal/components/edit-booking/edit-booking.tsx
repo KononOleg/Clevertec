@@ -8,14 +8,14 @@ import { deleteBooking, rebookingBook } from '../../../../store/thunks/library-t
 import { Calendar } from '../../../calendar';
 import { Modal } from '../../../modal';
 
-interface IProps {
+type Props = {
   bookId: string;
   bookingId: string;
   dateOrder: string;
   userId: string;
-}
+};
 
-export const EditBooking: FC<IProps> = ({ bookId, bookingId, dateOrder, userId }) => {
+export const EditBooking: FC<Props> = ({ bookId, bookingId, dateOrder, userId }) => {
   const dispatch = useAppDispatch();
   const [rebookingDate, setRebookingDate] = useState<Moment>(moment(dateOrder));
 

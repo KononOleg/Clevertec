@@ -1,30 +1,31 @@
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { phoneMask } from '../../../../constants';
 import { regex } from '../../../../constants/regex';
 import { useAppDispatch } from '../../../../hooks/redux';
 import { updateAccount } from '../../../../store/thunks/account-thunks';
-import { IAccount } from '../../../../types';
+import { Account } from '../../../../types';
 import { ErrorTextPassword, ErrorTextUserName } from '../../../authorization/components/error-text';
 import { PasswordInput } from '../../../authorization/components/password-input';
 import { TextInput } from '../../../authorization/components/text-input';
 
 import './credentials.scss';
 
-interface IProps {
-  account: IAccount;
-}
+type Props = {
+  account: Account;
+};
 
-interface IFormInputs {
+type FormInputs = {
   login: string;
   password: string;
   firstName: string;
   lastName: string;
   phone: string;
   email: string;
-}
+};
 
-export const Сredentials: FC<IProps> = ({ account }) => {
+export const Сredentials: FC<Props> = ({ account }) => {
   const dispatch = useAppDispatch();
   const { lastName, firstName, username, phone, email } = account;
 
@@ -33,14 +34,14 @@ export const Сredentials: FC<IProps> = ({ account }) => {
     formState: { errors },
     handleSubmit,
     watch,
-  } = useForm<IFormInputs>({
+  } = useForm<FormInputs>({
     defaultValues: {
       lastName,
       firstName,
       phone,
       login: username,
       email,
-      password: ' ',
+      password: 'Password123',
     },
     mode: 'all',
   });
@@ -52,7 +53,7 @@ export const Сredentials: FC<IProps> = ({ account }) => {
   const watchUserName = watch('login');
   const watchPassword = watch('password');
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) => {
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
     dispatch(updateAccount({ user: { username: data.login, ...data }, userId: account.id }));
     setIsDisabledInputs(true);
   };
@@ -127,8 +128,7 @@ export const Сredentials: FC<IProps> = ({ account }) => {
           <div className='input-container'>
             <TextInput
               label='Номер телефона'
-              mask='+375 (99) 999-99-99'
-              maskChar='x'
+              mask={phoneMask}
               isError={errors.phone}
               register={{
                 ...register('phone', {

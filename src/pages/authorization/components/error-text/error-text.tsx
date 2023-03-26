@@ -2,13 +2,13 @@ import { FC, Fragment } from 'react';
 
 import { regex } from '../../../../constants/regex';
 
-interface IProps {
+type Props = {
   text: string;
-}
+};
 
 const { onlyLetter, onlyNumber, onlyCyrillic, firstUpper, password } = regex;
 
-export const ErrorTextUserName: FC<IProps> = ({ text }) => {
+export const ErrorTextUserName: FC<Props> = ({ text }) => {
   if (text) {
     if (onlyLetter.test(text) && !onlyNumber.test(text) && !onlyCyrillic.test(text)) {
       return (
@@ -37,7 +37,7 @@ export const ErrorTextUserName: FC<IProps> = ({ text }) => {
   return <Fragment>Используйте для логина латинский алфавит и цифры</Fragment>;
 };
 
-export const ErrorTextPassword: FC<IProps> = ({ text }) => {
+export const ErrorTextPassword: FC<Props> = ({ text }) => {
   if (text) {
     if (firstUpper.test(text) && onlyNumber.test(text) && !password.test(text)) {
       return (

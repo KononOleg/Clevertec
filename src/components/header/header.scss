@@ -20,7 +20,7 @@
   .burger:before,
   .burger:after,
   .burger div {
-    background: $dark;
+    background-color: $dark;
     content: '';
     display: block;
     height: 3px;

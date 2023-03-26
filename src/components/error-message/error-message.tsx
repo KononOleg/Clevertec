@@ -19,7 +19,6 @@ export const ErrorMessage: FC = () => {
   const { error: errorAccount, success: successAccount } = useAppSelector(accountSelector);
 
   const error = errorLibrary || errorAccount;
-
   const success = successLibrary || successAccount;
 
   const closeErrorMessage = useCallback(() => {

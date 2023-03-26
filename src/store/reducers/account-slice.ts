@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { AccountPayloadAction, IAccount, IError, ISuccess } from '../../types';
+import { isPendingAction, isRejectedAction } from '../../helpers';
+import { Account, AccountPayloadAction, Error, Success } from '../../types';
 import { getAccount, updateAccount, uploadFile } from '../thunks/account-thunks';
 
-interface AccountSliceState {
-  account: IAccount | null;
+type AccountSliceState = {
+  account: Account | null;
   isPending: boolean;
-  success: ISuccess | null;
-  error: IError | null;
-}
+  success: Success | null;
+  error: Error | null;
+};
 
 const initialState: AccountSliceState = {
   account: null,
@@ -30,49 +31,34 @@ export const accountSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getAccount.pending, (state) => ({ ...state, isPending: true }));
+    builder
+      .addCase(getAccount.fulfilled, (state, action: PayloadAction<Account>) => ({
+        ...state,
+        isPending: false,
+        account: action.payload,
+      }))
 
-    builder.addCase(updateAccount.pending, (state) => ({ ...state, isPending: true }));
+      .addCase(updateAccount.fulfilled, (state, action: PayloadAction<AccountPayloadAction>) => ({
+        ...state,
+        isPending: false,
+        account: action.payload.account,
+        success: action.payload.success,
+      }))
 
-    builder.addCase(uploadFile.pending, (state) => ({ ...state, isPending: true }));
+      .addCase(uploadFile.fulfilled, (state, action: PayloadAction<AccountPayloadAction>) => ({
+        ...state,
+        isPending: false,
+        account: action.payload.account,
+        success: action.payload.success,
+      }))
 
-    builder.addCase(getAccount.fulfilled.type, (state, action: PayloadAction<IAccount>) => ({
-      ...state,
-      isPending: false,
-      account: action.payload,
-    }));
+      .addMatcher(isPendingAction('account'), (state) => ({ ...state, isPending: true }))
 
-    builder.addCase(updateAccount.fulfilled.type, (state, action: PayloadAction<AccountPayloadAction>) => ({
-      ...state,
-      isPending: false,
-      account: action.payload.account,
-      success: action.payload.success,
-    }));
-
-    builder.addCase(uploadFile.fulfilled.type, (state, action: PayloadAction<AccountPayloadAction>) => ({
-      ...state,
-      isPending: false,
-      account: action.payload.account,
-      success: action.payload.success,
-    }));
-
-    builder.addCase(getAccount.rejected.type, (state, action: PayloadAction<IError>) => ({
-      ...state,
-      isPending: false,
-      error: action.payload,
-    }));
-
-    builder.addCase(updateAccount.rejected.type, (state, action: PayloadAction<IError>) => ({
-      ...state,
-      isPending: false,
-      error: action.payload,
-    }));
-
-    builder.addCase(uploadFile.rejected.type, (state, action: PayloadAction<IError>) => ({
-      ...state,
-      isPending: false,
-      error: action.payload,
-    }));
+      .addMatcher(isRejectedAction('account'), (state, action) => ({
+        ...state,
+        isPending: false,
+        error: action.payload,
+      }));
   },
 });
 export const { resetErrorAccount, resetSuccessAccount } = accountSlice.actions;

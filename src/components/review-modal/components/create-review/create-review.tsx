@@ -8,22 +8,22 @@ import { createComment } from '../../../../store/thunks/library-thunks';
 import { Modal } from '../../../modal';
 import { Rating } from '../../../rating';
 
-interface IFormInputs {
+type FormInputs = {
   comment: string;
-}
+};
 
-interface IProps {
+type Props = {
   bookId: string;
   userId: string;
-}
+};
 
-export const CreateReview: FC<IProps> = ({ bookId, userId }) => {
+export const CreateReview: FC<Props> = ({ bookId, userId }) => {
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm<IFormInputs>();
+  const { register, handleSubmit } = useForm<FormInputs>();
 
-  const [rating, setRating] = useState<number>(0);
+  const [rating, setRating] = useState<number>(1);
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) =>
+  const onSubmit: SubmitHandler<FormInputs> = (data) =>
     dispatch(
       createComment({
         rating,

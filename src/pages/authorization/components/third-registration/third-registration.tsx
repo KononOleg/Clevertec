@@ -1,24 +1,24 @@
 import { FC, Fragment } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
+import { phoneMask } from '../../../../constants';
 import { regex } from '../../../../constants/regex';
-import { IRegistrationInputs } from '../registration/registration';
+import { RegistrationInputs } from '../registration/registration';
 import { TextInput } from '../text-input';
 
-interface IProps {
-  register: UseFormRegister<IRegistrationInputs>;
-  errors: FieldErrors<IRegistrationInputs>;
+type Props = {
+  register: UseFormRegister<RegistrationInputs>;
+  errors: FieldErrors<RegistrationInputs>;
   isValid: boolean;
-}
+};
 
-export const ThirdRegistration: FC<IProps> = ({ register, errors, isValid }) => (
+export const ThirdRegistration: FC<Props> = ({ register, errors, isValid }) => (
   <Fragment>
     <div className='fields'>
       <div className='input-container'>
         <TextInput
           label='Номер телефона'
-          mask='+375 (99) 999-99-99'
-          maskChar='x'
+          mask={phoneMask}
           isError={errors.phone}
           register={{
             ...register('phone', {

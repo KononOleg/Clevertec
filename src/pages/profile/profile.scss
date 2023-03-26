@@ -2,7 +2,6 @@
 
 .profile-page {
   padding: 29px 0 62px;
-
   display: flex;
   flex-direction: column;
   gap: 89px;
@@ -30,7 +29,7 @@
 
   .empty_blue {
     opacity: 0.7;
-    background: $blue;
+    background-color: $blue;
   }
 
   .empty_red {
@@ -54,7 +53,6 @@
 @media (max-width: 680px) {
   .profile-page {
     padding: 29px 0 32px;
-
     gap: 44px;
 
     .subtitle {

@@ -4,21 +4,19 @@ import Moment from 'moment';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setBookingModalParams } from '../../store/reducers/library-slice';
 import { accountSelector } from '../../store/selectors/account-selector';
-import { IBooking, IDelivery } from '../../types';
+import { Booking, Delivery } from '../../types';
 
-import './button.scss';
-
-interface IProps {
-  booking: IBooking;
-  delivery: IDelivery;
+type Props = {
+  booking: Booking;
+  delivery: Delivery;
   bookId: string;
-}
+};
 
-export const Button: FC<IProps> = ({ booking, delivery, bookId }) => {
+export const Button: FC<Props> = ({ booking, delivery, bookId }) => {
   const dispatch = useAppDispatch();
   const { account } = useAppSelector(accountSelector);
-  const { id, order, dateOrder, customerId } = booking || ({} as IBooking);
-  const { handed, dateHandedTo } = delivery || ({} as IDelivery);
+  const { id, order, dateOrder, customerId } = booking || ({} as Booking);
+  const { handed, dateHandedTo } = delivery || ({} as Delivery);
 
   const isCurrentUserBooking = customerId === account?.id;
 

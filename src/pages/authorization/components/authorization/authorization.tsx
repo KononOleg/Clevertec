@@ -12,22 +12,22 @@ import { ErrorModal } from '../error-modal';
 import { PasswordInput } from '../password-input';
 import { TextInput } from '../text-input';
 
-interface IFormInputs {
+type FormInputs = {
   identifier: string;
   password: string;
-}
+};
 
 export const Authorization: FC = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IFormInputs>({ mode: 'all' });
+  } = useForm<FormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
   const { error } = useAppSelector(authSelector);
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) =>
+  const onSubmit: SubmitHandler<FormInputs> = (data) =>
     dispatch(signIn({ login: data.identifier, password: data.password }));
 
   const isAuthError = error?.status === HttpStatusCode.BAD_REQUEST ? true : false;

@@ -1,15 +1,15 @@
 import { FC, Fragment } from 'react';
 
-import { IBook } from '../../../../types';
+import { Book } from '../../../../types';
 
 import './detailed.scss';
 
-interface IProps {
-  book: IBook;
+type Props = {
+  book: Book;
   category: string;
-}
+};
 
-export const Detailed: FC<IProps> = ({ book, category }) => (
+export const Detailed: FC<Props> = ({ book, category }) => (
   <div className='detailed'>
     <h5 className='title'>Подробная информация</h5>
     <div className='content'>

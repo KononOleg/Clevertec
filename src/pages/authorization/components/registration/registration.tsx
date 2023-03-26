@@ -14,14 +14,14 @@ import { FirstRegistration } from '../first-registration';
 import { SecondRegistration } from '../second-registration';
 import { ThirdRegistration } from '../third-registration';
 
-export interface IRegistrationInputs {
+export type RegistrationInputs = {
   username: string;
   password: string;
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
-}
+};
 
 export const Registration: FC = () => {
   const {
@@ -30,14 +30,14 @@ export const Registration: FC = () => {
     handleSubmit,
     reset,
     watch,
-  } = useForm<IRegistrationInputs>({ mode: 'all' });
+  } = useForm<RegistrationInputs>({ mode: 'all' });
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { error, isSuccessfulRegistration } = useAppSelector(authSelector);
   const [step, setStep] = useState<number>(RegistrationStep.FirstStep);
 
-  const onSubmit: SubmitHandler<IRegistrationInputs> = (data) => dispatch(signUp({ ...data }));
+  const onSubmit: SubmitHandler<RegistrationInputs> = (data) => dispatch(signUp({ ...data }));
 
   const resetSliceHandler = useCallback(() => {
     reset();

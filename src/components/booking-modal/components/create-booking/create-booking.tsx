@@ -7,12 +7,12 @@ import { bookingBook } from '../../../../store/thunks/library-thunks';
 import { Calendar } from '../../../calendar';
 import { Modal } from '../../../modal';
 
-interface IProps {
+type Props = {
   bookId: string;
   userId: string;
-}
+};
 
-export const CreateBooking: FC<IProps> = ({ bookId, userId }) => {
+export const CreateBooking: FC<Props> = ({ bookId, userId }) => {
   const dispatch = useAppDispatch();
   const [dateOrder, setDateOrder] = useState<Moment | null>(null);
 

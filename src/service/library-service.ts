@@ -1,27 +1,27 @@
 import { AxiosResponse } from 'axios';
 
 import {
+  Book,
   BookingBookAttributes,
   BookingBookRequest,
+  Category,
   CreateCommentRequest,
   CreateCommentResponse,
-  IBook,
-  ICategory,
 } from '../types';
 
 import { $api } from './http';
 
 export class LibraryService {
-  static async getBooks(): Promise<AxiosResponse<IBook[]>> {
-    return $api.get<IBook[]>('/api/books');
+  static async getBooks(): Promise<AxiosResponse<Book[]>> {
+    return $api.get<Book[]>('/api/books');
   }
 
-  static async getBook(bookdId: string): Promise<AxiosResponse<IBook>> {
-    return $api.get<IBook>(`/api/books/${bookdId}`);
+  static async getBook(bookdId: string): Promise<AxiosResponse<Book>> {
+    return $api.get<Book>(`/api/books/${bookdId}`);
   }
 
-  static async getCategories(): Promise<AxiosResponse<ICategory[]>> {
-    return $api.get<ICategory[]>('/api/categories');
+  static async getCategories(): Promise<AxiosResponse<Category[]>> {
+    return $api.get<Category[]>('/api/categories');
   }
 
   static async createComment(

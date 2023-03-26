@@ -7,9 +7,9 @@ import { librarySlice } from './reducers/library-slice';
 
 export const store = configureStore({
   reducer: {
-    librarySlice: librarySlice.reducer,
     appSlice: appSlice.reducer,
     authSlice: authSlice.reducer,
+    librarySlice: librarySlice.reducer,
     accountSlice: accountSlice.reducer,
   },
 });

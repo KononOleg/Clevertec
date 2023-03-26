@@ -5,27 +5,27 @@ import { useAppDispatch } from '../../../../hooks/redux';
 import { TextAreaInput } from '../../../../pages/book/components/textarea-input';
 import { setReviewModalParams } from '../../../../store/reducers/library-slice';
 import { updateComment } from '../../../../store/thunks/library-thunks';
-import { IComment } from '../../../../types';
+import { Comment } from '../../../../types';
 import { Modal } from '../../../modal';
 import { Rating } from '../../../rating';
 
-interface IFormInputs {
+type FormInputs = {
   comment: string;
-}
+};
 
-interface IProps {
+type Props = {
   bookId: string;
   userId: string;
-  comment: IComment;
-}
+  comment: Comment;
+};
 
-export const UpdateReview: FC<IProps> = ({ bookId, userId, comment }) => {
+export const UpdateReview: FC<Props> = ({ bookId, userId, comment }) => {
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm<IFormInputs>({ defaultValues: { comment: comment.text } });
+  const { register, handleSubmit } = useForm<FormInputs>({ defaultValues: { comment: comment.text } });
 
   const [rating, setRating] = useState<number>(comment.rating);
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) =>
+  const onSubmit: SubmitHandler<FormInputs> = (data) =>
     dispatch(
       updateComment({
         data: {

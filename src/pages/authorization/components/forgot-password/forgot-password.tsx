@@ -13,21 +13,21 @@ import { TextInput } from '../text-input';
 
 import './forgot-password.scss';
 
-interface IFormInputs {
+type FormInputs = {
   email: string;
-}
+};
 
 export const ForgotPassword: FC = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IFormInputs>({ mode: 'all' });
+  } = useForm<FormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
   const { isSuccessfulResetPassword, error } = useAppSelector(authSelector);
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) => dispatch(resetPassword(data.email));
+  const onSubmit: SubmitHandler<FormInputs> = (data) => dispatch(resetPassword(data.email));
 
   return (
     <div className='forgot-password '>

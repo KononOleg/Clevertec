@@ -1,37 +1,36 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import { ERROR_MESSAGE } from '../../constants';
 import { AccountService } from '../../service/acсount-service';
-import { IError, UpdateAccountResponse } from '../../types';
+import { Error, UpdateAccountResponse } from '../../types';
 
-const ERROR_MESSAGE = 'Что-то пошло не так. Обновите страницу через некоторое время.';
-
-export const getAccount = createAsyncThunk('account/getAccount', async (_, thunkAPI) => {
+export const getAccount = createAsyncThunk('account/getAccount', async (_, { rejectWithValue }) => {
   try {
     const response = await AccountService.getAccount();
 
     return response.data;
   } catch {
-    return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
+    return rejectWithValue({ message: ERROR_MESSAGE } as Error);
   }
 });
 
 export const updateAccount = createAsyncThunk(
   'account/updateAccount',
-  async (payload: { userId: string; user: UpdateAccountResponse }, thunkAPI) => {
+  async (payload: { userId: string; user: UpdateAccountResponse }, { rejectWithValue }) => {
     try {
       const response = await AccountService.updateAccount(payload.userId, payload.user);
       const success = { message: 'Изменения успешно сохранены!' };
 
       return { success, account: response.data };
     } catch {
-      return thunkAPI.rejectWithValue({ message: 'Изменения не были сохранены. Попробуйте позже!' } as IError);
+      return rejectWithValue({ message: 'Изменения не были сохранены. Попробуйте позже!' } as Error);
     }
   }
 );
 
 export const uploadFile = createAsyncThunk(
   'account/uploadFile',
-  async (payload: { files: FormData; userId: string }, thunkAPI) => {
+  async (payload: { files: FormData; userId: string }, { rejectWithValue }) => {
     try {
       const { data } = await AccountService.uploadFile(payload.files);
       const response = await AccountService.updateAvatar(payload.userId, data[0].id);
@@ -39,9 +38,9 @@ export const uploadFile = createAsyncThunk(
 
       return { success, account: response.data };
     } catch {
-      return thunkAPI.rejectWithValue({
+      return rejectWithValue({
         message: 'Что-то пошло не так, фото не сохранилось. Попробуйте позже!',
-      } as IError);
+      } as Error);
     }
   }
 );

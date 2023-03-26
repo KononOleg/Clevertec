@@ -1,14 +1,12 @@
 @import '../../../../index.variables.scss';
 
 .error-modal {
-  background: $white;
+  background-color: $white;
   border-radius: 16px;
   padding: 48px 96px;
   width: 600px;
-
   display: flex;
   flex-direction: column;
-
   align-items: center;
   text-align: center;
   gap: 35px;
@@ -23,7 +21,6 @@
   .error-modal {
     max-width: 600px;
     width: 100%;
-
     gap: 26px;
     padding: 42px 16px 32px;
 

@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import moment from 'moment';
 
-import { IUserDelivery } from '../../../../types';
+import { UserDelivery } from '../../../../types';
 import { BookCard } from '../../../main/components/book-card';
 
 import './delivery.scss';
 
-interface IProps {
-  delivery: IUserDelivery;
-}
+type Props = {
+  delivery: UserDelivery;
+};
 
-export const Delivery: FC<IProps> = ({ delivery }) => {
+export const Delivery: FC<Props> = ({ delivery }) => {
   const { book, dateHandedTo } = delivery;
 
   return (

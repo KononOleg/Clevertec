@@ -1,26 +1,26 @@
 import { FC, useState } from 'react';
 import Moment from 'moment';
 
+import ReviewAvatarPNG from '../../../../assets/avatar.png';
 import ArrowSVG from '../../../../assets/icon-arrow.svg';
-import ReviewAvatarPNG from '../../../../assets/review-avatar.png';
 import { Rating } from '../../../../components/rating';
 import { API_HOST } from '../../../../constants';
 import { sortComments } from '../../../../helpers';
 import { useAppDispatch } from '../../../../hooks/redux';
 import { setReviewModalParams } from '../../../../store/reducers/library-slice';
-import { IBook, IComment } from '../../../../types';
+import { Book, Comment } from '../../../../types';
 
 import './reviews.scss';
 
 import 'moment/locale/ru';
 
-interface IProps {
-  reviews: IComment[];
+type Props = {
+  reviews: Comment[];
   userId: string;
-  book: IBook;
-}
+  book: Book;
+};
 
-export const Reviews: FC<IProps> = ({ reviews, userId, book }) => {
+export const Reviews: FC<Props> = ({ reviews, userId, book }) => {
   const [isTurn, setIsTurn] = useState<boolean>(true);
 
   const dispatch = useAppDispatch();

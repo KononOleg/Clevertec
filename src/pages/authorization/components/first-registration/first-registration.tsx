@@ -4,18 +4,18 @@ import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
 import { regex } from '../../../../constants/regex';
 import { ErrorTextPassword, ErrorTextUserName } from '../error-text';
 import { PasswordInput } from '../password-input';
-import { IRegistrationInputs } from '../registration/registration';
+import { RegistrationInputs } from '../registration/registration';
 import { TextInput } from '../text-input';
 
-interface IProps {
-  register: UseFormRegister<IRegistrationInputs>;
-  errors: FieldErrors<IRegistrationInputs>;
+type Props = {
+  register: UseFormRegister<RegistrationInputs>;
+  errors: FieldErrors<RegistrationInputs>;
   nextStepHandler: () => void;
   isValid: boolean;
-  watch: UseFormWatch<IRegistrationInputs>;
-}
+  watch: UseFormWatch<RegistrationInputs>;
+};
 
-export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandler, isValid, watch }) => {
+export const FirstRegistration: FC<Props> = ({ register, errors, nextStepHandler, isValid, watch }) => {
   const [focusedUserName, setFocusedUserName] = useState<boolean>(false);
   const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
 

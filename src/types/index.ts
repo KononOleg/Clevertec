@@ -14,29 +14,29 @@ export enum RegistrationStep {
   SecondStep,
   ThirdStep,
 }
-export interface ILibrary extends ICategory {
-  books: IBook[];
-}
+export type Library = Category & {
+  books: Book[];
+};
 
-export interface ICategory {
+export type Category = {
   id: string;
   name: string;
   path: string;
-}
+};
 
-export interface IBook {
+export type Book = {
   id: string;
   issueYear?: string;
   rating?: number;
   title: string;
   authors?: string[];
-  image?: IImage;
-  images: IImage[];
+  image?: Image;
+  images: Image[];
   categories: string[];
-  booking: IBooking;
-  delivery: IDelivery;
-  histories?: IHistory[];
-  comments: IComment[];
+  booking: Booking;
+  delivery: Delivery;
+  histories?: History[];
+  comments: Comment[];
   description: string;
   publish?: string;
   pages?: string;
@@ -45,22 +45,22 @@ export interface IBook {
   format?: string;
   ISBN?: string;
   producer?: string;
-}
+};
 
-export interface IImage {
+export type Image = {
   url: string;
-}
+};
 
-export interface IBooking {
+export type Booking = {
   id: string;
   order: boolean;
   dateOrder?: string;
   customerId?: string;
   customerFirstName?: string;
   customerLastName?: string;
-}
+};
 
-export interface IDelivery {
+export type Delivery = {
   id: string;
   handed: boolean;
   dateHandedFrom?: string;
@@ -68,45 +68,45 @@ export interface IDelivery {
   recipientId?: string;
   recipientFirstName?: string;
   recipientLastName?: string;
-}
+};
 
-export interface IHistory {
+export type History = {
   id: string;
   userId: string;
-}
+};
 
-export interface IComment {
+export type Comment = {
   id: string;
   rating: number;
   text?: string;
   createdAt: string;
-  user: IReviewer;
-}
+  user: Reviewer;
+};
 
-export interface IReviewer {
+export type Reviewer = {
   commentUserId: string;
   firstName: string;
   lastName: string;
   avatarUrl?: string;
-}
+};
 
-export interface AxiosErrorDataType {
+export type AxiosErrorDataType = {
   data: null;
-  error: IError;
-}
+  error: Error;
+};
 
-export interface IError {
+export type Error = {
   status: number;
   name: string;
   message: string;
   details: object[];
-}
+};
 
-export interface ISuccess {
+export type Success = {
   message: string;
-}
+};
 
-export interface IUser {
+export type User = {
   id: string;
   username: string;
   email: string;
@@ -118,137 +118,137 @@ export interface IUser {
   firstName: string;
   lastName: string;
   phone: string;
-}
+};
 
-export interface AuthResponse {
+export type AuthResponse = {
   jwt: string;
-  user: IUser;
-}
+  user: User;
+};
 
-export interface SignUpRequest {
+export type SignUpRequest = {
   username: string;
   email: string;
   password: string;
   firstName: string;
   lastName: string;
   phone: string;
-}
+};
 
-export interface CreateCommentRequest {
+export type CreateCommentRequest = {
   rating: number;
   text: string;
   book: string;
   user: string;
-}
+};
 
-export interface BookingBookRequest {
+export type BookingBookRequest = {
   order: boolean;
   dateOrder: string;
   book: string;
   customer: string;
-}
+};
 
-export interface CreateCommentResponse {
+export type CreateCommentResponse = {
   id: string;
   attributes: CreateCommentAttributes;
-}
+};
 
-export interface UpdateAccountResponse {
+export type UpdateAccountResponse = {
   username: string;
   password: string;
   firstName: string;
   lastName: string;
   phone: string;
   email: string;
-}
+};
 
-export interface BookingBookResponse {
+export type BookingBookResponse = {
   id: string;
   attributes: BookingBookAttributes;
-}
+};
 
-export interface CreateCommentAttributes {
+export type CreateCommentAttributes = {
   rating: number;
   text: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-}
+};
 
-export interface BookingBookAttributes {
+export type BookingBookAttributes = {
   order: boolean;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
   dateOrder: string;
-}
+};
 
-export interface BookingModalParams {
+export type BookingModalParams = {
   bookId: string;
   order: boolean;
   bookingId: string;
   dateOrder: string;
-}
+};
 
-export interface ReviewModalParams {
-  book: IBook;
-  comment?: IComment;
-}
+export type ReviewModalParams = {
+  book: Book;
+  comment?: Comment;
+};
 
-export interface IAccount extends IUser {
-  role: IRole;
-  comments: IAccountComment[];
+export type Account = User & {
+  role: Role;
+  comments: AccountComment[];
   avatar: string;
-  booking: IUserBooking;
-  delivery: IUserDelivery;
-  history: IUserHistory;
-}
+  booking: UserBooking;
+  delivery: UserDelivery;
+  history: UserHistory;
+};
 
-export interface IAccountComment {
+export type AccountComment = {
   id: string;
   rating: number;
   text: string;
   bookId: string;
-}
+};
 
-export interface IRole {
+export type Role = {
   id: string;
   name: string;
   description: string;
   type: string;
-}
+};
 
-export interface IUserBooking {
+export type UserBooking = {
   id: string;
   order: boolean;
   dateOrder: string;
-  book: IBook;
-}
+  book: Book;
+};
 
-export interface IUserDelivery {
+export type UserDelivery = {
   id: string;
   handed: boolean;
   dateHandedFrom: string;
   dateHandedTo: string;
-  book: IBook;
-}
+  book: Book;
+};
 
-export interface IUserHistory {
+export type UserHistory = {
   id: string;
-  books: IBook[];
-}
+  books: Book[];
+};
 
-export interface AccountPayloadAction {
-  account: IAccount;
-  success: ISuccess;
-}
+export type AccountPayloadAction = {
+  account: Account;
+  success: Success;
+};
 
-export interface SignInPayloadAction {
-  user: IUser;
+export type SignInPayloadAction = {
+  user: User;
   password: string;
-}
+};
 
-export interface UploadFileResponse {
+export type UploadFileResponse = {
   id: string;
   name: string;
   alternativeText: string;
@@ -266,9 +266,9 @@ export interface UploadFileResponse {
   provider_metadata: string;
   createdAt: string;
   updatedAt: string;
-}
+};
 
-export interface Thumbnail {
+export type Thumbnail = {
   name: string;
   hash: string;
   ext: string;
@@ -278,11 +278,11 @@ export interface Thumbnail {
   height: number;
   size: number;
   url: string;
-}
+};
 
-export interface Formats {
+export type Formats = {
   thumbnail: Thumbnail;
   large: Thumbnail;
   medium: Thumbnail;
   small: Thumbnail;
-}
+};

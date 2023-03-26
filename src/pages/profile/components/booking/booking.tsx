@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import moment from 'moment';
 
-import { IUserBooking } from '../../../../types';
+import { UserBooking } from '../../../../types';
 import { BookCard } from '../../../main/components/book-card';
 
 import './booking.scss';
 
-interface IProps {
-  booking: IUserBooking;
-}
+type Props = {
+  booking: UserBooking;
+};
 
-export const Booking: FC<IProps> = ({ booking }) => {
+export const Booking: FC<Props> = ({ booking }) => {
   const { book, dateOrder } = booking;
 
   return (

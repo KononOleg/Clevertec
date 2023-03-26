@@ -11,22 +11,22 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { setReviewModalParams } from '../../../../store/reducers/library-slice';
 import { librarySelector } from '../../../../store/selectors/library-selector';
 import { deleteBooking } from '../../../../store/thunks/library-thunks';
-import { IAccountComment, IBook } from '../../../../types';
+import { AccountComment, Book } from '../../../../types';
 
 import './book-card.scss';
 
-interface IProps {
-  book: IBook;
+type Props = {
+  book: Book;
   isTileView: boolean;
   isBooking?: boolean;
   isDelivery?: boolean;
   isHistory?: boolean;
   bookingId?: string;
   dateHandedTo?: string;
-  comment?: IAccountComment;
-}
+  comment?: AccountComment;
+};
 
-export const BookCard: FC<IProps> = ({
+export const BookCard: FC<Props> = ({
   book,
   isTileView,
   isBooking,
@@ -36,7 +36,7 @@ export const BookCard: FC<IProps> = ({
   dateHandedTo,
   comment,
 }) => {
-  const { category } = useParams();
+  const { category = PATH.all } = useParams();
   const dispatch = useAppDispatch();
   const { id, issueYear, authors, title, image, rating, booking, delivery } = book;
   const { filterText } = useAppSelector(librarySelector);

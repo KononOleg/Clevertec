@@ -3,17 +3,17 @@ import { FC, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { librarySelector } from '../../../../store/selectors/library-selector';
 import { getAccount } from '../../../../store/thunks/account-thunks';
-import { IAccountComment, IUserHistory } from '../../../../types';
+import { AccountComment, UserHistory } from '../../../../types';
 import { HistorySlide } from '../history-slide';
 
 import './history.scss';
 
-interface IProps {
-  history: IUserHistory;
-  comments: IAccountComment[];
-}
+type Props = {
+  history: UserHistory;
+  comments: AccountComment[];
+};
 
-export const History: FC<IProps> = ({ history, comments }) => {
+export const History: FC<Props> = ({ history, comments }) => {
   const { books } = history;
   const dispatch = useAppDispatch();
   const { success } = useAppSelector(librarySelector);

@@ -13,18 +13,18 @@ export const AuthorizationLayout: FC = () => {
   const { isAuth, isPending } = useAppSelector(authSelector);
 
   useEffect(() => {
-    if (isAuth) {
-      if (!isPending) navigate(PATH.allBooks);
-    }
+    if (isAuth && !isPending) navigate(PATH.allBooks);
   }, [isAuth, isPending, navigate]);
 
   return (
     <Fragment>
       {isPending && <Loading />}
-      <div className='authorization-layout' data-test-id='auth'>
-        <h3 className='title'>Cleverland</h3>
-        <Outlet />
-      </div>
+      {!isAuth && !isPending && (
+        <div className='authorization-layout' data-test-id='auth'>
+          <h3 className='title'>Cleverland</h3>
+          <Outlet />
+        </div>
+      )}
     </Fragment>
   );
 };

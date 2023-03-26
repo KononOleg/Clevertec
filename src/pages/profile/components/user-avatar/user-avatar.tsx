@@ -5,15 +5,15 @@ import PhotoPNG from '../../../../assets/icon-photo.png';
 import { API_HOST } from '../../../../constants';
 import { useAppDispatch } from '../../../../hooks/redux';
 import { uploadFile } from '../../../../store/thunks/account-thunks';
-import { IAccount } from '../../../../types';
+import { Account } from '../../../../types';
 
 import './user-avatar.scss';
 
-interface IProps {
-  account: IAccount;
-}
+type Props = {
+  account: Account;
+};
 
-export const UserAvatar: FC<IProps> = ({ account }) => {
+export const UserAvatar: FC<Props> = ({ account }) => {
   const { lastName, firstName, avatar } = account;
 
   const dispatch = useAppDispatch();

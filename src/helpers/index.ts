@@ -1,9 +1,10 @@
+import { AnyAction } from '@reduxjs/toolkit';
 import moment, { Moment } from 'moment';
 
 import { PATH } from '../constants';
-import { IBook, ICategory, IComment, ILibrary } from '../types';
+import { Book, Category, Comment, Library } from '../types';
 
-export const sortBooks = (books: IBook[], isDescendingOrder: boolean) => {
+export const sortBooks = (books: Book[], isDescendingOrder: boolean) => {
   const booksWithoutRating = books.filter((book) => book.rating === null);
   const booksWithRating = books.filter((book) => book.rating !== null);
 
@@ -20,12 +21,12 @@ export const sortBooks = (books: IBook[], isDescendingOrder: boolean) => {
     : booksWithoutRating.concat(booksWithRating.reverse());
 };
 
-export const filterBooks = (books: IBook[], filterText: string) =>
+export const filterBooks = (books: Book[], filterText: string) =>
   books.filter((book) => book.title.toLowerCase().includes(filterText.toLowerCase()));
 
-export const filterCategory = (library: ILibrary[], category: string) => {
+export const filterCategory = (library: Library[], category: string) => {
   if (category === PATH.all) {
-    const concatBooks: IBook[] = [];
+    const concatBooks: Book[] = [];
 
     library.forEach((currentLibrary) => concatBooks.push(...currentLibrary.books));
 
@@ -38,8 +39,8 @@ export const filterCategory = (library: ILibrary[], category: string) => {
   return [];
 };
 
-export const createLibrary = (categories: ICategory[], books: IBook[]) => {
-  const library: ILibrary[] = categories.map((category) => ({ ...category, books: [] }));
+export const createLibrary = (categories: Category[], books: Book[]) => {
+  const library: Library[] = categories.map((category) => ({ ...category, books: [] }));
 
   books.forEach((book) => {
     book.categories.forEach((category) => {
@@ -52,7 +53,7 @@ export const createLibrary = (categories: ICategory[], books: IBook[]) => {
   return library;
 };
 
-export const sortComments = (comments: IComment[]) =>
+export const sortComments = (comments: Comment[]) =>
   [...comments].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
 export const buildCalender = (value: Moment) => {
@@ -103,3 +104,22 @@ export const isOneMonth = (firstValue: Moment, secondValue: Moment) =>
   firstValue.format('M') === secondValue.format('M');
 
 export const getNumberMonth = (value: Moment) => (value.format('M') as unknown as number) - 1;
+
+const hasPrefix = (action: AnyAction, prefix: string) => action.type.startsWith(prefix);
+const isPending = (action: AnyAction) => action.type.endsWith('/pending');
+const isFulfilled = (action: AnyAction) => action.type.endsWith('/fulfilled');
+const isRejected = (action: AnyAction) => action.type.endsWith('/rejected');
+
+export const isPendingAction =
+  (prefix: string) =>
+  (action: AnyAction): action is AnyAction =>
+    hasPrefix(action, prefix) && isPending(action);
+export const isRejectedAction =
+  (prefix: string) =>
+  (action: AnyAction): action is AnyAction =>
+    hasPrefix(action, prefix) && isRejected(action);
+
+export const isFulfilledAction =
+  (prefix: string) =>
+  (action: AnyAction): action is AnyAction =>
+    hasPrefix(action, prefix) && isFulfilled(action);

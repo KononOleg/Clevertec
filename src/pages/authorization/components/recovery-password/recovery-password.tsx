@@ -12,18 +12,16 @@ import { ErrorModal } from '../error-modal';
 import { ErrorTextPassword } from '../error-text';
 import { PasswordInput } from '../password-input';
 
-import './recovery-password.scss';
-
-interface IFormInputs {
+type FormInputs = {
   password: string;
   passwordConfirmation: string;
-}
+};
 
-interface IProps {
+type Props = {
   code: string;
-}
+};
 
-export const RecoveryPassword: FC<IProps> = ({ code }) => {
+export const RecoveryPassword: FC<Props> = ({ code }) => {
   const {
     register,
     formState: { errors, touchedFields },
@@ -32,7 +30,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
     reset,
     trigger,
     clearErrors,
-  } = useForm<IFormInputs>({ mode: 'all' });
+  } = useForm<FormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -44,7 +42,7 @@ export const RecoveryPassword: FC<IProps> = ({ code }) => {
 
   const isPasswordConfirmationError = !focusedPasswordConfirmation || errors.passwordConfirmation?.type === 'required';
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) => {
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
     dispatch(
       recoveryPassword({
         code,

@@ -6,11 +6,11 @@ import { Navigation } from '../../../navigation';
 
 import './burger-navigation.scss';
 
-interface IProps {
+type Props = {
   burgerEl: RefObject<HTMLButtonElement>;
-}
+};
 
-export const BurgerNavigation: FC<IProps> = ({ burgerEl }) => {
+export const BurgerNavigation: FC<Props> = ({ burgerEl }) => {
   const dispatch = useAppDispatch();
   const { isBurgerActive } = useAppSelector((state) => state.appSlice);
 

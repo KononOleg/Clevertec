@@ -23,16 +23,21 @@ export const Layout: FC = () => {
   const { isAuth, isPending } = useAppSelector(authSelector);
   const { isPending: isPendingLibrary, bookingModalParams, reviewModalParams } = useAppSelector(librarySelector);
   const { isPending: isPendingAccount } = useAppSelector(accountSelector);
+
   const dataFetchedRef = useRef(false);
 
   useEffect(() => {
     if (isAuth) {
       if (dataFetchedRef.current) return;
       dataFetchedRef.current = true;
-      dispatch(getLibrary());
       dispatch(getAccount());
-    } else if (!isPending) navigate(PATH.auth);
+      dispatch(getLibrary());
+    }
   }, [dispatch, isAuth, isPending, navigate]);
+
+  useEffect(() => {
+    if (!isAuth && !isPending) navigate(PATH.auth);
+  }, [isAuth, isPending, navigate]);
 
   return (
     <Fragment>
@@ -40,14 +45,16 @@ export const Layout: FC = () => {
       {bookingModalParams && <BookingModal />}
       {reviewModalParams && <ReviewModal />}
       <div className='main-layout'>
-        <div className='main-layout__wrapper'>
-          <ErrorMessage />
-          <Header />
-          <main className='main'>
-            <Outlet />
-          </main>
-          <Footer />
-        </div>
+        {isAuth && (
+          <div className='main-layout__wrapper'>
+            <ErrorMessage />
+            <Header />
+            <main className='main'>
+              <Outlet />
+            </main>
+            <Footer />
+          </div>
+        )}
       </div>
     </Fragment>
   );
