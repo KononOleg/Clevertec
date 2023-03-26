@@ -19,12 +19,10 @@ export const AuthorizationLayout: FC = () => {
   return (
     <Fragment>
       {isPending && <Loading />}
-      {!isAuth && !isPending && (
-        <div className='authorization-layout' data-test-id='auth'>
-          <h3 className='title'>Cleverland</h3>
-          <Outlet />
-        </div>
-      )}
+      <div className='authorization-layout' data-test-id='auth'>
+        <h3 className='title'>Cleverland</h3>
+        <Outlet />
+      </div>
     </Fragment>
   );
 };
