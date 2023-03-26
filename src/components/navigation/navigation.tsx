@@ -96,7 +96,12 @@ export const Navigation: FC<Props> = ({ navigation }) => {
             <div className='border' />
             <ul className='links'>
               <li>
-                <NavLink to={PATH.profile} className={navLinkClassName} onClick={closeBurgerHandler}>
+                <NavLink
+                  to={PATH.profile}
+                  className={navLinkClassName}
+                  onClick={closeBurgerHandler}
+                  data-test-id='profile-button'
+                >
                   <h5 className='page'>Профиль</h5>
                 </NavLink>
               </li>

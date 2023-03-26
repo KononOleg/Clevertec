@@ -36,7 +36,7 @@ export const Layout: FC = () => {
   }, [dispatch, isAuth, isPending, navigate]);
 
   useEffect(() => {
-    if (!isAuth) navigate(PATH.auth);
+    if (!isAuth && !isPending) navigate(PATH.auth);
   }, [isAuth, isPending, navigate]);
 
   return (

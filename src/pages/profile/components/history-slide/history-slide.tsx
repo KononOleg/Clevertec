@@ -28,7 +28,7 @@ export const HistorySlide: FC<Props> = ({ books, comments }) => {
             slidesPerView: 4,
           },
 
-          786: {
+          760: {
             width: 640,
             spaceBetween: 35,
             slidesPerView: 3,
