@@ -3,18 +3,18 @@ import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { SwiperPagination } from '../../../../components/swiper-pagination';
-import { IBook, IComment } from '../../../../types';
+import { IAccountComment, IBook } from '../../../../types';
 import { BookCard } from '../../../main/components/book-card';
 
 import './history-slide.scss';
 
 interface IProps {
   books: IBook[];
-  comments: IComment[];
+  comments: IAccountComment[];
 }
 
 export const HistorySlide: FC<IProps> = ({ books, comments }) => {
-  const searchComment = (id: string) => comments.find((comment) => comment.id === id);
+  const searchComment = (id: string) => comments.find((comment) => comment.bookId === id);
 
   return (
     <div className='history-slide'>

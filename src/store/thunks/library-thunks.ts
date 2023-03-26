@@ -56,7 +56,7 @@ export const createComment = createAsyncThunk(
 
       return { message: 'Спасибо, что нашли время оценить книгу!' };
     } catch {
-      return thunkAPI.rejectWithValue({ message: 'Оценка не была отправлена. Попробуйте позже' } as IError);
+      return thunkAPI.rejectWithValue({ message: 'Оценка не была отправлена. Попробуйте позже!' } as IError);
     }
   }
 );

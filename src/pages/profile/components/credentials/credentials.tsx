@@ -13,11 +13,10 @@ import './credentials.scss';
 
 interface IProps {
   account: IAccount;
-  password: string;
 }
 
 interface IFormInputs {
-  username: string;
+  login: string;
   password: string;
   firstName: string;
   lastName: string;
@@ -25,7 +24,7 @@ interface IFormInputs {
   email: string;
 }
 
-export const Сredentials: FC<IProps> = ({ account, password }) => {
+export const Сredentials: FC<IProps> = ({ account }) => {
   const dispatch = useAppDispatch();
   const { lastName, firstName, username, phone, email } = account;
 
@@ -39,9 +38,9 @@ export const Сredentials: FC<IProps> = ({ account, password }) => {
       lastName,
       firstName,
       phone,
-      username,
+      login: username,
       email,
-      password,
+      password: ' ',
     },
     mode: 'all',
   });
@@ -50,10 +49,13 @@ export const Сredentials: FC<IProps> = ({ account, password }) => {
   const [focusedUserName, setFocusedUserName] = useState<boolean>(false);
   const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
 
-  const watchUserName = watch('username');
+  const watchUserName = watch('login');
   const watchPassword = watch('password');
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) => dispatch(updateAccount({ user: data, userId: account.id }));
+  const onSubmit: SubmitHandler<IFormInputs> = (data) => {
+    dispatch(updateAccount({ user: { username: data.login, ...data }, userId: account.id }));
+    setIsDisabledInputs(true);
+  };
 
   return (
     <div className='credentials' data-test-id='profile-form'>
@@ -61,104 +63,106 @@ export const Сredentials: FC<IProps> = ({ account, password }) => {
       <p className='body_large subtitle'>Здесь вы можете отредактировать информацию о себе</p>
       <form className='form' onSubmit={handleSubmit(onSubmit)}>
         <fieldset className='fields' disabled={isDisabledInputs}>
-          <div className='side'>
-            <div className='input-container'>
-              <TextInput
-                label='Логин'
-                isError={!focusedUserName && errors.username}
-                register={{
-                  ...register('username', {
-                    required: 'Поле не может быть пустым',
-                    pattern: regex.username,
-                  }),
-                }}
-                onBlur={() => setFocusedUserName(false)}
-                onFocus={() => setFocusedUserName(true)}
-                error={focusedUserName ? undefined : errors.username}
-              />
-              {(errors.username?.type !== 'required' || focusedUserName) && (
-                <p
-                  className={`error info_large ${!focusedUserName && errors.username ? 'color_error' : ''}`}
-                  data-test-id='hint'
-                >
-                  <ErrorTextUserName text={watchUserName} />
-                </p>
-              )}
-            </div>
+          <div className='input-container'>
             <TextInput
-              label='Имя'
-              isError={errors.firstName}
-              register={{ ...register('firstName') }}
-              error={errors.firstName}
-            />
-            <div className='input-container'>
-              <TextInput
-                label='Номер телефона'
-                mask='+375 (99) 999-99-99'
-                maskChar='x'
-                isError={errors.phone}
-                register={{
-                  ...register('phone', {
-                    pattern: regex.phone,
-                  }),
-                }}
-                error={errors.phone}
-              />
-              {errors.phone?.type !== 'required' && (
-                <p className={`error info_large ${errors.phone ? 'color_error' : ''}`} data-test-id='hint'>
-                  В формате +375 (xx) xxx-xx-xx
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className='side'>
-            <div className='input-container'>
-              <PasswordInput
-                label='Пароль'
-                isError={!focusedPassword && errors.password}
-                IsValid={errors.password}
-                register={{
-                  ...register('password', {
-                    required: 'Поле не может быть пустым',
-                    pattern: regex.password,
-                  }),
-                }}
-                onBlur={() => setFocusedPassword(false)}
-                onFocus={() => setFocusedPassword(true)}
-                error={focusedPassword ? undefined : errors.password}
-                shouldShowCheckmark={true}
-              />
-              {(errors.password?.type !== 'required' || focusedPassword) && (
-                <p
-                  className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
-                  data-test-id='hint'
-                >
-                  <ErrorTextPassword text={watchPassword} />
-                </p>
-              )}
-            </div>
-            <TextInput
-              label='Фамилия'
-              isError={errors.lastName}
-              register={{ ...register('lastName', { required: 'Поле не может быть пустым' }) }}
-              error={errors.lastName}
-            />
-            <TextInput
-              label='E-mail'
-              isError={errors.email}
+              label='Логин'
+              isError={!focusedUserName && errors.login}
               register={{
-                ...register('email', {
+                ...register('login', {
                   required: 'Поле не может быть пустым',
-                  pattern: {
-                    value: regex.email,
-                    message: 'Введите корректный e-mail',
-                  },
+                  pattern: regex.username,
                 }),
               }}
-              error={errors.email}
+              onBlur={() => setFocusedUserName(false)}
+              onFocus={() => setFocusedUserName(true)}
+              error={errors.login}
             />
+            {errors.login?.type !== 'required' && (
+              <p
+                className={`error info_large ${!focusedUserName && errors.login ? 'color_error' : ''}`}
+                data-test-id='hint'
+              >
+                <ErrorTextUserName text={watchUserName} />
+              </p>
+            )}
           </div>
+          <div className='input-container'>
+            <PasswordInput
+              label='Пароль'
+              isError={!focusedPassword && errors.password}
+              IsValid={errors.password}
+              register={{
+                ...register('password', {
+                  required: 'Поле не может быть пустым',
+                  pattern: regex.password,
+                }),
+              }}
+              onBlur={() => setFocusedPassword(false)}
+              onFocus={() => setFocusedPassword(true)}
+              error={errors.password}
+              shouldShowCheckmark={true}
+              watchPassword={watchPassword}
+            />
+            {errors.password?.type !== 'required' && (
+              <p
+                className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
+                data-test-id='hint'
+              >
+                <ErrorTextPassword text={watchPassword} />
+              </p>
+            )}
+          </div>
+          <TextInput
+            label='Имя'
+            isError={errors.firstName}
+            register={{ ...register('firstName', { required: 'Поле не может быть пустым' }) }}
+            error={errors.firstName}
+          />
+          <TextInput
+            label='Фамилия'
+            isError={errors.lastName}
+            register={{ ...register('lastName', { required: 'Поле не может быть пустым' }) }}
+            error={errors.lastName}
+          />
+          <div className='input-container'>
+            <TextInput
+              label='Номер телефона'
+              mask='+375 (99) 999-99-99'
+              maskChar='x'
+              isError={errors.phone}
+              register={{
+                ...register('phone', {
+                  required: true,
+                  pattern: regex.phone,
+                }),
+              }}
+              error={errors.phone}
+              alwaysShowMask={true}
+            />
+            {errors.phone && (
+              <p
+                className={`error info_large ${errors.phone ? 'color_error' : ''}`}
+                data-test-id={errors.phone ? 'hint' : ''}
+              >
+                В формате +375 (xx) xxx-xx-xx
+              </p>
+            )}
+          </div>
+
+          <TextInput
+            label='E-mail'
+            isError={errors.email}
+            register={{
+              ...register('email', {
+                required: 'Поле не может быть пустым',
+                pattern: {
+                  value: regex.email,
+                  message: 'Введите корректный e-mail',
+                },
+              }),
+            }}
+            error={errors.email}
+          />
         </fieldset>
 
         <div className='buttons'>
@@ -166,7 +170,7 @@ export const Сredentials: FC<IProps> = ({ account, password }) => {
             type='button'
             data-test-id='edit-button'
             className='button button_secondary'
-            onClick={() => setIsDisabledInputs(false)}
+            onClick={() => setIsDisabledInputs(!isDisabledInputs)}
           >
             Редактировать
           </button>

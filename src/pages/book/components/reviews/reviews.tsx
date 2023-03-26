@@ -25,9 +25,11 @@ export const Reviews: FC<IProps> = ({ reviews, userId, book }) => {
 
   const dispatch = useAppDispatch();
 
-  const openModalHandler = () => dispatch(setReviewModalParams({ book }));
+  const searchComment = reviews && reviews.find((review) => review.user.commentUserId === userId);
 
-  const disabled = !reviews || reviews.find((review) => review.user.commentUserId === userId) ? true : false;
+  const openCreateReviewModalHandler = () => dispatch(setReviewModalParams({ book }));
+
+  const openUpdateReviewModalHandler = () => dispatch(setReviewModalParams({ book, comment: searchComment }));
 
   return (
     <div className='reviews' data-test-id='reviews'>
@@ -73,15 +75,25 @@ export const Reviews: FC<IProps> = ({ reviews, userId, book }) => {
         </div>
       )}
 
-      <button
-        className='button button_rating'
-        type='button'
-        disabled={disabled}
-        data-test-id='button-rate-book'
-        onClick={openModalHandler}
-      >
-        оценить книгу
-      </button>
+      {searchComment ? (
+        <button
+          className='button button_secondary button_rating'
+          type='button'
+          data-test-id='button-rate-book'
+          onClick={openUpdateReviewModalHandler}
+        >
+          изменить оценку
+        </button>
+      ) : (
+        <button
+          className='button button_rating'
+          type='button'
+          data-test-id='button-rate-book'
+          onClick={openCreateReviewModalHandler}
+        >
+          оценить книгу
+        </button>
+      )}
     </div>
   );
 };

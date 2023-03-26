@@ -15,9 +15,20 @@ interface IProps {
   onFocus?: () => void;
   mask?: string;
   maskChar?: string;
+  alwaysShowMask?: boolean;
 }
 
-export const TextInput: FC<IProps> = ({ label, register, error, isError, onFocus, onBlur, mask, maskChar }) => {
+export const TextInput: FC<IProps> = ({
+  label,
+  register,
+  error,
+  isError,
+  onFocus,
+  onBlur,
+  mask,
+  maskChar,
+  alwaysShowMask,
+}) => {
   const [, setIsFocus] = useState<boolean>(false);
 
   return (
@@ -28,6 +39,7 @@ export const TextInput: FC<IProps> = ({ label, register, error, isError, onFocus
           type='text'
           mask={mask}
           maskChar={maskChar}
+          alwaysShowMask={alwaysShowMask}
           placeholder=' '
           {...register}
         />

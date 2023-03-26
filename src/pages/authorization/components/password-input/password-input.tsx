@@ -18,6 +18,7 @@ interface IProps {
   onFocus?: () => void;
   onChange?: () => void;
   shouldShowCheckmark?: boolean;
+  watchPassword?: string;
 }
 
 export const PasswordInput: FC<IProps> = ({
@@ -30,10 +31,11 @@ export const PasswordInput: FC<IProps> = ({
   onFocus,
   onChange,
   shouldShowCheckmark,
+  watchPassword,
 }) => {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
 
-  const [password, setPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>(watchPassword || '');
 
   return (
     <InputLayout label={label} error={error}>

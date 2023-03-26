@@ -3,14 +3,14 @@ import { FC, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { librarySelector } from '../../../../store/selectors/library-selector';
 import { getAccount } from '../../../../store/thunks/account-thunks';
-import { IBook, IComment, IUserHistory } from '../../../../types';
+import { IAccountComment, IUserHistory } from '../../../../types';
 import { HistorySlide } from '../history-slide';
 
 import './history.scss';
 
 interface IProps {
   history: IUserHistory;
-  comments: IComment[];
+  comments: IAccountComment[];
 }
 
 export const History: FC<IProps> = ({ history, comments }) => {
@@ -28,7 +28,7 @@ export const History: FC<IProps> = ({ history, comments }) => {
       <p className='body_large subtitle'>Список прочитанных книг</p>
 
       {books ? (
-        <HistorySlide books={books as unknown as IBook[]} comments={comments} />
+        <HistorySlide books={books} comments={comments} />
       ) : (
         <div className='empty empty_blue' data-test-id='empty-blue-card'>
           <h3>{'Вы не читали книг\nиз нашей библиотеки'} </h3>

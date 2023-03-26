@@ -197,11 +197,18 @@ export interface ReviewModalParams {
 
 export interface IAccount extends IUser {
   role: IRole;
-  comments: IComment[];
+  comments: IAccountComment[];
   avatar: string;
   booking: IUserBooking;
   delivery: IUserDelivery;
   history: IUserHistory;
+}
+
+export interface IAccountComment {
+  id: string;
+  rating: number;
+  text: string;
+  bookId: string;
 }
 
 export interface IRole {

@@ -234,6 +234,7 @@ button:disabled {
   font-weight: 600;
   font-size: 16px;
   line-height: 18px;
+  letter-spacing: 0.2px;
   text-transform: uppercase;
 }
 
@@ -252,7 +253,7 @@ button:disabled {
 }
 
 .button_secondary {
-  background: $white;
+  background: $transparent;
   border: 1px solid $grey20;
   color: #363636;
 }

@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { setReviewModalParams } from '../../../../store/reducers/library-slice';
 import { librarySelector } from '../../../../store/selectors/library-selector';
 import { deleteBooking } from '../../../../store/thunks/library-thunks';
-import { IBook, IComment } from '../../../../types';
+import { IAccountComment, IBook } from '../../../../types';
 
 import './book-card.scss';
 
@@ -23,7 +23,7 @@ interface IProps {
   isHistory?: boolean;
   bookingId?: string;
   dateHandedTo?: string;
-  comment?: IComment;
+  comment?: IAccountComment;
 }
 
 export const BookCard: FC<IProps> = ({

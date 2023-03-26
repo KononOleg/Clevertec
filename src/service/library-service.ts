@@ -36,7 +36,7 @@ export class LibraryService {
     createCommentRequest: CreateCommentRequest,
     commentId: string
   ): Promise<AxiosResponse<CreateCommentResponse>> {
-    return $api.post<CreateCommentResponse>(`/api/comments${commentId}`, {
+    return $api.put<CreateCommentResponse>(`/api/comments/${commentId}`, {
       data: createCommentRequest,
     });
   }
