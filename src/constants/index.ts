@@ -1,5 +1,20 @@
 export const API_HOST = 'https://strapi.cleverland.by';
 
+export const API_PATH = {
+  local: '/api/auth/local',
+  register: '/api/auth/local/register',
+  forgotPassword: '/api/auth/forgot-password',
+  resetPassword: '/api/auth/reset-password',
+  account: '/api/users/me',
+  users: '/api/users/',
+  file: '/api/upload',
+  books: '/api/books/',
+  getBooks: '/api/books',
+  categories: '/api/categories',
+  comments: '/api/comments/',
+  bookings: '/api/bookings/',
+};
+
 export const PATH = {
   home: '/',
   books: '/books',
@@ -99,3 +114,14 @@ export const monthNames = [
 ];
 
 export const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
+export const phoneMask = '+375 (99) 999-99-99';
+
+export const ERROR_MESSAGE = 'Что-то пошло не так. Обновите страницу через некоторое время.';
+
+export const inputErrors = {
+  phone: 'В формате +375 (xx) xxx-xx-xx',
+  required: 'Поле не может быть пустым',
+  matchPassword: 'Пароли не совпадают',
+  email: 'Введите корректный e-mail',
+};

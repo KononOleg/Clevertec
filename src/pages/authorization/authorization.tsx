@@ -10,11 +10,11 @@ import { Registration } from './components/registration';
 
 import './authorization.scss';
 
-interface IProps {
+type Props = {
   contentView: AuthorizationContentView;
-}
+};
 
-export const AuthorizationPage: FC<IProps> = ({ contentView }) => {
+export const AuthorizationPage: FC<Props> = ({ contentView }) => {
   const [searchParams] = useSearchParams();
 
   const codeQuery = searchParams.get('code') || '';

@@ -1,5 +1,5 @@
 import { FC, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import LogoPNG from '../../assets/logo.png';
 import { PATH } from '../../constants';
@@ -13,6 +13,7 @@ import { Person } from './components/person';
 import './header.scss';
 
 export const Header: FC = () => {
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const { isBurgerActive } = useAppSelector(appSelector);
 
@@ -37,7 +38,7 @@ export const Header: FC = () => {
           <div />
         </button>
 
-        <h3>Библиотека</h3>
+        <h3>{location.pathname === PATH.profile ? 'Личный кабинет' : 'Библиотека'}</h3>
       </div>
       <Person />
     </header>

@@ -1,29 +1,30 @@
 import { FC, Fragment } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
-import { IRegistrationInputs } from '../registration/registration';
+import { inputErrors } from '../../../../constants';
+import { RegistrationInputs } from '../registration/registration';
 import { TextInput } from '../text-input';
 
-interface IProps {
-  register: UseFormRegister<IRegistrationInputs>;
-  errors: FieldErrors<IRegistrationInputs>;
+type Props = {
+  register: UseFormRegister<RegistrationInputs>;
+  errors: FieldErrors<RegistrationInputs>;
   nextStepHandler: () => void;
   isValid: boolean;
-}
+};
 
-export const SecondRegistration: FC<IProps> = ({ register, errors, nextStepHandler, isValid }) => (
+export const SecondRegistration: FC<Props> = ({ register, errors, nextStepHandler, isValid }) => (
   <Fragment>
     <div className='fields'>
       <TextInput
         label='Имя'
         isError={errors.firstName}
-        register={{ ...register('firstName', { required: 'Поле не может быть пустым' }) }}
+        register={{ ...register('firstName', { required: inputErrors.required }) }}
         error={errors.firstName}
       />
       <TextInput
         label='Фамилия'
         isError={errors.lastName}
-        register={{ ...register('lastName', { required: 'Поле не может быть пустым' }) }}
+        register={{ ...register('lastName', { required: inputErrors.required }) }}
         error={errors.lastName}
       />
     </div>

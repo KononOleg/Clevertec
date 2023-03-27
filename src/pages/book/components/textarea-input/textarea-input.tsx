@@ -3,12 +3,12 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { InputLayout } from '../../../authorization/components/input-layout';
 
-interface IProps {
+type Props = {
   label: string;
   register: UseFormRegisterReturn;
-}
+};
 
-export const TextAreaInput: FC<IProps> = ({ label, register }) => (
+export const TextAreaInput: FC<Props> = ({ label, register }) => (
   <InputLayout label={label} error={undefined}>
     <textarea className='input textarea' data-test-id='comment' placeholder=' ' {...register} />
   </InputLayout>

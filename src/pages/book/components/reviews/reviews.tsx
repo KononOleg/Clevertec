@@ -1,32 +1,35 @@
 import { FC, useState } from 'react';
 import Moment from 'moment';
 
+import ReviewAvatarPNG from '../../../../assets/avatar.png';
 import ArrowSVG from '../../../../assets/icon-arrow.svg';
-import ReviewAvatarPNG from '../../../../assets/review-avatar.png';
 import { Rating } from '../../../../components/rating';
 import { API_HOST } from '../../../../constants';
 import { sortComments } from '../../../../helpers';
 import { useAppDispatch } from '../../../../hooks/redux';
-import { setIsReviewModalActive } from '../../../../store/reducers/library-slice';
-import { IComment } from '../../../../types';
+import { setReviewModalParams } from '../../../../store/reducers/library-slice';
+import { Book, Comment } from '../../../../types';
 
 import './reviews.scss';
 
 import 'moment/locale/ru';
 
-interface IProps {
-  reviews: IComment[];
+type Props = {
+  reviews: Comment[];
   userId: string;
-}
+  book: Book;
+};
 
-export const Reviews: FC<IProps> = ({ reviews, userId }) => {
-  const [isTurn, setIsTurn] = useState<boolean>(true);
+export const Reviews: FC<Props> = ({ reviews, userId, book }) => {
+  const [isTurn, setIsTurn] = useState(true);
 
   const dispatch = useAppDispatch();
 
-  const openModalHandler = () => dispatch(setIsReviewModalActive(true));
+  const searchComment = reviews && reviews.find((review) => review.user.commentUserId === userId);
 
-  const disabled = reviews.find((review) => review.user.commentUserId === userId) ? true : false;
+  const openCreateReviewModalHandler = () => dispatch(setReviewModalParams({ book }));
+
+  const openUpdateReviewModalHandler = () => dispatch(setReviewModalParams({ book, comment: searchComment }));
 
   return (
     <div className='reviews' data-test-id='reviews'>
@@ -72,15 +75,25 @@ export const Reviews: FC<IProps> = ({ reviews, userId }) => {
         </div>
       )}
 
-      <button
-        className='button button_rating'
-        type='button'
-        disabled={disabled}
-        data-test-id='button-rate-book'
-        onClick={openModalHandler}
-      >
-        оценить книгу
-      </button>
+      {searchComment ? (
+        <button
+          className='button button_secondary button_rating'
+          type='button'
+          data-test-id='button-rate-book'
+          onClick={openUpdateReviewModalHandler}
+        >
+          изменить оценку
+        </button>
+      ) : (
+        <button
+          className='button button_rating'
+          type='button'
+          data-test-id='button-rate-book'
+          onClick={openCreateReviewModalHandler}
+        >
+          оценить книгу
+        </button>
+      )}
     </div>
   );
 };

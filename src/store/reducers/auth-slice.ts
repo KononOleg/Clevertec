@@ -1,23 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IError, IUser } from '../../types';
+import { isPendingAction, isRejectedAction } from '../../helpers';
+import { Error, SignInPayloadAction } from '../../types';
 import { recoveryPassword, resetPassword, signIn, signUp } from '../thunks/auth-thunks';
 
-interface AuthSliceState {
+type AuthSliceState = {
   isPending: boolean;
   isAuth: boolean;
-  error: IError | null;
-  user: IUser | null;
+  password: string;
+  error: Error | null;
   isSuccessfulRegistration: boolean;
   isSuccessfulResetPassword: boolean;
   isSuccessfulRecoveryPassword: boolean;
-}
+};
 
 const initialState: AuthSliceState = {
-  isPending: false,
+  isPending: true,
   isAuth: false,
+  password: '',
   error: null,
-  user: null,
   isSuccessfulRegistration: false,
   isSuccessfulResetPassword: false,
   isSuccessfulRecoveryPassword: false,
@@ -28,10 +29,30 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     signOut(state) {
-      localStorage.removeItem('token');
+      sessionStorage.clear();
 
       return {
         ...state,
+        isAuth: false,
+        isPending: false,
+      };
+    },
+
+    checkisAuth(state) {
+      const token = sessionStorage.getItem('token');
+      const password = sessionStorage.getItem('password');
+
+      if (token && password)
+        return {
+          ...state,
+          isAuth: true,
+          isPending: false,
+          password,
+        };
+
+      return {
+        ...state,
+        isPending: false,
         isAuth: false,
       };
     },
@@ -40,6 +61,7 @@ export const authSlice = createSlice({
       return {
         ...state,
         isPending: false,
+        password: '',
         error: null,
         user: null,
         isSuccessfulRegistration: false,
@@ -48,61 +70,35 @@ export const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(signIn.pending, (state) => ({ ...state, isPending: true }));
-    builder.addCase(signUp.pending, (state) => ({ ...state, isPending: true }));
-    builder.addCase(resetPassword.pending, (state) => ({ ...state, isPending: true }));
-    builder.addCase(recoveryPassword.pending, (state) => ({ ...state, isPending: true }));
+    builder
+      .addCase(signIn.fulfilled, (state, action: PayloadAction<SignInPayloadAction>) => ({
+        ...state,
+        isPending: false,
+        isAuth: true,
+        password: action.payload.password,
+      }))
 
-    builder.addCase(signIn.fulfilled.type, (state, action: PayloadAction<IUser>) => ({
-      ...state,
-      isPending: false,
-      isAuth: true,
-      user: action.payload,
-    }));
+      .addCase(signUp.fulfilled, (state) => ({
+        ...state,
+        isPending: false,
+        isSuccessfulRegistration: true,
+      }))
 
-    builder.addCase(signUp.fulfilled.type, (state, action: PayloadAction<IUser>) => ({
-      ...state,
-      isPending: false,
-      isSuccessfulRegistration: true,
-      user: action.payload,
-    }));
+      .addCase(resetPassword.fulfilled, (state) => ({
+        ...state,
+        isPending: false,
+        isSuccessfulResetPassword: true,
+      }));
+    builder
+      .addCase(recoveryPassword.fulfilled, (state) => ({
+        ...state,
+        isPending: false,
+        isSuccessfulRecoveryPassword: true,
+      }))
+      .addMatcher(isPendingAction('auth'), (state) => ({ ...state, isPending: true }))
 
-    builder.addCase(resetPassword.fulfilled.type, (state) => ({
-      ...state,
-      isPending: false,
-      isSuccessfulResetPassword: true,
-    }));
-
-    builder.addCase(recoveryPassword.fulfilled.type, (state) => ({
-      ...state,
-      isPending: false,
-      isSuccessfulRecoveryPassword: true,
-    }));
-
-    builder.addCase(signIn.rejected.type, (state, action: PayloadAction<IError>) => ({
-      ...state,
-      isPending: false,
-      error: action.payload,
-    }));
-
-    builder.addCase(signUp.rejected.type, (state, action: PayloadAction<IError>) => ({
-      ...state,
-      isPending: false,
-      error: action.payload,
-    }));
-
-    builder.addCase(resetPassword.rejected.type, (state, action: PayloadAction<IError>) => ({
-      ...state,
-      isPending: false,
-      error: action.payload,
-    }));
-
-    builder.addCase(recoveryPassword.rejected.type, (state, action: PayloadAction<IError>) => ({
-      ...state,
-      isPending: false,
-      error: action.payload,
-    }));
+      .addMatcher(isRejectedAction('auth'), (state, action) => ({ ...state, isPending: false, error: action.payload }));
   },
 });
 
-export const { resetSlice, signOut } = authSlice.actions;
+export const { resetSlice, signOut, checkisAuth } = authSlice.actions;

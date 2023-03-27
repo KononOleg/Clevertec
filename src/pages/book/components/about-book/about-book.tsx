@@ -2,11 +2,11 @@ import { FC } from 'react';
 
 import './about-book.scss';
 
-interface IProps {
+type Props = {
   description: string;
-}
+};
 
-export const AboutBook: FC<IProps> = ({ description }) => (
+export const AboutBook: FC<Props> = ({ description }) => (
   <div className='about-book'>
     <h5>О книге</h5>
     <p className='body_large'>{description}</p>

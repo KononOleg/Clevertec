@@ -2,17 +2,18 @@ import { FC, RefObject, useEffect, useRef } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { setIsBurgerActive } from '../../../../store/reducers/app-slice';
+import { appSelector } from '../../../../store/selectors/app-selector';
 import { Navigation } from '../../../navigation';
 
 import './burger-navigation.scss';
 
-interface IProps {
+type Props = {
   burgerEl: RefObject<HTMLButtonElement>;
-}
+};
 
-export const BurgerNavigation: FC<IProps> = ({ burgerEl }) => {
+export const BurgerNavigation: FC<Props> = ({ burgerEl }) => {
   const dispatch = useAppDispatch();
-  const { isBurgerActive } = useAppSelector((state) => state.appSlice);
+  const { isBurgerActive } = useAppSelector(appSelector);
 
   const navEl = useRef<HTMLDivElement>(null);
 

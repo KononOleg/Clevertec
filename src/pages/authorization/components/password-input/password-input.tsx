@@ -8,7 +8,7 @@ import { InputLayout } from '../input-layout';
 
 import './password-input.scss';
 
-interface IProps {
+type Props = {
   label: string;
   register: UseFormRegisterReturn;
   error: FieldError | undefined;
@@ -18,9 +18,10 @@ interface IProps {
   onFocus?: () => void;
   onChange?: () => void;
   shouldShowCheckmark?: boolean;
-}
+  watchPassword?: string;
+};
 
-export const PasswordInput: FC<IProps> = ({
+export const PasswordInput: FC<Props> = ({
   label,
   register,
   error,
@@ -28,12 +29,11 @@ export const PasswordInput: FC<IProps> = ({
   IsValid,
   onBlur,
   onFocus,
-  onChange,
   shouldShowCheckmark,
+  watchPassword,
 }) => {
-  const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
-
-  const [password, setPassword] = useState<string>('');
+  const [isPasswordShow, setIsPasswordShow] = useState(false);
+  const [password, setPassword] = useState(watchPassword || '');
 
   return (
     <InputLayout label={label} error={error}>
@@ -44,9 +44,8 @@ export const PasswordInput: FC<IProps> = ({
         onFocus={onFocus}
         {...register}
         onChange={(e) => {
-          register.onChange(e);
           setPassword(e.target.value);
-          if (onChange) onChange();
+          register.onChange(e);
         }}
         onBlur={(e) => {
           register.onBlur(e);

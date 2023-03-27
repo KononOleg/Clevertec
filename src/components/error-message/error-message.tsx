@@ -4,7 +4,9 @@ import { ReactComponent as CloseSVG } from '../../assets/icon-close.svg';
 import SuccessPNG from '../../assets/icon-success.png';
 import WarningPNG from '../../assets/icon-warning.png';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { resetError, resetSuccess } from '../../store/reducers/library-slice';
+import { resetErrorAccount, resetSuccessAccount } from '../../store/reducers/account-slice';
+import { resetErrorLibrary, resetSuccessLibrary } from '../../store/reducers/library-slice';
+import { accountSelector } from '../../store/selectors/account-selector';
 import { librarySelector } from '../../store/selectors/library-selector';
 
 import './error-message.scss';
@@ -13,11 +15,17 @@ const CLOSE_TIMEOUT = 4000;
 
 export const ErrorMessage: FC = () => {
   const dispatch = useAppDispatch();
-  const { error, success } = useAppSelector(librarySelector);
+  const { error: errorLibrary, success: successLibrary } = useAppSelector(librarySelector);
+  const { error: errorAccount, success: successAccount } = useAppSelector(accountSelector);
+
+  const error = errorLibrary || errorAccount;
+  const success = successLibrary || successAccount;
 
   const closeErrorMessage = useCallback(() => {
-    dispatch(resetError());
-    dispatch(resetSuccess());
+    dispatch(resetErrorLibrary());
+    dispatch(resetSuccessLibrary());
+    dispatch(resetErrorAccount());
+    dispatch(resetSuccessAccount());
   }, [dispatch]);
 
   useEffect(() => {

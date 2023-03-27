@@ -1,23 +1,24 @@
 import { FC, Fragment, useState } from 'react';
 import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
 
+import { inputErrors } from '../../../../constants';
 import { regex } from '../../../../constants/regex';
 import { ErrorTextPassword, ErrorTextUserName } from '../error-text';
 import { PasswordInput } from '../password-input';
-import { IRegistrationInputs } from '../registration/registration';
+import { RegistrationInputs } from '../registration/registration';
 import { TextInput } from '../text-input';
 
-interface IProps {
-  register: UseFormRegister<IRegistrationInputs>;
-  errors: FieldErrors<IRegistrationInputs>;
+type Props = {
+  register: UseFormRegister<RegistrationInputs>;
+  errors: FieldErrors<RegistrationInputs>;
   nextStepHandler: () => void;
   isValid: boolean;
-  watch: UseFormWatch<IRegistrationInputs>;
-}
+  watch: UseFormWatch<RegistrationInputs>;
+};
 
-export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandler, isValid, watch }) => {
-  const [focusedUserName, setFocusedUserName] = useState<boolean>(false);
-  const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
+export const FirstRegistration: FC<Props> = ({ register, errors, nextStepHandler, isValid, watch }) => {
+  const [focusedUserName, setFocusedUserName] = useState(false);
+  const [focusedPassword, setFocusedPassword] = useState(false);
 
   const watchUserName = watch('username');
   const watchPassword = watch('password');
@@ -31,7 +32,7 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             isError={!focusedUserName && errors.username}
             register={{
               ...register('username', {
-                required: 'Поле не может быть пустым',
+                required: inputErrors.required,
                 pattern: regex.username,
               }),
             }}
@@ -55,16 +56,16 @@ export const FirstRegistration: FC<IProps> = ({ register, errors, nextStepHandle
             IsValid={errors.password}
             register={{
               ...register('password', {
-                required: 'Поле не может быть пустым',
+                required: inputErrors.required,
                 pattern: regex.password,
               }),
             }}
             onBlur={() => setFocusedPassword(false)}
             onFocus={() => setFocusedPassword(true)}
-            error={errors.password}
+            error={focusedPassword ? undefined : errors.password}
             shouldShowCheckmark={true}
           />
-          {errors.password?.type !== 'required' && (
+          {(errors.password?.type !== 'required' || focusedUserName) && (
             <p
               className={`error info_large ${!focusedPassword && errors.password ? 'color_error' : ''}`}
               data-test-id='hint'

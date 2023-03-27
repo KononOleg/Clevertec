@@ -3,8 +3,9 @@ import { FreeMode, Navigation, Pagination, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperClass from 'swiper/types/swiper-class';
 
+import { SwiperPagination } from '../../../../components/swiper-pagination';
 import { API_HOST } from '../../../../constants';
-import { IImage } from '../../../../types';
+import { Image } from '../../../../types';
 
 import './swiper.scss';
 
@@ -13,24 +14,17 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
-interface IProps {
-  images: IImage[];
-}
+type Props = {
+  images: Image[];
+};
 
-export const BookSwiper: FC<IProps> = ({ images }) => {
+export const BookSwiper: FC<Props> = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass>();
-
-  const pagination = {
-    clickable: true,
-    renderBullet(_: number, className: string) {
-      return `<span class="${className}"></span>`;
-    },
-  };
 
   return (
     <div className='swiper__wrapper'>
       <Swiper
-        pagination={pagination}
+        pagination={SwiperPagination}
         slidesPerView={1}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         modules={[Pagination, FreeMode, Navigation, Thumbs]}

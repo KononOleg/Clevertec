@@ -14,15 +14,25 @@
   }
 
   .input {
-    background: $black5;
+    background-color: $black5;
     border-radius: 4px 4px 0 0;
     padding: 26px 12px 12px;
     border: 0;
     border-bottom: 2px solid $grey20;
     outline: none;
-
     height: 56px;
     width: 416px;
+  }
+  .error {
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    letter-spacing: 0.2px;
+    color: $grey40;
+  }
+
+  .color_error {
+    color: $negative;
   }
 
   .input_error {
@@ -31,10 +41,8 @@
 
   .input:focus-within ~ .input-label,
   .input:not(:placeholder-shown) ~ .input-label {
-    transform: translate(12px, 6px);
-
     @extend .info_large;
-
+    transform: translate(12px, 6px);
     color: $grey40;
   }
 }

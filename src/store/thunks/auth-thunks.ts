@@ -1,31 +1,30 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
+import { ERROR_MESSAGE } from '../../constants';
 import { AuthService } from '../../service/auth-service';
-import { AxiosErrorDataType, IError, SignUpRequest } from '../../types';
-
-const ERROR_MESSAGE = 'Что-то пошло не так. Обновите страницу через некоторое время.';
+import { AxiosErrorDataType, Error, SignUpRequest } from '../../types';
 
 export const signIn = createAsyncThunk(
   'auth/signIn',
-  async (payload: { login: string; password: string }, thunkAPI) => {
+  async (payload: { login: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await AuthService.signIn(payload.login, payload.password);
-
       const { jwt, user } = response.data;
 
-      localStorage.setItem('token', jwt);
+      sessionStorage.setItem('token', jwt);
+      sessionStorage.setItem('password', payload.password);
 
-      return user;
+      return { user, password: payload.password };
     } catch (err) {
       const { response } = (await err) as AxiosError;
 
-      return thunkAPI.rejectWithValue({ status: response?.status } as IError);
+      return rejectWithValue({ status: response?.status } as Error);
     }
   }
 );
 
-export const signUp = createAsyncThunk('auth/signUp', async (payload: SignUpRequest, thunkAPI) => {
+export const signUp = createAsyncThunk('auth/signUp', async (payload: SignUpRequest, { rejectWithValue }) => {
   try {
     const response = await AuthService.signUp(payload);
 
@@ -33,11 +32,11 @@ export const signUp = createAsyncThunk('auth/signUp', async (payload: SignUpRequ
   } catch (err) {
     const { response } = (await err) as AxiosError;
 
-    return thunkAPI.rejectWithValue({ status: response?.status } as IError);
+    return rejectWithValue({ status: response?.status } as Error);
   }
 });
 
-export const resetPassword = createAsyncThunk('auth/resetPassword', async (email: string, thunkAPI) => {
+export const resetPassword = createAsyncThunk('auth/resetPassword', async (email: string, { rejectWithValue }) => {
   try {
     const response = await AuthService.resetPassword(email);
 
@@ -46,29 +45,23 @@ export const resetPassword = createAsyncThunk('auth/resetPassword', async (email
     if (axios.isAxiosError(err) && err.response) {
       const data = err.response.data as AxiosErrorDataType;
 
-      return thunkAPI.rejectWithValue(data.error);
+      return rejectWithValue(data.error);
     }
 
-    return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
+    return rejectWithValue({ message: ERROR_MESSAGE } as Error);
   }
 });
 
 export const recoveryPassword = createAsyncThunk(
   'auth/recoveryPassword',
-  async (payload: { password: string; passwordConfirmation: string; code: string }, thunkAPI) => {
+  async (payload: { password: string; passwordConfirmation: string; code: string }, { rejectWithValue }) => {
     try {
       const { password, passwordConfirmation, code } = payload;
       const response = await AuthService.recoveryPassword(password, passwordConfirmation, code);
 
       return response.data;
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const data = err.response.data as AxiosErrorDataType;
-
-        return thunkAPI.rejectWithValue(data.error);
-      }
-
-      return thunkAPI.rejectWithValue({ message: ERROR_MESSAGE } as IError);
+    } catch {
+      return rejectWithValue({ message: ERROR_MESSAGE } as Error);
     }
   }
 );

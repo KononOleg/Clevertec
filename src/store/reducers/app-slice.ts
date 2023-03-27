@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface AppSliceState {
+type AppSliceState = {
   isBurgerActive: boolean;
-}
+};
 
 const initialState: AppSliceState = {
   isBurgerActive: false,

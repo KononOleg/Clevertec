@@ -7,15 +7,15 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setIsBurgerActive } from '../../store/reducers/app-slice';
 import { signOut } from '../../store/reducers/auth-slice';
 import { librarySelector } from '../../store/selectors/library-selector';
-import { ILibrary } from '../../types';
+import { Library } from '../../types';
 
 import './navigation.scss';
 
-interface IProps {
+type Props = {
   navigation: string;
-}
+};
 
-export const Navigation: FC<IProps> = ({ navigation }) => {
+export const Navigation: FC<Props> = ({ navigation }) => {
   const dispatch = useAppDispatch();
   const isAllBooksPath = useMatch(PATH.allBooks);
   const isBookCategoryPath = useMatch(PATH.booksCategory);
@@ -49,7 +49,7 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
                   </NavLink>
                 </li>
                 <ul>
-                  {library.map(({ id, name, path, books }: ILibrary) => (
+                  {library.map(({ id, name, path, books }: Library) => (
                     <li key={id}>
                       <p className='body_large'>
                         <NavLink
@@ -96,7 +96,12 @@ export const Navigation: FC<IProps> = ({ navigation }) => {
             <div className='border' />
             <ul className='links'>
               <li>
-                <NavLink to={PATH.profile} className={navLinkClassName} onClick={closeBurgerHandler}>
+                <NavLink
+                  to={PATH.profile}
+                  className={navLinkClassName}
+                  onClick={closeBurgerHandler}
+                  data-test-id='profile-button'
+                >
                   <h5 className='page'>Профиль</h5>
                 </NavLink>
               </li>

@@ -18,7 +18,7 @@ interface IProps {
 
 export const NavigationList: FC<IProps> = ({ isTileView, setTileViewHandler }) => {
   const dispatch = useAppDispatch();
-  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { isDescendingOrder, filterText } = useAppSelector(librarySelector);
 
   return (

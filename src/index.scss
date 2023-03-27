@@ -75,6 +75,12 @@ select {
   font: inherit;
 }
 
+h1 {
+  font-weight: 500;
+  font-size: 52px;
+  line-height: 64px;
+}
+
 h3 {
   font-weight: 700;
   font-size: 32px;
@@ -129,7 +135,16 @@ h5 {
   line-height: 16px;
 }
 
+.color_error {
+  color: $negative;
+}
+
 @media (max-width: 680px) {
+  h1 {
+    font-size: 26px;
+    line-height: 36px;
+  }
+
   h3 {
     font-size: 18px;
     line-height: 28px;
@@ -163,7 +178,6 @@ button {
   padding: 0;
   background: transparent;
   outline: none;
-
   cursor: pointer;
   white-space: nowrap;
 }
@@ -176,13 +190,11 @@ button:disabled {
   justify-content: center;
   align-items: center;
   gap: 8px;
-
   border: 0;
   border-radius: 38px / 38px;
   padding: 9px;
   min-width: 38px;
-
-  background: transparent;
+  background-color: transparent;
   color: $grey40;
   box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
     0px 1px 5px rgba(191, 196, 201, 0.24);
@@ -219,6 +231,7 @@ button:disabled {
   font-weight: 600;
   font-size: 16px;
   line-height: 18px;
+  letter-spacing: 0.2px;
   text-transform: uppercase;
 }
 
@@ -237,12 +250,12 @@ button:disabled {
 }
 
 .button_secondary {
-  background: $white;
+  background: $transparent;
   border: 1px solid $grey20;
   color: #363636;
 }
 
 .button_secondary:disabled {
-  background: $black5;
+  background-color: $black5;
   color: $grey40;
 }

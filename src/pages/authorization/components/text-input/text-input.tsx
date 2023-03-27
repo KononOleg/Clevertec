@@ -4,9 +4,7 @@ import InputMask from 'react-input-mask';
 
 import { InputLayout } from '../input-layout';
 
-import './text-input.scss';
-
-interface IProps {
+type Props = {
   label: string;
   register: UseFormRegisterReturn;
   error: FieldError | undefined;
@@ -14,20 +12,20 @@ interface IProps {
   onBlur?: () => void;
   onFocus?: () => void;
   mask?: string;
-  maskChar?: string;
-}
+  alwaysShowMask?: boolean;
+};
 
-export const TextInput: FC<IProps> = ({ label, register, error, isError, onFocus, onBlur, mask, maskChar }) => {
-  const [, setIsFocus] = useState<boolean>(false);
+export const TextInput: FC<Props> = ({ label, register, error, isError, onFocus, onBlur, mask, alwaysShowMask }) => {
+  const [, setIsFocus] = useState(false);
 
   return (
     <InputLayout label={label} error={error}>
       {mask ? (
         <InputMask
           className={`input ${isError ? 'input_error' : ''}`}
-          type='text'
+          maskChar='x'
           mask={mask}
-          maskChar={maskChar}
+          alwaysShowMask={alwaysShowMask}
           placeholder=' '
           {...register}
         />

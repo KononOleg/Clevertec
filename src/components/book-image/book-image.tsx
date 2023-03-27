@@ -2,14 +2,14 @@ import { FC } from 'react';
 
 import ImageEmptyPNG from '../../assets/book/image-empty.png';
 import { API_HOST } from '../../constants';
-import { IImage } from '../../types';
+import { Image } from '../../types';
 
-interface IProps {
-  image: IImage | undefined;
-}
+type Props = {
+  image: Image | undefined;
+};
 
-export const BookImage: FC<IProps> = ({ image }) => {
-  if (image) return <img src={`${API_HOST}${image.url}`} className='image' alt='book' />;
+export const BookImage: FC<Props> = ({ image }) => {
+  if (image) return <img src={`${API_HOST}${image.url || image}`} className='image' alt='book' />;
 
   return <img src={ImageEmptyPNG} className='image' alt='book-empty' />;
 };
