@@ -25,7 +25,7 @@ type Props = {
 
 export const Calendar: FC<Props> = ({ dateOrder, setDateOrder }) => {
   const [calender, setCalender] = useState<Moment[][]>([]);
-  const [value, setValue] = useState<Moment>(moment());
+  const [value, setValue] = useState(moment());
 
   const secondBookDate = getSecondBookDate(moment());
 

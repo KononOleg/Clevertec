@@ -1,9 +1,10 @@
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { phoneMask } from '../../../../constants';
+import { inputErrors, phoneMask } from '../../../../constants';
 import { regex } from '../../../../constants/regex';
-import { useAppDispatch } from '../../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { authSelector } from '../../../../store/selectors/auth-selector';
 import { updateAccount } from '../../../../store/thunks/account-thunks';
 import { Account } from '../../../../types';
 import { ErrorTextPassword, ErrorTextUserName } from '../../../authorization/components/error-text';
@@ -27,6 +28,7 @@ type FormInputs = {
 
 export const Сredentials: FC<Props> = ({ account }) => {
   const dispatch = useAppDispatch();
+  const { password } = useAppSelector(authSelector);
   const { lastName, firstName, username, phone, email } = account;
 
   const {
@@ -41,14 +43,14 @@ export const Сredentials: FC<Props> = ({ account }) => {
       phone,
       login: username,
       email,
-      password: 'Password123',
+      password,
     },
     mode: 'all',
   });
 
-  const [isDisabledInputs, setIsDisabledInputs] = useState<boolean>(true);
-  const [focusedUserName, setFocusedUserName] = useState<boolean>(false);
-  const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
+  const [isDisabledInputs, setIsDisabledInputs] = useState(true);
+  const [focusedUserName, setFocusedUserName] = useState(false);
+  const [focusedPassword, setFocusedPassword] = useState(false);
 
   const watchUserName = watch('login');
   const watchPassword = watch('password');
@@ -70,7 +72,7 @@ export const Сredentials: FC<Props> = ({ account }) => {
               isError={!focusedUserName && errors.login}
               register={{
                 ...register('login', {
-                  required: 'Поле не может быть пустым',
+                  required: inputErrors.required,
                   pattern: regex.username,
                 }),
               }}
@@ -94,7 +96,7 @@ export const Сredentials: FC<Props> = ({ account }) => {
               IsValid={errors.password}
               register={{
                 ...register('password', {
-                  required: 'Поле не может быть пустым',
+                  required: inputErrors.required,
                   pattern: regex.password,
                 }),
               }}
@@ -116,13 +118,13 @@ export const Сredentials: FC<Props> = ({ account }) => {
           <TextInput
             label='Имя'
             isError={errors.firstName}
-            register={{ ...register('firstName', { required: 'Поле не может быть пустым' }) }}
+            register={{ ...register('firstName', { required: inputErrors.required }) }}
             error={errors.firstName}
           />
           <TextInput
             label='Фамилия'
             isError={errors.lastName}
-            register={{ ...register('lastName', { required: 'Поле не может быть пустым' }) }}
+            register={{ ...register('lastName', { required: inputErrors.required }) }}
             error={errors.lastName}
           />
           <div className='input-container'>
@@ -144,7 +146,7 @@ export const Сredentials: FC<Props> = ({ account }) => {
                 className={`error info_large ${errors.phone ? 'color_error' : ''}`}
                 data-test-id={errors.phone ? 'hint' : ''}
               >
-                В формате +375 (xx) xxx-xx-xx
+                {inputErrors.phone}
               </p>
             )}
           </div>
@@ -154,10 +156,10 @@ export const Сredentials: FC<Props> = ({ account }) => {
             isError={errors.email}
             register={{
               ...register('email', {
-                required: 'Поле не может быть пустым',
+                required: inputErrors.required,
                 pattern: {
                   value: regex.email,
-                  message: 'Введите корректный e-mail',
+                  message: inputErrors.email,
                 },
               }),
             }}

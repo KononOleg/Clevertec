@@ -35,7 +35,7 @@ export const Registration: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { error, isSuccessfulRegistration } = useAppSelector(authSelector);
-  const [step, setStep] = useState<number>(RegistrationStep.FirstStep);
+  const [step, setStep] = useState(RegistrationStep.FirstStep);
 
   const onSubmit: SubmitHandler<RegistrationInputs> = (data) => dispatch(signUp({ ...data }));
 

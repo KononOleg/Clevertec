@@ -1,6 +1,7 @@
 import { FC, Fragment } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
+import { inputErrors } from '../../../../constants';
 import { RegistrationInputs } from '../registration/registration';
 import { TextInput } from '../text-input';
 
@@ -17,13 +18,13 @@ export const SecondRegistration: FC<Props> = ({ register, errors, nextStepHandle
       <TextInput
         label='Имя'
         isError={errors.firstName}
-        register={{ ...register('firstName', { required: 'Поле не может быть пустым' }) }}
+        register={{ ...register('firstName', { required: inputErrors.required }) }}
         error={errors.firstName}
       />
       <TextInput
         label='Фамилия'
         isError={errors.lastName}
-        register={{ ...register('lastName', { required: 'Поле не может быть пустым' }) }}
+        register={{ ...register('lastName', { required: inputErrors.required }) }}
         error={errors.lastName}
       />
     </div>

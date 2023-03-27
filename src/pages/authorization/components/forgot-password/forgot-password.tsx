@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import { TextButton } from '../../../../components/text-button';
-import { PATH } from '../../../../constants';
+import { inputErrors, PATH } from '../../../../constants';
 import { regex } from '../../../../constants/regex';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { authSelector } from '../../../../store/selectors/auth-selector';
@@ -52,11 +52,11 @@ export const ForgotPassword: FC = () => {
                     error={errors.email}
                     register={{
                       ...register('email', {
-                        required: 'Поле не может быть пустым',
+                        required: inputErrors.required,
 
                         pattern: {
                           value: regex.email,
-                          message: 'Введите корректный e-mail',
+                          message: inputErrors.email,
                         },
                       }),
                     }}

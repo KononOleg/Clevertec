@@ -1,7 +1,7 @@
 import { FC, Fragment } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
-import { phoneMask } from '../../../../constants';
+import { inputErrors, phoneMask } from '../../../../constants';
 import { regex } from '../../../../constants/regex';
 import { RegistrationInputs } from '../registration/registration';
 import { TextInput } from '../text-input';
@@ -22,7 +22,7 @@ export const ThirdRegistration: FC<Props> = ({ register, errors, isValid }) => (
           isError={errors.phone}
           register={{
             ...register('phone', {
-              required: 'Поле не может быть пустым',
+              required: inputErrors.required,
               pattern: regex.phone,
             }),
           }}
@@ -30,7 +30,7 @@ export const ThirdRegistration: FC<Props> = ({ register, errors, isValid }) => (
         />
         {errors.phone?.type !== 'required' && (
           <p className={`error info_large ${errors.phone ? 'color_error' : ''}`} data-test-id='hint'>
-            В формате +375 (xx) xxx-xx-xx
+            {inputErrors.phone}
           </p>
         )}
       </div>
@@ -39,10 +39,10 @@ export const ThirdRegistration: FC<Props> = ({ register, errors, isValid }) => (
         isError={errors.email}
         register={{
           ...register('email', {
-            required: 'Поле не может быть пустым',
+            required: inputErrors.required,
             pattern: {
               value: regex.email,
-              message: 'Введите корректный e-mail',
+              message: inputErrors.email,
             },
           }),
         }}

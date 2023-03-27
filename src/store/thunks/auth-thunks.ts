@@ -13,6 +13,7 @@ export const signIn = createAsyncThunk(
       const { jwt, user } = response.data;
 
       sessionStorage.setItem('token', jwt);
+      sessionStorage.setItem('password', payload.password);
 
       return { user, password: payload.password };
     } catch (err) {

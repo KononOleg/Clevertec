@@ -32,8 +32,8 @@ export const PasswordInput: FC<Props> = ({
   shouldShowCheckmark,
   watchPassword,
 }) => {
-  const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
-  const [password, setPassword] = useState<string>(watchPassword || '');
+  const [isPasswordShow, setIsPasswordShow] = useState(false);
+  const [password, setPassword] = useState(watchPassword || '');
 
   return (
     <InputLayout label={label} error={error}>

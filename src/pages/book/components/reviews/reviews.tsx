@@ -21,7 +21,7 @@ type Props = {
 };
 
 export const Reviews: FC<Props> = ({ reviews, userId, book }) => {
-  const [isTurn, setIsTurn] = useState<boolean>(true);
+  const [isTurn, setIsTurn] = useState(true);
 
   const dispatch = useAppDispatch();
 

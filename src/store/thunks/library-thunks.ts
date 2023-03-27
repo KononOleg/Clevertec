@@ -8,7 +8,7 @@ import { RootState } from '../store';
 
 export const getLibrary = createAsyncThunk('library/getLibrary', async (_, { rejectWithValue }) => {
   try {
-    const [categories, books] = await Promise.all([LibraryService.getCategories(), LibraryService.getBooks()]);
+    const [books, categories] = await Promise.all([LibraryService.getBooks(), LibraryService.getCategories()]);
     const library = createLibrary(categories.data, books.data);
 
     return library;

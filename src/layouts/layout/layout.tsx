@@ -30,8 +30,8 @@ export const Layout: FC = () => {
     if (isAuth) {
       if (dataFetchedRef.current) return;
       dataFetchedRef.current = true;
-      dispatch(getAccount());
       dispatch(getLibrary());
+      dispatch(getAccount());
     }
   }, [dispatch, isAuth, isPending, navigate]);
 

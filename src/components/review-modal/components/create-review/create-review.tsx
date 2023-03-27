@@ -21,7 +21,7 @@ export const CreateReview: FC<Props> = ({ bookId, userId }) => {
   const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm<FormInputs>();
 
-  const [rating, setRating] = useState<number>(1);
+  const [rating, setRating] = useState(1);
 
   const onSubmit: SubmitHandler<FormInputs> = (data) =>
     dispatch(

@@ -7,6 +7,7 @@ import { recoveryPassword, resetPassword, signIn, signUp } from '../thunks/auth-
 type AuthSliceState = {
   isPending: boolean;
   isAuth: boolean;
+  password: string;
   error: Error | null;
   isSuccessfulRegistration: boolean;
   isSuccessfulResetPassword: boolean;
@@ -16,6 +17,7 @@ type AuthSliceState = {
 const initialState: AuthSliceState = {
   isPending: true,
   isAuth: false,
+  password: '',
   error: null,
   isSuccessfulRegistration: false,
   isSuccessfulResetPassword: false,
@@ -27,23 +29,25 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     signOut(state) {
-      sessionStorage.removeItem('token');
+      sessionStorage.clear();
 
       return {
         ...state,
         isAuth: false,
-        isPending: true,
+        isPending: false,
       };
     },
 
     checkisAuth(state) {
       const token = sessionStorage.getItem('token');
+      const password = sessionStorage.getItem('password');
 
-      if (token)
+      if (token && password)
         return {
           ...state,
           isAuth: true,
           isPending: false,
+          password,
         };
 
       return {

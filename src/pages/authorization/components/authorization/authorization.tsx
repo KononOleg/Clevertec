@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import { TextButton } from '../../../../components/text-button';
-import { HttpStatusCode, PATH } from '../../../../constants';
+import { HttpStatusCode, inputErrors, PATH } from '../../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { resetSlice } from '../../../../store/reducers/auth-slice';
 import { authSelector } from '../../../../store/selectors/auth-selector';
@@ -49,13 +49,13 @@ export const Authorization: FC = () => {
               <TextInput
                 label='Логин'
                 isError={errors.identifier || isAuthError}
-                register={{ ...register('identifier', { required: 'Поле не может быть пустым' }) }}
+                register={{ ...register('identifier', { required: inputErrors.required }) }}
                 error={errors.identifier}
               />
               <PasswordInput
                 label='Пароль'
                 isError={errors.password || isAuthError}
-                register={{ ...register('password', { required: 'Поле не может быть пустым' }) }}
+                register={{ ...register('password', { required: inputErrors.required }) }}
                 error={errors.password}
               />
             </div>

@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 
 import { compareDates } from '../../../../helpers';
 import { useAppDispatch } from '../../../../hooks/redux';
@@ -17,7 +17,7 @@ type Props = {
 
 export const EditBooking: FC<Props> = ({ bookId, bookingId, dateOrder, userId }) => {
   const dispatch = useAppDispatch();
-  const [rebookingDate, setRebookingDate] = useState<Moment>(moment(dateOrder));
+  const [rebookingDate, setRebookingDate] = useState(moment(dateOrder));
 
   const closeModalHandler = () => dispatch(setBookingModalParams(null));
 

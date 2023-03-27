@@ -12,9 +12,10 @@ import './person.scss';
 export const Person: FC = () => {
   const dispatch = useAppDispatch();
   const { account } = useAppSelector(accountSelector);
-  const [isActiveModal, setIsActiveModal] = useState<boolean>(false);
+  const [isActiveModal, setIsActiveModal] = useState(false);
 
   const signOutHandler = () => dispatch(signOut());
+  const closeModalHandler = () => setIsActiveModal(false);
 
   return (
     <div className='person'>
@@ -25,7 +26,7 @@ export const Person: FC = () => {
 
       {isActiveModal && (
         <div className='person__modal'>
-          <Link to={PATH.profile} data-test-id='profile-button'>
+          <Link to={PATH.profile} data-test-id='profile-button' onClick={closeModalHandler}>
             <h5>Профиль</h5>
           </Link>
 

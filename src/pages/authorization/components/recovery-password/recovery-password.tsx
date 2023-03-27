@@ -2,7 +2,7 @@ import { FC, Fragment, useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { PATH } from '../../../../constants';
+import { inputErrors, PATH } from '../../../../constants';
 import { regex } from '../../../../constants/regex';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { resetSlice } from '../../../../store/reducers/auth-slice';
@@ -29,18 +29,17 @@ export const RecoveryPassword: FC<Props> = ({ code }) => {
     watch,
     reset,
     trigger,
-    clearErrors,
   } = useForm<FormInputs>({ mode: 'all' });
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { error, isSuccessfulRecoveryPassword } = useAppSelector(authSelector);
-  const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
-  const [focusedPasswordConfirmation, setFocusedPasswordConfirmation] = useState<boolean>(false);
+  const [focusedPassword, setFocusedPassword] = useState(false);
+  const [focusedPasswordConfirmation, setFocusedPasswordConfirmation] = useState(false);
 
   const watchPassword = watch('password');
 
-  const isPasswordConfirmationError = !focusedPasswordConfirmation || errors.passwordConfirmation?.type === 'required';
+  const isPasswordConfirmationError = !focusedPasswordConfirmation && !!errors.passwordConfirmation?.message;
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     dispatch(
@@ -91,7 +90,7 @@ export const RecoveryPassword: FC<Props> = ({ code }) => {
                   IsValid={errors.password}
                   register={{
                     ...register('password', {
-                      required: 'Поле не может быть пустым',
+                      required: inputErrors.required,
                       pattern: regex.password,
                     }),
                   }}
@@ -117,14 +116,13 @@ export const RecoveryPassword: FC<Props> = ({ code }) => {
                 label='Повторите пароль'
                 isError={isPasswordConfirmationError ? errors.passwordConfirmation : undefined}
                 onFocus={() => {
-                  if (errors.passwordConfirmation?.type !== 'required') clearErrors('passwordConfirmation');
                   setFocusedPasswordConfirmation(true);
                 }}
                 onBlur={() => setFocusedPasswordConfirmation(false)}
                 register={{
                   ...register('passwordConfirmation', {
-                    validate: { match: (value) => value === watchPassword || 'Пароли не совпадают' },
-                    required: 'Поле не может быть пустым',
+                    validate: { match: (value) => value === watchPassword || inputErrors.matchPassword },
+                    required: inputErrors.required,
                   }),
                 }}
                 error={isPasswordConfirmationError ? errors.passwordConfirmation : undefined}

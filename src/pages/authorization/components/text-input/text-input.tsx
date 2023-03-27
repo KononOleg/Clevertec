@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const TextInput: FC<Props> = ({ label, register, error, isError, onFocus, onBlur, mask, alwaysShowMask }) => {
-  const [, setIsFocus] = useState<boolean>(false);
+  const [, setIsFocus] = useState(false);
 
   return (
     <InputLayout label={label} error={error}>

@@ -23,7 +23,7 @@ export const UpdateReview: FC<Props> = ({ bookId, userId, comment }) => {
   const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm<FormInputs>({ defaultValues: { comment: comment.text } });
 
-  const [rating, setRating] = useState<number>(comment.rating);
+  const [rating, setRating] = useState(comment.rating);
 
   const onSubmit: SubmitHandler<FormInputs> = (data) =>
     dispatch(

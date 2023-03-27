@@ -1,6 +1,7 @@
 import { FC, Fragment, useState } from 'react';
 import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
 
+import { inputErrors } from '../../../../constants';
 import { regex } from '../../../../constants/regex';
 import { ErrorTextPassword, ErrorTextUserName } from '../error-text';
 import { PasswordInput } from '../password-input';
@@ -16,8 +17,8 @@ type Props = {
 };
 
 export const FirstRegistration: FC<Props> = ({ register, errors, nextStepHandler, isValid, watch }) => {
-  const [focusedUserName, setFocusedUserName] = useState<boolean>(false);
-  const [focusedPassword, setFocusedPassword] = useState<boolean>(false);
+  const [focusedUserName, setFocusedUserName] = useState(false);
+  const [focusedPassword, setFocusedPassword] = useState(false);
 
   const watchUserName = watch('username');
   const watchPassword = watch('password');
@@ -31,7 +32,7 @@ export const FirstRegistration: FC<Props> = ({ register, errors, nextStepHandler
             isError={!focusedUserName && errors.username}
             register={{
               ...register('username', {
-                required: 'Поле не может быть пустым',
+                required: inputErrors.required,
                 pattern: regex.username,
               }),
             }}
@@ -55,7 +56,7 @@ export const FirstRegistration: FC<Props> = ({ register, errors, nextStepHandler
             IsValid={errors.password}
             register={{
               ...register('password', {
-                required: 'Поле не может быть пустым',
+                required: inputErrors.required,
                 pattern: regex.password,
               }),
             }}

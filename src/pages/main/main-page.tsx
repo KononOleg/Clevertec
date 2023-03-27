@@ -15,7 +15,7 @@ import './main-page.scss';
 export const MainPage: FC = () => {
   const { category } = useParams();
   const dispatch = useAppDispatch();
-  const [isTileView, setTileView] = useState<boolean>(true);
+  const [isTileView, setTileView] = useState(true);
   const { library, isPending, isDescendingOrder, filterText, success } = useAppSelector(librarySelector);
 
   const filteredCategory = useMemo(() => filterCategory(library, category as string), [library, category]);
